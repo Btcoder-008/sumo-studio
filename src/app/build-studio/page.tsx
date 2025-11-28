@@ -961,15 +961,15 @@ export default function BuildStudio() {
               )}
             </div>
 
-            {/* Localhost Link */}
+            {/* Run Local Button */}
             <div className="mb-4">
               <a
                 href="http://localhost:3001"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 text-sm font-medium underline"
+                className="inline-block px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-medium text-sm rounded-lg transition-all cursor-pointer"
               >
-                http://localhost:3001
+                Run Local
               </a>
             </div>
 
