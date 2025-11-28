@@ -880,6 +880,21 @@ export default function BuildStudio() {
               )}
             </div>
 
+            {/* Copy Path Clipboard */}
+            <div className="mb-4">
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText("/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend");
+                  setBuildStatus("Path copied to clipboard!");
+                  setTimeout(() => setBuildStatus(""), 2000);
+                }}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-700 transition-all group"
+              >
+                <span className="font-mono text-xs truncate max-w-[300px]">/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend</span>
+                <span className="text-gray-500 group-hover:text-gray-700">📋</span>
+              </button>
+            </div>
+
             {/* Project Name Input */}
             <div className="mb-4">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
