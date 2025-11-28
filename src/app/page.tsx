@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 // Floating app icon component
 function FloatingIcon({ icon, style }: { icon: string; style: React.CSSProperties }) {
@@ -54,7 +55,7 @@ export default function Home() {
       {/* Centered Super Sumo mascot */}
       <main className="relative z-10 flex min-h-screen items-center justify-center">
         <div className="animate-bounce-gentle">
-          <a href="/build-studio" className="cursor-pointer">
+          <Link href="/home" className="cursor-pointer">
             <Image
               src="/super-sumo.png"
               alt="Super Sumo mascot"
@@ -63,7 +64,7 @@ export default function Home() {
               priority
               className="drop-shadow-2xl animate-wiggle hover:scale-105 transition-transform"
             />
-          </a>
+          </Link>
         </div>
       </main>
     </div>

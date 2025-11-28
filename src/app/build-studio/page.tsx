@@ -845,6 +845,12 @@ export default function BuildStudio() {
           {/* Navigation Menu */}
           <nav className="flex items-center gap-2">
             <Link
+              href="/terminal"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
+            >
+              Terminal
+            </Link>
+            <Link
               href="/build-studio"
               className="px-4 py-2 bg-yellow-100 text-yellow-700 font-medium rounded-lg transition-all"
             >
