@@ -192,12 +192,15 @@ export default function TerminalPage() {
                   {createCopied2 ? "✓" : "Copy"}
                 </button>
               </div>
+              <a href="http://localhost:3001/build-studio" target="_blank" rel="noopener noreferrer" className="inline-block mt-2 px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-lg transition-all">http://localhost:3001/build-studio</a>
             </div>
 
             {/* Run Local Button */}
             <div>
-              <Link
-                href="/build-studio"
+              <a
+                href="http://localhost:3001/build-studio"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
                   createBothCopied.path && createBothCopied.npm
                     ? "bg-green-500 hover:bg-green-600 text-white"
@@ -205,7 +208,7 @@ export default function TerminalPage() {
                 }`}
               >
                 Run Local
-              </Link>
+              </a>
             </div>
           </div>
 
