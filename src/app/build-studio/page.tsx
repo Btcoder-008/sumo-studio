@@ -642,7 +642,23 @@ export default function BuildStudio() {
     return script?.name || "No script selected";
   };
 
-  // Download script as file
+  // Local server URL (runs on user's machine)
+  const LOCAL_SERVER_URL = "http://localhost:4000";
+
+  // Check if local server is running
+  const checkLocalServer = async (): Promise<boolean> => {
+    try {
+      const response = await fetch(`${LOCAL_SERVER_URL}/health`, {
+        method: "GET",
+        signal: AbortSignal.timeout(2000), // 2 second timeout
+      });
+      return response.ok;
+    } catch {
+      return false;
+    }
+  };
+
+  // Download script as file (fallback)
   const downloadScript = (content: string, filename: string) => {
     const blob = new Blob([content], { type: "text/x-shellscript" });
     const url = URL.createObjectURL(blob);
@@ -655,7 +671,7 @@ export default function BuildStudio() {
     URL.revokeObjectURL(url);
   };
 
-  // Handle build - Downloads the script for user to run
+  // Handle build - Sends to local server to open Terminal
   const handleBuild = async () => {
     if (!projectName.trim()) {
       setBuildStatus("Please enter a project name!");
@@ -685,42 +701,50 @@ export default function BuildStudio() {
     }
 
     setIsBuilding(true);
-    setBuildStatus(`Generating ${getSelectedScriptName()} script...`);
+    setBuildStatus("Checking local server connection...");
 
-    try {
-      // Use edited content if available, otherwise use original
-      let scriptContent = editedContent || getOriginalScriptContent();
+    // Use edited content if available, otherwise use original
+    let scriptContent = editedContent || getOriginalScriptContent();
 
-      // Inject the user-provided project path and name into the script
-      const cleanPath = projectPath.trim().replace(/\/+$/, ""); // Remove trailing slashes
-      const cleanName = projectName.trim();
-      scriptContent = injectProjectValues(scriptContent, cleanPath, cleanName);
+    // Inject the user-provided project path and name into the script
+    const cleanPath = projectPath.trim().replace(/\/+$/, ""); // Remove trailing slashes
+    const cleanName = projectName.trim();
+    scriptContent = injectProjectValues(scriptContent, cleanPath, cleanName);
 
-      const response = await fetch("/api/run-script", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          scriptId: selectedScript,
-          content: scriptContent,
-          projectName: projectName.trim(),
-          projectPath: cleanPath,
-        }),
-      });
+    // Try local server first
+    const localServerRunning = await checkLocalServer();
 
-      const data = await response.json();
+    if (localServerRunning) {
+      try {
+        setBuildStatus("Opening Terminal...");
+        const response = await fetch(`${LOCAL_SERVER_URL}/run-script`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            content: scriptContent,
+            projectName: cleanName,
+          }),
+        });
 
-      if (data.success && data.script) {
-        // Download the script
-        downloadScript(data.script, data.filename);
-        setBuildStatus(`Script downloaded! Run it in Terminal: bash ~Downloads/${data.filename}`);
-      } else {
-        setBuildStatus(data.message || "Failed to generate script. Please try again.");
+        const data = await response.json();
+
+        if (data.success) {
+          setBuildStatus("Terminal opened! Script is running...");
+        } else {
+          setBuildStatus(data.message || "Failed to open Terminal.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setBuildStatus("Error connecting to local server.");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      setBuildStatus("Error: Could not connect to server.");
+    } else {
+      // Fallback: download script
+      setBuildStatus("Local server not running. Downloading script instead...");
+      const filename = `${cleanName}-setup.sh`;
+      downloadScript(scriptContent, filename);
+      setBuildStatus(`Script downloaded! Run: bash ~/Downloads/${filename} | Start local server: npm run local-server`);
     }
 
     setIsBuilding(false);
@@ -923,12 +947,12 @@ export default function BuildStudio() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
-                      Generating...
+                      Building...
                     </>
                   ) : (
                     <>
-                      <span className="text-2xl">📥</span>
-                      Download Script
+                      <span className="text-2xl">🚀</span>
+                      Build Project
                     </>
                   )}
                 </span>
