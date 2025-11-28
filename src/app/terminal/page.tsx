@@ -41,7 +41,8 @@ export default function TerminalPage() {
   // Edit Project state
   const [editCopied1, setEditCopied1] = useState(false);
   const [editCopied2, setEditCopied2] = useState(false);
-  const [editBothCopied, setEditBothCopied] = useState({ path: false, cmd: false });
+  const [editCopied3, setEditCopied3] = useState(false);
+  const [editBothCopied, setEditBothCopied] = useState({ path: false, npm: false, cmd: false });
 
   // Run Backend state
   const [backendCopied1, setBackendCopied1] = useState(false);
@@ -367,11 +368,11 @@ export default function TerminalPage() {
             <div className="mb-4">
               <div className="flex items-center gap-2">
                 <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600 truncate">
-                  cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend
+                  cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps
                 </div>
                 <button
                   onClick={async () => {
-                    const path = "cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend";
+                    const path = "cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps";
                     try {
                       await navigator.clipboard.writeText(path);
                       setEditCopied1(true);
@@ -399,19 +400,19 @@ export default function TerminalPage() {
               </div>
             </div>
 
-            {/* Copy code command Clipboard */}
+            {/* Copy npm run dev Clipboard */}
             <div className="mb-4">
               <div className="flex items-center gap-2">
                 <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
-                  code .
+                  npm run dev
                 </div>
                 <button
                   onClick={async () => {
-                    const cmd = "code .";
+                    const cmd = "npm run dev";
                     try {
                       await navigator.clipboard.writeText(cmd);
                       setEditCopied2(true);
-                      setEditBothCopied(prev => ({ ...prev, cmd: true }));
+                      setEditBothCopied(prev => ({ ...prev, npm: true }));
                     } catch {
                       const textArea = document.createElement("textarea");
                       textArea.value = cmd;
@@ -420,7 +421,7 @@ export default function TerminalPage() {
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
                       setEditCopied2(true);
-                      setEditBothCopied(prev => ({ ...prev, cmd: true }));
+                      setEditBothCopied(prev => ({ ...prev, npm: true }));
                     }
                     setTimeout(() => setEditCopied2(false), 2000);
                   }}
@@ -435,11 +436,47 @@ export default function TerminalPage() {
               </div>
             </div>
 
+            {/* Copy npm run build Clipboard */}
+            <div className="mb-4">
+              <div className="flex items-center gap-2">
+                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
+                  npm run build
+                </div>
+                <button
+                  onClick={async () => {
+                    const cmd = "npm run build";
+                    try {
+                      await navigator.clipboard.writeText(cmd);
+                      setEditCopied3(true);
+                      setEditBothCopied(prev => ({ ...prev, cmd: true }));
+                    } catch {
+                      const textArea = document.createElement("textarea");
+                      textArea.value = cmd;
+                      document.body.appendChild(textArea);
+                      textArea.select();
+                      document.execCommand("copy");
+                      document.body.removeChild(textArea);
+                      setEditCopied3(true);
+                      setEditBothCopied(prev => ({ ...prev, cmd: true }));
+                    }
+                    setTimeout(() => setEditCopied3(false), 2000);
+                  }}
+                  className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
+                    editCopied3
+                      ? "bg-green-500 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  {editCopied3 ? "✓" : "Copy"}
+                </button>
+              </div>
+            </div>
+
             {/* Open Editor Button */}
             <div>
               <button
                 className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
-                  editBothCopied.path && editBothCopied.cmd
+                  editBothCopied.path && editBothCopied.npm && editBothCopied.cmd
                     ? "bg-green-500 hover:bg-green-600 text-white"
                     : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                 }`}
