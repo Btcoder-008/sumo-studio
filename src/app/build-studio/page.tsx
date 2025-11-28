@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -337,8 +337,35 @@ export default function BuildStudio() {
   const [isRunning, setIsRunning] = useState(false);
   const [status, setStatus] = useState("");
   const [projectName, setProjectName] = useState("");
+  const [serverRunning, setServerRunning] = useState<boolean | null>(null);
+
+  // Check if local server is running
+  const checkServerStatus = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:4000/health", {
+        method: "GET",
+      });
+      const data = await response.json();
+      setServerRunning(data.status === "running");
+    } catch {
+      setServerRunning(false);
+    }
+  }, []);
+
+  // Check server status on mount and periodically
+  useEffect(() => {
+    checkServerStatus();
+    const interval = setInterval(checkServerStatus, 5000); // Check every 5 seconds
+    return () => clearInterval(interval);
+  }, [checkServerStatus]);
 
   const handleRunScript = async () => {
+    // Check if server is running first
+    if (!serverRunning) {
+      setStatus("Waiting for local server... Run: npm run local-server");
+      return;
+    }
+
     // Validate project name
     if (!projectName.trim()) {
       setStatus("Error: Please enter a project name.");
@@ -354,8 +381,8 @@ export default function BuildStudio() {
     setIsRunning(true);
     setStatus("Running script...");
 
-    // Generate the script with the project name
-    const scriptWithProjectName = FULLSTACK_SCRIPT.replace(
+    // Generate the script with the project name (replace all occurrences)
+    const scriptWithProjectName = FULLSTACK_SCRIPT.replaceAll(
       "PROJECT_NAME_PLACEHOLDER",
       projectName.trim()
     );
@@ -380,7 +407,9 @@ export default function BuildStudio() {
         setStatus(data.message || "Failed to run script.");
       }
     } catch {
-      setStatus("Error: Local server not running. Start it with: npm run local-server");
+      // Re-check server status
+      await checkServerStatus();
+      setStatus("Connection failed. Please ensure local server is running.");
     }
 
     setIsRunning(false);
@@ -472,6 +501,30 @@ export default function BuildStudio() {
             <p className="text-gray-600 mb-6">Django + PostgreSQL + Next.js</p>
 
             <div className="space-y-4">
+              {/* Server Status Indicator */}
+              <div className={`flex items-center justify-center gap-2 p-3 rounded-lg ${
+                serverRunning === null
+                  ? "bg-gray-100 text-gray-600"
+                  : serverRunning
+                  ? "bg-green-100 text-green-700"
+                  : "bg-yellow-100 text-yellow-700"
+              }`}>
+                <span className={`w-3 h-3 rounded-full ${
+                  serverRunning === null
+                    ? "bg-gray-400 animate-pulse"
+                    : serverRunning
+                    ? "bg-green-500"
+                    : "bg-yellow-500 animate-pulse"
+                }`} />
+                <span className="font-medium text-sm">
+                  {serverRunning === null
+                    ? "Checking local server..."
+                    : serverRunning
+                    ? "Local server connected"
+                    : "Local server offline - Run: npm run local-server"}
+                </span>
+              </div>
+
               {/* Project Name Input */}
               <div className="text-left">
                 <label htmlFor="projectName" className="block text-sm font-medium text-gray-700 mb-2">
