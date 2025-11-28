@@ -613,9 +613,6 @@ export default function BuildStudio() {
   const [editedContent, setEditedContent] = useState<string>("");
   const [isEditing, setIsEditing] = useState(false);
   const [isLocalServer, setIsLocalServer] = useState(false);
-  const [isCopied, setIsCopied] = useState(false);
-  const [isCopied2, setIsCopied2] = useState(false);
-  const [bothCopied, setBothCopied] = useState({ path: false, npm: false });
 
   // Check if local server is running on mount
   useEffect(() => {
@@ -851,12 +848,6 @@ export default function BuildStudio() {
               Terminal
             </Link>
             <Link
-              href="/build-studio"
-              className="px-4 py-2 bg-yellow-100 text-yellow-700 font-medium rounded-lg transition-all"
-            >
-              Build Studio
-            </Link>
-            <Link
               href="/frontend-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-orange-100 hover:text-orange-700 transition-all"
             >
@@ -879,113 +870,8 @@ export default function BuildStudio() {
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">🥋</span>
-                Use Terminal
+                Build Studio
               </h2>
-              {isLocalServer && (
-                <p className="text-sm text-green-600 mt-1 flex items-center gap-1">
-                  <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                  Open Terminal
-                </p>
-              )}
-            </div>
-
-            {/* Copy Path Clipboard */}
-            <div className="mb-4">
-              <div className="flex items-center gap-2">
-                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600 truncate">
-                  cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend
-                </div>
-                <button
-                  onClick={async () => {
-                    const path = "cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend";
-                    try {
-                      await navigator.clipboard.writeText(path);
-                      setIsCopied(true);
-                      setBothCopied(prev => ({ ...prev, path: true }));
-                    } catch {
-                      // Fallback for older browsers
-                      const textArea = document.createElement("textarea");
-                      textArea.value = path;
-                      document.body.appendChild(textArea);
-                      textArea.select();
-                      document.execCommand("copy");
-                      document.body.removeChild(textArea);
-                      setIsCopied(true);
-                      setBothCopied(prev => ({ ...prev, path: true }));
-                    }
-                    setTimeout(() => setIsCopied(false), 2000);
-                  }}
-                  className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                    isCopied
-                      ? "bg-green-500 text-white"
-                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                  }`}
-                >
-                  {isCopied ? "✓ Copied!" : "Copy"}
-                </button>
-              </div>
-              {isCopied && (
-                <p className="text-green-600 text-sm mt-2 font-medium flex items-center gap-1">
-                  <span>✓</span> Path copied to clipboard!
-                </p>
-              )}
-            </div>
-
-            {/* Copy npm run dev Clipboard */}
-            <div className="mb-4">
-              <div className="flex items-center gap-2">
-                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
-                  npm run dev
-                </div>
-                <button
-                  onClick={async () => {
-                    const cmd = "npm run dev";
-                    try {
-                      await navigator.clipboard.writeText(cmd);
-                      setIsCopied2(true);
-                      setBothCopied(prev => ({ ...prev, npm: true }));
-                    } catch {
-                      const textArea = document.createElement("textarea");
-                      textArea.value = cmd;
-                      document.body.appendChild(textArea);
-                      textArea.select();
-                      document.execCommand("copy");
-                      document.body.removeChild(textArea);
-                      setIsCopied2(true);
-                      setBothCopied(prev => ({ ...prev, npm: true }));
-                    }
-                    setTimeout(() => setIsCopied2(false), 2000);
-                  }}
-                  className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                    isCopied2
-                      ? "bg-green-500 text-white"
-                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                  }`}
-                >
-                  {isCopied2 ? "✓ Copied!" : "Copy"}
-                </button>
-              </div>
-              {isCopied2 && (
-                <p className="text-green-600 text-sm mt-2 font-medium flex items-center gap-1">
-                  <span>✓</span> Command copied to clipboard!
-                </p>
-              )}
-            </div>
-
-            {/* Run Local Button */}
-            <div className="mb-4">
-              <a
-                href="http://localhost:3001"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
-                  bothCopied.path && bothCopied.npm
-                    ? "bg-green-500 hover:bg-green-600 text-white"
-                    : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                }`}
-              >
-                Run Local
-              </a>
             </div>
 
             {/* Project Name Input */}

@@ -44,14 +44,6 @@ const studioCards = [
     hoverColor: "hover:shadow-green-300/50",
   },
   {
-    title: "Build Studio",
-    icon: "🥋",
-    href: "/build-studio",
-    description: "Build fullstack apps",
-    bgColor: "from-yellow-400 to-orange-500",
-    hoverColor: "hover:shadow-yellow-300/50",
-  },
-  {
     title: "Frontend Studio",
     icon: "🎨",
     href: "/frontend-studio",
@@ -123,12 +115,6 @@ export default function HomePage() {
               Terminal
             </Link>
             <Link
-              href="/build-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
-            >
-              Build Studio
-            </Link>
-            <Link
               href="/frontend-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-orange-100 hover:text-orange-700 transition-all"
             >
@@ -147,7 +133,7 @@ export default function HomePage() {
       {/* Main content */}
       <main className="relative z-10 flex flex-col items-center justify-center px-4 py-16">
         {/* Studio cards grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl w-full">
           {studioCards.map((card) => (
             <Link
               key={card.title}

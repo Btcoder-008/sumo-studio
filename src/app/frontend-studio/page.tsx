@@ -162,12 +162,6 @@ export default function FrontendStudio() {
               Terminal
             </Link>
             <Link
-              href="/build-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
-            >
-              Build Studio
-            </Link>
-            <Link
               href="/frontend-studio"
               className="px-4 py-2 bg-orange-100 text-orange-700 font-medium rounded-lg transition-all"
             >
