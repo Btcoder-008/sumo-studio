@@ -615,6 +615,7 @@ export default function BuildStudio() {
   const [isLocalServer, setIsLocalServer] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isCopied2, setIsCopied2] = useState(false);
+  const [bothCopied, setBothCopied] = useState({ path: false, npm: false });
 
   // Check if local server is running on mount
   useEffect(() => {
@@ -894,6 +895,7 @@ export default function BuildStudio() {
                     try {
                       await navigator.clipboard.writeText(path);
                       setIsCopied(true);
+                      setBothCopied(prev => ({ ...prev, path: true }));
                     } catch {
                       // Fallback for older browsers
                       const textArea = document.createElement("textarea");
@@ -903,6 +905,7 @@ export default function BuildStudio() {
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
                       setIsCopied(true);
+                      setBothCopied(prev => ({ ...prev, path: true }));
                     }
                     setTimeout(() => setIsCopied(false), 2000);
                   }}
@@ -934,6 +937,7 @@ export default function BuildStudio() {
                     try {
                       await navigator.clipboard.writeText(cmd);
                       setIsCopied2(true);
+                      setBothCopied(prev => ({ ...prev, npm: true }));
                     } catch {
                       const textArea = document.createElement("textarea");
                       textArea.value = cmd;
@@ -942,6 +946,7 @@ export default function BuildStudio() {
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
                       setIsCopied2(true);
+                      setBothCopied(prev => ({ ...prev, npm: true }));
                     }
                     setTimeout(() => setIsCopied2(false), 2000);
                   }}
@@ -967,7 +972,11 @@ export default function BuildStudio() {
                 href="http://localhost:3001"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-medium text-sm rounded-lg transition-all cursor-pointer"
+                className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
+                  bothCopied.path && bothCopied.npm
+                    ? "bg-green-500 hover:bg-green-600 text-white"
+                    : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                }`}
               >
                 Run Local
               </a>
