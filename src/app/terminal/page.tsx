@@ -43,11 +43,14 @@ export default function TerminalPage() {
   const [editCopied1, setEditCopied1] = useState(false);
   const [editCopied2, setEditCopied2] = useState(false);
   const [editCopied3, setEditCopied3] = useState(false);
+  const [editCopied4, setEditCopied4] = useState(false);
   const [editBothCopied, setEditBothCopied] = useState({ path: false, npm: false, cmd: false });
 
   // Run Backend state
   const [backendCopied1, setBackendCopied1] = useState(false);
   const [backendCopied2, setBackendCopied2] = useState(false);
+  const [backendCopied3, setBackendCopied3] = useState(false);
+  const [backendCopied4, setBackendCopied4] = useState(false);
   const [backendBothCopied, setBackendBothCopied] = useState({ path: false, cmd: false });
 
   return (
@@ -109,6 +112,12 @@ export default function TerminalPage() {
               Frontend Studio
             </Link>
             <Link
+              href="/module-studio"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-teal-100 hover:text-teal-700 transition-all"
+            >
+              Module Studio
+            </Link>
+            <Link
               href="/backend-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-pink-100 hover:text-pink-700 transition-all"
             >
@@ -126,7 +135,7 @@ export default function TerminalPage() {
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">🚀</span>
-                Create Project
+                Parent Project
               </h2>
             </div>
 
@@ -397,7 +406,7 @@ export default function TerminalPage() {
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">✏️</span>
-                Edit Project
+                Child Frontend
               </h2>
             </div>
 
@@ -405,11 +414,11 @@ export default function TerminalPage() {
             <div className="mb-4">
               <div className="flex items-center gap-2">
                 <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600 truncate">
-                  cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps
+                  /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps
                 </div>
                 <button
                   onClick={async () => {
-                    const path = "cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps";
+                    const path = "/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps";
                     try {
                       await navigator.clipboard.writeText(path);
                       setEditCopied1(true);
@@ -437,6 +446,58 @@ export default function TerminalPage() {
               </div>
             </div>
 
+            {/* Open Child Terminal Section */}
+            <div className="pt-4 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">cd Child Terminal Frontend</h3>
+            </div>
+
+            {/* Copy claude Clipboard */}
+            <div className="mb-4">
+              <div className="flex items-center gap-2">
+                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
+                  claude
+                </div>
+                <button
+                  onClick={async () => {
+                    const cmd = "claude";
+                    try {
+                      await navigator.clipboard.writeText(cmd);
+                      setEditCopied2(true);
+                    } catch {
+                      const textArea = document.createElement("textarea");
+                      textArea.value = cmd;
+                      document.body.appendChild(textArea);
+                      textArea.select();
+                      document.execCommand("copy");
+                      document.body.removeChild(textArea);
+                      setEditCopied2(true);
+                    }
+                    setTimeout(() => setEditCopied2(false), 2000);
+                  }}
+                  className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
+                    editCopied2
+                      ? "bg-green-500 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  {editCopied2 ? "✓" : "Copy"}
+                </button>
+              </div>
+            </div>
+
+            {/* Use Frontend Studio Section */}
+            <div className="pt-4 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                Use Frontend Studio
+                <a
+                  href="/frontend-studio"
+                  className="text-blue-500 hover:text-blue-600 transition-colors"
+                >
+                  🔗
+                </a>
+              </h3>
+            </div>
+
             {/* Copy npm run dev Clipboard */}
             <div className="mb-4">
               <div className="flex items-center gap-2">
@@ -448,7 +509,7 @@ export default function TerminalPage() {
                     const cmd = "npm run dev";
                     try {
                       await navigator.clipboard.writeText(cmd);
-                      setEditCopied2(true);
+                      setEditCopied3(true);
                       setEditBothCopied(prev => ({ ...prev, npm: true }));
                     } catch {
                       const textArea = document.createElement("textarea");
@@ -457,18 +518,18 @@ export default function TerminalPage() {
                       textArea.select();
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
-                      setEditCopied2(true);
+                      setEditCopied3(true);
                       setEditBothCopied(prev => ({ ...prev, npm: true }));
                     }
-                    setTimeout(() => setEditCopied2(false), 2000);
+                    setTimeout(() => setEditCopied3(false), 2000);
                   }}
                   className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                    editCopied2
+                    editCopied3
                       ? "bg-green-500 text-white"
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
                 >
-                  {editCopied2 ? "✓" : "Copy"}
+                  {editCopied3 ? "✓" : "Copy"}
                 </button>
               </div>
             </div>
@@ -484,7 +545,7 @@ export default function TerminalPage() {
                     const cmd = "npm run build";
                     try {
                       await navigator.clipboard.writeText(cmd);
-                      setEditCopied3(true);
+                      setEditCopied4(true);
                       setEditBothCopied(prev => ({ ...prev, cmd: true }));
                     } catch {
                       const textArea = document.createElement("textarea");
@@ -493,42 +554,60 @@ export default function TerminalPage() {
                       textArea.select();
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
-                      setEditCopied3(true);
+                      setEditCopied4(true);
                       setEditBothCopied(prev => ({ ...prev, cmd: true }));
                     }
-                    setTimeout(() => setEditCopied3(false), 2000);
+                    setTimeout(() => setEditCopied4(false), 2000);
                   }}
                   className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                    editCopied3
+                    editCopied4
                       ? "bg-green-500 text-white"
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
                 >
-                  {editCopied3 ? "✓" : "Copy"}
+                  {editCopied4 ? "✓" : "Copy"}
                 </button>
               </div>
             </div>
 
-            {/* Open Editor Button */}
-            <div>
-              <button
-                className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
-                  editBothCopied.path && editBothCopied.npm && editBothCopied.cmd
-                    ? "bg-green-500 hover:bg-green-600 text-white"
-                    : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                }`}
-              >
-                Open Editor
-              </button>
+            {/* Push & Deploy Frontend Section */}
+            <div className="pt-4 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">Push & Deploy Frontend</h3>
+              <div className="flex gap-2 w-full">
+                <a
+                  href="http://localhost:3000/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
+                >
+                  Local
+                </a>
+                <a
+                  href="https://github.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
+                >
+                  Github
+                </a>
+                <a
+                  href="https://vercel.com/new?teamSlug=drthiyagarajanbalakrishnan-gmailcoms-projects"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
+                >
+                  Vercel
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Card 3: Run Backend */}
+          {/* Card 3: Child Backend */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-purple-200/50 transition-shadow duration-300">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">⚙️</span>
-                Run Backend
+                Child Backend
               </h2>
             </div>
 
@@ -536,11 +615,11 @@ export default function TerminalPage() {
             <div className="mb-4">
               <div className="flex items-center gap-2">
                 <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600 truncate">
-                  cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/backend
+                  /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps
                 </div>
                 <button
                   onClick={async () => {
-                    const path = "cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/backend";
+                    const path = "/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps";
                     try {
                       await navigator.clipboard.writeText(path);
                       setBackendCopied1(true);
@@ -568,19 +647,23 @@ export default function TerminalPage() {
               </div>
             </div>
 
-            {/* Copy python command Clipboard */}
+            {/* cd Child Terminal Backend Section */}
+            <div className="pt-4 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">cd Child Terminal Backend</h3>
+            </div>
+
+            {/* Copy claude Clipboard */}
             <div className="mb-4">
               <div className="flex items-center gap-2">
                 <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
-                  python3 manage.py runserver 8001
+                  claude
                 </div>
                 <button
                   onClick={async () => {
-                    const cmd = "python3 manage.py runserver 8001";
+                    const cmd = "claude";
                     try {
                       await navigator.clipboard.writeText(cmd);
                       setBackendCopied2(true);
-                      setBackendBothCopied(prev => ({ ...prev, cmd: true }));
                     } catch {
                       const textArea = document.createElement("textarea");
                       textArea.value = cmd;
@@ -589,7 +672,6 @@ export default function TerminalPage() {
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
                       setBackendCopied2(true);
-                      setBackendBothCopied(prev => ({ ...prev, cmd: true }));
                     }
                     setTimeout(() => setBackendCopied2(false), 2000);
                   }}
@@ -604,25 +686,122 @@ export default function TerminalPage() {
               </div>
             </div>
 
-            {/* Run Backend Button */}
-            <div>
-              <a
-                href="http://127.0.0.1:8001"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
-                  backendBothCopied.path && backendBothCopied.cmd
-                    ? "bg-green-500 hover:bg-green-600 text-white"
-                    : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                }`}
-              >
-                Run Backend
-              </a>
+            {/* Use Backend Studio Section */}
+            <div className="pt-4 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                Use Backend Studio
+                <a
+                  href="/backend-studio"
+                  className="text-blue-500 hover:text-blue-600 transition-colors"
+                >
+                  🔗
+                </a>
+              </h3>
+            </div>
+
+            {/* Copy python runserver Clipboard */}
+            <div className="mb-4">
+              <div className="flex items-center gap-2">
+                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
+                  python3 manage.py runserver 8001
+                </div>
+                <button
+                  onClick={async () => {
+                    const cmd = "python3 manage.py runserver 8001";
+                    try {
+                      await navigator.clipboard.writeText(cmd);
+                      setBackendCopied3(true);
+                    } catch {
+                      const textArea = document.createElement("textarea");
+                      textArea.value = cmd;
+                      document.body.appendChild(textArea);
+                      textArea.select();
+                      document.execCommand("copy");
+                      document.body.removeChild(textArea);
+                      setBackendCopied3(true);
+                    }
+                    setTimeout(() => setBackendCopied3(false), 2000);
+                  }}
+                  className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
+                    backendCopied3
+                      ? "bg-green-500 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  {backendCopied3 ? "✓" : "Copy"}
+                </button>
+              </div>
+            </div>
+
+            {/* Copy python migrate Clipboard */}
+            <div className="mb-4">
+              <div className="flex items-center gap-2">
+                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
+                  python3 manage.py migrate
+                </div>
+                <button
+                  onClick={async () => {
+                    const cmd = "python3 manage.py migrate";
+                    try {
+                      await navigator.clipboard.writeText(cmd);
+                      setBackendCopied4(true);
+                    } catch {
+                      const textArea = document.createElement("textarea");
+                      textArea.value = cmd;
+                      document.body.appendChild(textArea);
+                      textArea.select();
+                      document.execCommand("copy");
+                      document.body.removeChild(textArea);
+                      setBackendCopied4(true);
+                    }
+                    setTimeout(() => setBackendCopied4(false), 2000);
+                  }}
+                  className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
+                    backendCopied4
+                      ? "bg-green-500 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  {backendCopied4 ? "✓" : "Copy"}
+                </button>
+              </div>
+            </div>
+
+            {/* Push & Deploy Backend Section */}
+            <div className="pt-4 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">Push & Deploy Backend</h3>
+              <div className="flex gap-2 w-full">
+                <a
+                  href="http://localhost:8000/admin/login/?next=/admin/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
+                >
+                  Local
+                </a>
+                <a
+                  href="https://github.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
+                >
+                  Github
+                </a>
+                <a
+                  href="https://railway.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
+                >
+                  Railway
+                </a>
+              </div>
             </div>
           </div>
 
         </div>
       </main>
+
     </div>
   );
 }
