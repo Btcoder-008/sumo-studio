@@ -60,6 +60,8 @@ const server = http.createServer((req, res) => {
           fs.chmodSync(tempPath, 0o755);
           console.log(`\n📝 Script saved to: ${tempPath}`);
           console.log(`🚀 Opening Terminal for project: ${projectName}`);
+          // Log first 500 chars of script for debugging
+          console.log(`📄 Script preview (first 500 chars):\n${content.substring(0, 500)}`);
         } else {
           res.writeHead(400, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: false, message: 'Missing content/projectName or scriptPath' }));

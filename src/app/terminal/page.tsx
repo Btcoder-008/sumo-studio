@@ -275,11 +275,11 @@ export default function TerminalPage() {
               <div className="mb-4">
                 <div className="flex items-center gap-2">
                   <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
-                    python3 manage.py runserver
+                    python3 manage.py runserver 8001
                   </div>
                   <button
                     onClick={async () => {
-                      const text = "python3 manage.py runserver";
+                      const text = "python3 manage.py runserver 8001";
                       try {
                         await navigator.clipboard.writeText(text);
                         setBackendRunserver(true);
@@ -467,11 +467,11 @@ export default function TerminalPage() {
             <div className="mb-4">
               <div className="flex items-center gap-2">
                 <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
-                  python3 manage.py runserver
+                  python3 manage.py runserver 8001
                 </div>
                 <button
                   onClick={async () => {
-                    const cmd = "python3 manage.py runserver";
+                    const cmd = "python3 manage.py runserver 8001";
                     try {
                       await navigator.clipboard.writeText(cmd);
                       setBackendCopied2(true);
@@ -502,7 +502,7 @@ export default function TerminalPage() {
             {/* Run Backend Button */}
             <div>
               <a
-                href="http://localhost:8000"
+                href="http://localhost:8001"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${

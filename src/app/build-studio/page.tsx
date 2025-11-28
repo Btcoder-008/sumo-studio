@@ -26,16 +26,339 @@ const floatingIcons = [
   { icon: "🔮", bottom: "30%", left: "8%", delay: "3s", duration: "6s" },
 ];
 
-export default function BuildStudio() {
-  const [isCreating, setIsCreating] = useState(false);
-  const [status, setStatus] = useState("");
-  const [copied1, setCopied1] = useState(false);
-  const [copied2, setCopied2] = useState(false);
-  const [copied3, setCopied3] = useState(false);
+// Pre-loaded fullstack script
+const FULLSTACK_SCRIPT = `#!/bin/bash
 
-  const handleCreateProject = async () => {
-    setIsCreating(true);
-    setStatus("Starting project creation...");
+# Exit on any error
+set -e
+
+# Setup Django and PostgreSQL
+setup_django_postgres() {
+    local project_path=$1
+    local app_name=$2
+    local pg_user=$3
+    local pg_password=$4
+    local pg_db=$5
+
+    # Ensure PostgreSQL is running (macOS with Homebrew)
+    brew services start postgresql@14 2>/dev/null || echo "PostgreSQL may already be running"
+
+    # Add PostgreSQL to PATH for this session
+    export PATH="/opt/homebrew/opt/postgresql@14/bin:$PATH"
+
+    # Create PostgreSQL database and user
+    /opt/homebrew/opt/postgresql@14/bin/psql postgres <<EOF
+DROP DATABASE IF EXISTS $pg_db;
+DROP USER IF EXISTS $pg_user;
+CREATE USER $pg_user WITH PASSWORD '$pg_password';
+CREATE DATABASE $pg_db;
+ALTER DATABASE $pg_db OWNER TO $pg_user;
+GRANT ALL PRIVILEGES ON DATABASE $pg_db TO $pg_user;
+\\c $pg_db
+GRANT ALL ON SCHEMA public TO $pg_user;
+\\q
+EOF
+
+    # Navigate to project directory
+    mkdir -p "$project_path/backend"
+    cd "$project_path/backend"
+
+    # Create virtual environment
+    python3 -m venv venv
+    source venv/bin/activate
+
+    # Install Django and dependencies
+    pip install --upgrade pip
+    pip install django psycopg2-binary djangorestframework \\
+                django-cors-headers django-environ gunicorn
+
+    # Create Django project
+    django-admin startproject myproject .
+    python manage.py startapp "$app_name"
+
+    # Configure settings.py
+    settings_file="myproject/settings.py"
+
+    # Update INSTALLED_APPS
+    sed -i '' "/django.contrib.staticfiles'/a\\\\
+    'rest_framework',\\\\
+    'corsheaders',\\\\
+    '$app_name'," "$settings_file"
+
+    # Update MIDDLEWARE
+    sed -i '' "/MIDDLEWARE = \\[/a\\\\
+    'corsheaders.middleware.CorsMiddleware'," "$settings_file"
+
+    # Configure database settings
+    cat >> "$settings_file" <<EOF
+
+# Database Configuration
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': '$pg_db',
+        'USER': '$pg_user',
+        'PASSWORD': '$pg_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
+# CORS Settings
+CORS_ORIGIN_ALLOW_ALL = True
+EOF
+
+    # Create .env file for sensitive configuration
+    cat > .env <<EOF
+SECRET_KEY=$(python3 -c "import secrets; print(secrets.token_hex(50))")
+DEBUG=True
+DATABASE_URL=postgresql://$pg_user:$pg_password@localhost:5432/$pg_db
+EOF
+
+    # Run database migrations
+    python manage.py makemigrations
+    python manage.py migrate
+
+    # Create superuser automatically
+    echo "Creating Django superuser..."
+    DJANGO_SUPERUSER_PASSWORD=sumo1234 python manage.py createsuperuser \\
+        --noinput \\
+        --username sumo \\
+        --email sumo@example.com
+
+    echo ""
+    echo "Django and PostgreSQL setup complete!"
+    echo "Superuser created - Username: sumo, Password: sumo1234"
+}
+
+# Setup Next.js frontend
+setup_nextjs_frontend() {
+    local project_path=$1
+
+    # Navigate to project directory
+    cd "$project_path"
+
+    echo "Creating Next.js frontend..."
+
+    # Create Next.js app with all defaults (no prompts)
+    # Automatically answer "yes" to React Compiler question
+    echo "yes" | npx create-next-app@latest frontend \\
+        --typescript \\
+        --tailwind \\
+        --eslint \\
+        --app \\
+        --src-dir \\
+        --import-alias "@/*" \\
+        --no-git
+
+    # Navigate to frontend directory and install dependencies explicitly
+    cd "$project_path/frontend"
+
+    echo "Installing frontend dependencies..."
+    npm install
+
+    # Verify installation
+    if [ -f "package.json" ] && [ -d "node_modules" ]; then
+        echo "✓ Next.js frontend setup complete!"
+        echo "✓ Dependencies installed successfully"
+    else
+        echo "⚠ Warning: Frontend setup may have issues"
+        echo "Please check the frontend directory manually"
+    fi
+}
+
+# Kill any existing processes on ports 8000 and 3000
+kill_existing_servers() {
+    echo ""
+    echo "Checking for existing servers on ports 8000 and 3000..."
+
+    # Kill processes on port 8000 (Django)
+    if lsof -ti :8000 >/dev/null 2>&1; then
+        echo "  - Killing existing Django server on port 8000..."
+        lsof -ti :8000 | xargs kill -9 2>/dev/null || true
+    fi
+
+    # Kill processes on port 3000 (Next.js)
+    if lsof -ti :3000 >/dev/null 2>&1; then
+        echo "  - Killing existing Next.js server on port 3000..."
+        lsof -ti :3000 | xargs kill -9 2>/dev/null || true
+    fi
+
+    echo "Ports cleared!"
+}
+
+# Start development servers in new terminal tabs (macOS)
+start_dev_servers() {
+    local project_path=$1
+
+    echo ""
+    echo "Starting development servers in new terminal tabs..."
+
+    # Start Django backend in a new tab
+    osascript -e "tell application \\"Terminal\\"
+        tell application \\"System Events\\" to keystroke \\"t\\" using {command down}
+        do script \\"cd '$project_path/backend' && source venv/bin/activate && python manage.py runserver\\" in front window
+    end tell"
+
+    # Wait for backend to start
+    echo "  - Starting Django backend..."
+    sleep 3
+
+    # Start Next.js frontend in a new tab
+    osascript -e "tell application \\"Terminal\\"
+        tell application \\"System Events\\" to keystroke \\"t\\" using {command down}
+        do script \\"cd '$project_path/frontend' && npm run dev\\" in front window
+    end tell"
+
+    # Wait for frontend to start
+    echo "  - Starting Next.js frontend..."
+    sleep 3
+
+    echo "Development servers started!"
+    echo "  - Backend running on: http://localhost:8000"
+    echo "  - Frontend running on: http://localhost:3000"
+}
+
+# Open Brave browser with localhost tabs
+open_browser() {
+    echo ""
+    echo "Opening Brave browser with development URLs..."
+
+    # Wait for servers to fully start up
+    echo "  - Waiting for servers to fully initialize..."
+    sleep 5
+
+    # Check if servers are running
+    if lsof -ti :8000 >/dev/null 2>&1; then
+        echo "  ✓ Backend server is running on port 8000"
+    else
+        echo "  ⚠ Warning: Backend server not detected on port 8000"
+    fi
+
+    if lsof -ti :3000 >/dev/null 2>&1; then
+        echo "  ✓ Frontend server is running on port 3000"
+    else
+        echo "  ⚠ Warning: Frontend server not detected on port 3000"
+    fi
+
+    # Open Brave with all URLs in new tabs
+    echo "  - Opening browser tabs..."
+    open -a "Brave Browser" http://localhost:3000
+    sleep 1
+    open -a "Brave Browser" http://localhost:8000
+    sleep 1
+    open -a "Brave Browser" http://localhost:8000/admin
+
+    echo ""
+    echo "✓ Browser opened with Frontend, Backend API, and Django Admin!"
+}
+
+# Set default project location
+project_location="/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps"
+
+# Project name will be set by the UI (replaced at runtime)
+# PROJECT_NAME_PLACEHOLDER will be replaced with actual project name
+project_name="PROJECT_NAME_PLACEHOLDER"
+
+# Display project location
+echo ""
+echo "Projects will be created in: $project_location"
+echo ""
+
+# Auto-generate other values based on project name
+app_name="\${project_name}app"
+pg_user="\${project_name}user"
+pg_password="sumo123"
+pg_db="\${project_name}db"
+
+echo ""
+echo "=== Project Configuration ==="
+echo "Project Path: $project_location/$project_name"
+echo "App Name: $app_name"
+echo "Database User: $pg_user"
+echo "Database Password: $pg_password"
+echo "Database Name: $pg_db"
+echo "============================="
+echo ""
+
+# Execute setup
+setup_django_postgres "$project_location/$project_name" "$app_name" "$pg_user" "$pg_password" "$pg_db"
+setup_nextjs_frontend "$project_location/$project_name"
+
+echo ""
+echo "=== Setup Complete! ==="
+echo "Backend: $project_location/$project_name/backend"
+echo "Frontend: $project_location/$project_name/frontend"
+echo ""
+echo "Django Admin:"
+echo "  URL: http://localhost:8000/admin"
+echo "  Username: sumo"
+echo "  Password: sumo1234"
+echo "========================"
+echo ""
+
+# Kill any existing servers before starting new ones
+kill_existing_servers
+
+# Automatically start dev servers
+start_dev_servers "$project_location/$project_name"
+
+# Open Brave browser with both URLs
+open_browser
+
+echo ""
+echo "================================"
+echo "✓ All systems ready! Happy coding!"
+echo "================================"
+echo ""
+echo "📍 Your Project Location:"
+echo "   $project_location/$project_name"
+echo ""
+echo "🌐 Access URLs:"
+echo "   Frontend:     http://localhost:3000"
+echo "   Backend API:  http://localhost:8000"
+echo "   Django Admin: http://localhost:8000/admin"
+echo ""
+echo "🔑 Django Admin Credentials:"
+echo "   Username: sumo"
+echo "   Password: sumo1234"
+echo ""
+echo "🔄 To restart servers manually:"
+echo "   Frontend: cd $project_location/$project_name/frontend && npm run dev"
+echo "   Backend:  cd $project_location/$project_name/backend && source venv/bin/activate && python manage.py runserver"
+echo ""
+echo "📊 Terminal Tabs Overview:"
+echo "   Tab 1: This script (completed)"
+echo "   Tab 2: Django Backend (running on :8000)"
+echo "   Tab 3: Next.js Frontend (running on :3000)"
+echo "================================"`;
+
+export default function BuildStudio() {
+  const [isRunning, setIsRunning] = useState(false);
+  const [status, setStatus] = useState("");
+  const [projectName, setProjectName] = useState("");
+
+  const handleRunScript = async () => {
+    // Validate project name
+    if (!projectName.trim()) {
+      setStatus("Error: Please enter a project name.");
+      return;
+    }
+
+    // Validate project name format (no slashes, backslashes, or spaces)
+    if (/[/\\:\s]/.test(projectName)) {
+      setStatus("Error: Project name cannot contain slashes, backslashes, colons, or spaces.");
+      return;
+    }
+
+    setIsRunning(true);
+    setStatus("Running script...");
+
+    // Generate the script with the project name
+    const scriptWithProjectName = FULLSTACK_SCRIPT.replace(
+      "PROJECT_NAME_PLACEHOLDER",
+      projectName.trim()
+    );
 
     try {
       const response = await fetch("http://localhost:4000/run-script", {
@@ -44,22 +367,23 @@ export default function BuildStudio() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          scriptPath: "/Users/thiyagarajanbalakrishnan/Documents/supersumo/fullstack.sh",
+          content: scriptWithProjectName,
+          projectName: projectName.trim(),
         }),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        setStatus("Project creation started! Check your terminal.");
+        setStatus(`Script is running for project "${projectName}"! Check your terminal.`);
       } else {
-        setStatus(data.message || "Failed to start project creation.");
+        setStatus(data.message || "Failed to run script.");
       }
     } catch {
       setStatus("Error: Local server not running. Start it with: npm run local-server");
     }
 
-    setIsCreating(false);
+    setIsRunning(false);
   };
 
   return (
@@ -115,12 +439,6 @@ export default function BuildStudio() {
               Terminal
             </Link>
             <Link
-              href="/build-studio"
-              className="px-4 py-2 bg-orange-100 text-orange-700 font-medium rounded-lg transition-all"
-            >
-              Build Studio
-            </Link>
-            <Link
               href="/frontend-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-orange-100 hover:text-orange-700 transition-all"
             >
@@ -146,153 +464,79 @@ export default function BuildStudio() {
           <p className="text-gray-600 mt-2">Create and manage your projects</p>
         </div>
 
-        {/* Create Project Card */}
+        {/* Fullstack Script Card */}
         <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/30 hover:shadow-yellow-200/50 transition-shadow duration-300">
           <div className="text-center">
-            <span className="text-6xl mb-4 block">🚀</span>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Create New Project</h3>
-            <p className="text-gray-600 mb-6">Set up a fullstack project with Django + PostgreSQL + Next.js</p>
+            <span className="text-6xl mb-4 block">🥋</span>
+            <h3 className="text-xl font-bold text-gray-800 mb-2">Fullstack Project Setup</h3>
+            <p className="text-gray-600 mb-6">Django + PostgreSQL + Next.js</p>
 
-            <button
-              onClick={handleCreateProject}
-              disabled={isCreating}
-              className={`px-8 py-4 font-bold text-lg rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
-                isCreating
-                  ? "bg-gray-400 text-white"
-                  : "bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 hover:from-green-500 hover:via-blue-600 hover:to-purple-700 text-white"
-              }`}
-            >
-              {isCreating ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin h-6 w-6" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                  Creating...
-                </span>
-              ) : (
-                <span className="flex items-center justify-center gap-2">
-                  <span>🏗️</span>
-                  Create Project
-                </span>
+            <div className="space-y-4">
+              {/* Project Name Input */}
+              <div className="text-left">
+                <label htmlFor="projectName" className="block text-sm font-medium text-gray-700 mb-2">
+                  Project Name
+                </label>
+                <input
+                  type="text"
+                  id="projectName"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                  placeholder="e.g., myapp, blog, ecommerce"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-800 placeholder-gray-400"
+                />
+              </div>
+
+              {/* Run Button */}
+              <button
+                onClick={handleRunScript}
+                disabled={isRunning}
+                className={`w-full px-8 py-4 font-bold text-lg rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
+                  isRunning
+                    ? "bg-gray-400 text-white"
+                    : "bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 hover:from-green-500 hover:via-blue-600 hover:to-purple-700 text-white"
+                }`}
+              >
+                {isRunning ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-6 w-6" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Running...
+                  </span>
+                ) : (
+                  <span className="flex items-center justify-center gap-2">
+                    <span>🚀</span>
+                    Run Script
+                  </span>
+                )}
+              </button>
+
+              {status && (
+                <div className={`p-4 rounded-lg font-medium ${
+                  status.includes("Error") || status.includes("Failed")
+                    ? "bg-red-100 text-red-700"
+                    : status.includes("running") || status.includes("Running")
+                    ? "bg-green-100 text-green-700"
+                    : "bg-blue-100 text-blue-700"
+                }`}>
+                  {status}
+                </div>
               )}
-            </button>
 
-            {status && (
-              <div className={`mt-6 p-4 rounded-lg font-medium ${
-                status.includes("Error") || status.includes("Failed")
-                  ? "bg-red-100 text-red-700"
-                  : status.includes("started")
-                  ? "bg-green-100 text-green-700"
-                  : "bg-blue-100 text-blue-700"
-              }`}>
-                {status}
-              </div>
-            )}
-
-            {/* Clipboard Commands */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <h4 className="text-lg font-semibold text-gray-700 mb-4">Run Backend Server</h4>
-
-              {/* Clipboard 1: cd path */}
-              <div className="mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600 truncate">
-                    cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/backend
-                  </div>
-                  <button
-                    onClick={async () => {
-                      const text = "cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/backend";
-                      try {
-                        await navigator.clipboard.writeText(text);
-                        setCopied1(true);
-                      } catch {
-                        const textArea = document.createElement("textarea");
-                        textArea.value = text;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        document.execCommand("copy");
-                        document.body.removeChild(textArea);
-                        setCopied1(true);
-                      }
-                      setTimeout(() => setCopied1(false), 2000);
-                    }}
-                    className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                      copied1
-                        ? "bg-green-500 text-white"
-                        : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                    }`}
-                  >
-                    {copied1 ? "✓" : "Copy"}
-                  </button>
+              {/* Script Info */}
+              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <span className="text-2xl">📄</span>
+                  <span className="font-medium text-gray-800">fullstack.sh</span>
                 </div>
-              </div>
 
-              {/* Clipboard 2: source venv */}
-              <div className="mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
-                    source venv/bin/activate
-                  </div>
-                  <button
-                    onClick={async () => {
-                      const text = "source venv/bin/activate";
-                      try {
-                        await navigator.clipboard.writeText(text);
-                        setCopied2(true);
-                      } catch {
-                        const textArea = document.createElement("textarea");
-                        textArea.value = text;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        document.execCommand("copy");
-                        document.body.removeChild(textArea);
-                        setCopied2(true);
-                      }
-                      setTimeout(() => setCopied2(false), 2000);
-                    }}
-                    className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                      copied2
-                        ? "bg-green-500 text-white"
-                        : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                    }`}
-                  >
-                    {copied2 ? "✓" : "Copy"}
-                  </button>
-                </div>
-              </div>
-
-              {/* Clipboard 3: python manage.py runserver */}
-              <div className="mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
-                    python3 manage.py runserver
-                  </div>
-                  <button
-                    onClick={async () => {
-                      const text = "python3 manage.py runserver";
-                      try {
-                        await navigator.clipboard.writeText(text);
-                        setCopied3(true);
-                      } catch {
-                        const textArea = document.createElement("textarea");
-                        textArea.value = text;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        document.execCommand("copy");
-                        document.body.removeChild(textArea);
-                        setCopied3(true);
-                      }
-                      setTimeout(() => setCopied3(false), 2000);
-                    }}
-                    className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                      copied3
-                        ? "bg-green-500 text-white"
-                        : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                    }`}
-                  >
-                    {copied3 ? "✓" : "Copy"}
-                  </button>
+                {/* Script Preview */}
+                <div className="bg-gray-900 rounded-lg p-3 text-left max-h-64 overflow-auto">
+                  <pre className="text-green-400 text-xs font-mono whitespace-pre-wrap">
+                    {FULLSTACK_SCRIPT}
+                  </pre>
                 </div>
               </div>
             </div>
