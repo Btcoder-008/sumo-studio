@@ -328,7 +328,7 @@ export default function TerminalPage() {
                   Frontend
                 </a>
                 <a
-                  href="https://localhost:8001"
+                  href="http://127.0.0.1:8001"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
@@ -340,7 +340,7 @@ export default function TerminalPage() {
                   Backend
                 </a>
                 <a
-                  href="https://localhost:8001/admin"
+                  href="http://127.0.0.1:8001/admin"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
@@ -570,7 +570,7 @@ export default function TerminalPage() {
             {/* Run Backend Button */}
             <div>
               <a
-                href="http://localhost:8001"
+                href="http://127.0.0.1:8001"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
