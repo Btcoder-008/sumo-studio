@@ -873,7 +873,7 @@ export default function BuildStudio() {
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">🥋</span>
-                Build Studio
+                Use Terminal
               </h2>
               {isLocalServer && (
                 <p className="text-sm text-green-600 mt-1 flex items-center gap-1">
