@@ -613,6 +613,7 @@ export default function BuildStudio() {
   const [editedContent, setEditedContent] = useState<string>("");
   const [isEditing, setIsEditing] = useState(false);
   const [isLocalServer, setIsLocalServer] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   // Check if local server is running on mount
   useEffect(() => {
@@ -882,29 +883,42 @@ export default function BuildStudio() {
 
             {/* Copy Path Clipboard */}
             <div className="mb-4">
-              <button
-                onClick={async () => {
-                  const path = "/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend";
-                  try {
-                    await navigator.clipboard.writeText(path);
-                    setBuildStatus("Path copied to clipboard!");
-                  } catch {
-                    // Fallback for older browsers
-                    const textArea = document.createElement("textarea");
-                    textArea.value = path;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(textArea);
-                    setBuildStatus("Path copied to clipboard!");
-                  }
-                  setTimeout(() => setBuildStatus(""), 2000);
-                }}
-                className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-700 transition-all group cursor-pointer"
-              >
-                <span className="font-mono text-xs truncate max-w-[300px]">/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend</span>
-                <span className="text-gray-500 group-hover:text-gray-700">📋</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600 truncate">
+                  /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend
+                </div>
+                <button
+                  onClick={async () => {
+                    const path = "/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend";
+                    try {
+                      await navigator.clipboard.writeText(path);
+                      setIsCopied(true);
+                    } catch {
+                      // Fallback for older browsers
+                      const textArea = document.createElement("textarea");
+                      textArea.value = path;
+                      document.body.appendChild(textArea);
+                      textArea.select();
+                      document.execCommand("copy");
+                      document.body.removeChild(textArea);
+                      setIsCopied(true);
+                    }
+                    setTimeout(() => setIsCopied(false), 2000);
+                  }}
+                  className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
+                    isCopied
+                      ? "bg-green-500 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  {isCopied ? "✓ Copied!" : "Copy"}
+                </button>
+              </div>
+              {isCopied && (
+                <p className="text-green-600 text-sm mt-2 font-medium flex items-center gap-1">
+                  <span>✓</span> Path copied to clipboard!
+                </p>
+              )}
             </div>
 
             {/* Project Name Input */}
