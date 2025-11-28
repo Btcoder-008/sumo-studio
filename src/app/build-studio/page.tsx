@@ -642,7 +642,20 @@ export default function BuildStudio() {
     return script?.name || "No script selected";
   };
 
-  // Handle build - Opens Terminal and runs the script
+  // Download script as file
+  const downloadScript = (content: string, filename: string) => {
+    const blob = new Blob([content], { type: "text/x-shellscript" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  // Handle build - Downloads the script for user to run
   const handleBuild = async () => {
     if (!projectName.trim()) {
       setBuildStatus("Please enter a project name!");
@@ -672,7 +685,7 @@ export default function BuildStudio() {
     }
 
     setIsBuilding(true);
-    setBuildStatus(`Opening Terminal for ${getSelectedScriptName()}...`);
+    setBuildStatus(`Generating ${getSelectedScriptName()} script...`);
 
     try {
       // Use edited content if available, otherwise use original
@@ -698,10 +711,12 @@ export default function BuildStudio() {
 
       const data = await response.json();
 
-      if (data.success) {
-        setBuildStatus(`Terminal opened! Running ${getSelectedScriptName()}...`);
+      if (data.success && data.script) {
+        // Download the script
+        downloadScript(data.script, data.filename);
+        setBuildStatus(`Script downloaded! Run it in Terminal: bash ~Downloads/${data.filename}`);
       } else {
-        setBuildStatus("Failed to open Terminal. Please try again.");
+        setBuildStatus(data.message || "Failed to generate script. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -908,12 +923,12 @@ export default function BuildStudio() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
-                      Building...
+                      Generating...
                     </>
                   ) : (
                     <>
-                      <span className="text-2xl">🚀</span>
-                      Build Project
+                      <span className="text-2xl">📥</span>
+                      Download Script
                     </>
                   )}
                 </span>
@@ -923,10 +938,12 @@ export default function BuildStudio() {
             {/* Build Status */}
             {buildStatus && (
               <div className={`mt-4 p-4 rounded-lg text-center font-medium ${
-                buildStatus.includes("successfully")
+                buildStatus.includes("downloaded")
                   ? "bg-green-100 text-green-700"
-                  : buildStatus.includes("Please")
+                  : buildStatus.includes("Please") || buildStatus.includes("cannot")
                   ? "bg-yellow-100 text-yellow-700"
+                  : buildStatus.includes("Error") || buildStatus.includes("Failed")
+                  ? "bg-red-100 text-red-700"
                   : "bg-blue-100 text-blue-700"
               }`}>
                 {buildStatus}
