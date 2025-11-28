@@ -885,11 +885,11 @@ export default function BuildStudio() {
             <div className="mb-4">
               <div className="flex items-center gap-2">
                 <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600 truncate">
-                  cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps
+                  cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend
                 </div>
                 <button
                   onClick={async () => {
-                    const path = "cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps";
+                    const path = "cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend";
                     try {
                       await navigator.clipboard.writeText(path);
                       setIsCopied(true);
