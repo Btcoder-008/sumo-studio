@@ -30,7 +30,8 @@ export default function TerminalPage() {
   // Create Project state
   const [createCopied1, setCreateCopied1] = useState(false);
   const [createCopied2, setCreateCopied2] = useState(false);
-  const [createBothCopied, setCreateBothCopied] = useState({ path: false, npm: false });
+  const [createCopied3, setCreateCopied3] = useState(false);
+  const [createAllCopied, setCreateAllCopied] = useState({ path: false, npm: false, localServer: false });
 
   // Run Backend Server state (in Create Project card)
   const [backendPath, setBackendPath] = useState(false);
@@ -141,7 +142,7 @@ export default function TerminalPage() {
                     try {
                       await navigator.clipboard.writeText(path);
                       setCreateCopied1(true);
-                      setCreateBothCopied(prev => ({ ...prev, path: true }));
+                      setCreateAllCopied(prev => ({ ...prev, path: true }));
                     } catch {
                       const textArea = document.createElement("textarea");
                       textArea.value = path;
@@ -150,7 +151,7 @@ export default function TerminalPage() {
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
                       setCreateCopied1(true);
-                      setCreateBothCopied(prev => ({ ...prev, path: true }));
+                      setCreateAllCopied(prev => ({ ...prev, path: true }));
                     }
                     setTimeout(() => setCreateCopied1(false), 2000);
                   }}
@@ -177,7 +178,7 @@ export default function TerminalPage() {
                     try {
                       await navigator.clipboard.writeText(cmd);
                       setCreateCopied2(true);
-                      setCreateBothCopied(prev => ({ ...prev, npm: true }));
+                      setCreateAllCopied(prev => ({ ...prev, npm: true }));
                     } catch {
                       const textArea = document.createElement("textarea");
                       textArea.value = cmd;
@@ -186,7 +187,7 @@ export default function TerminalPage() {
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
                       setCreateCopied2(true);
-                      setCreateBothCopied(prev => ({ ...prev, npm: true }));
+                      setCreateAllCopied(prev => ({ ...prev, npm: true }));
                     }
                     setTimeout(() => setCreateCopied2(false), 2000);
                   }}
@@ -197,6 +198,42 @@ export default function TerminalPage() {
                   }`}
                 >
                   {createCopied2 ? "✓" : "Copy"}
+                </button>
+              </div>
+            </div>
+
+            {/* Copy npm run local-server Clipboard */}
+            <div className="mb-4">
+              <div className="flex items-center gap-2">
+                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
+                  npm run local-server
+                </div>
+                <button
+                  onClick={async () => {
+                    const cmd = "npm run local-server";
+                    try {
+                      await navigator.clipboard.writeText(cmd);
+                      setCreateCopied3(true);
+                      setCreateAllCopied(prev => ({ ...prev, localServer: true }));
+                    } catch {
+                      const textArea = document.createElement("textarea");
+                      textArea.value = cmd;
+                      document.body.appendChild(textArea);
+                      textArea.select();
+                      document.execCommand("copy");
+                      document.body.removeChild(textArea);
+                      setCreateCopied3(true);
+                      setCreateAllCopied(prev => ({ ...prev, localServer: true }));
+                    }
+                    setTimeout(() => setCreateCopied3(false), 2000);
+                  }}
+                  className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
+                    createCopied3
+                      ? "bg-green-500 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  {createCopied3 ? "✓" : "Copy"}
                 </button>
               </div>
             </div>
@@ -320,7 +357,7 @@ export default function TerminalPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
-                    createBothCopied.path && createBothCopied.npm
+                    createAllCopied.path && createAllCopied.npm && createAllCopied.localServer
                       ? "bg-green-500 hover:bg-green-600 text-white"
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
