@@ -883,12 +883,24 @@ export default function BuildStudio() {
             {/* Copy Path Clipboard */}
             <div className="mb-4">
               <button
-                onClick={() => {
-                  navigator.clipboard.writeText("/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend");
-                  setBuildStatus("Path copied to clipboard!");
+                onClick={async () => {
+                  const path = "/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend";
+                  try {
+                    await navigator.clipboard.writeText(path);
+                    setBuildStatus("Path copied to clipboard!");
+                  } catch {
+                    // Fallback for older browsers
+                    const textArea = document.createElement("textarea");
+                    textArea.value = path;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(textArea);
+                    setBuildStatus("Path copied to clipboard!");
+                  }
                   setTimeout(() => setBuildStatus(""), 2000);
                 }}
-                className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-700 transition-all group"
+                className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-700 transition-all group cursor-pointer"
               >
                 <span className="font-mono text-xs truncate max-w-[300px]">/Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/frontend</span>
                 <span className="text-gray-500 group-hover:text-gray-700">📋</span>
