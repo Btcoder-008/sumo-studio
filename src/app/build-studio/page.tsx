@@ -961,6 +961,18 @@ export default function BuildStudio() {
               )}
             </div>
 
+            {/* Localhost Link */}
+            <div className="mb-4">
+              <a
+                href="http://localhost:3001"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 text-sm font-medium underline"
+              >
+                http://localhost:3001
+              </a>
+            </div>
+
             {/* Project Name Input */}
             <div className="mb-4">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
