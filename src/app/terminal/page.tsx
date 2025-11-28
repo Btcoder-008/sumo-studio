@@ -36,6 +36,7 @@ export default function TerminalPage() {
   const [backendPath, setBackendPath] = useState(false);
   const [backendVenv, setBackendVenv] = useState(false);
   const [backendRunserver, setBackendRunserver] = useState(false);
+  const [backendAllCopied, setBackendAllCopied] = useState({ path: false, venv: false, runserver: false });
 
   // Edit Project state
   const [editCopied1, setEditCopied1] = useState(false);
@@ -215,6 +216,7 @@ export default function TerminalPage() {
                       try {
                         await navigator.clipboard.writeText(text);
                         setBackendPath(true);
+                        setBackendAllCopied(prev => ({ ...prev, path: true }));
                       } catch {
                         const textArea = document.createElement("textarea");
                         textArea.value = text;
@@ -223,6 +225,7 @@ export default function TerminalPage() {
                         document.execCommand("copy");
                         document.body.removeChild(textArea);
                         setBackendPath(true);
+                        setBackendAllCopied(prev => ({ ...prev, path: true }));
                       }
                       setTimeout(() => setBackendPath(false), 2000);
                     }}
@@ -249,6 +252,7 @@ export default function TerminalPage() {
                       try {
                         await navigator.clipboard.writeText(text);
                         setBackendVenv(true);
+                        setBackendAllCopied(prev => ({ ...prev, venv: true }));
                       } catch {
                         const textArea = document.createElement("textarea");
                         textArea.value = text;
@@ -257,6 +261,7 @@ export default function TerminalPage() {
                         document.execCommand("copy");
                         document.body.removeChild(textArea);
                         setBackendVenv(true);
+                        setBackendAllCopied(prev => ({ ...prev, venv: true }));
                       }
                       setTimeout(() => setBackendVenv(false), 2000);
                     }}
@@ -283,6 +288,7 @@ export default function TerminalPage() {
                       try {
                         await navigator.clipboard.writeText(text);
                         setBackendRunserver(true);
+                        setBackendAllCopied(prev => ({ ...prev, runserver: true }));
                       } catch {
                         const textArea = document.createElement("textarea");
                         textArea.value = text;
@@ -291,6 +297,7 @@ export default function TerminalPage() {
                         document.execCommand("copy");
                         document.body.removeChild(textArea);
                         setBackendRunserver(true);
+                        setBackendAllCopied(prev => ({ ...prev, runserver: true }));
                       }
                       setTimeout(() => setBackendRunserver(false), 2000);
                     }}
@@ -305,19 +312,43 @@ export default function TerminalPage() {
                 </div>
               </div>
 
-              {/* Run Local Button */}
-              <div>
+              {/* Run Buttons */}
+              <div className="flex gap-2">
                 <a
                   href="http://localhost:3001/build-studio"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
+                  className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
                     createBothCopied.path && createBothCopied.npm
                       ? "bg-green-500 hover:bg-green-600 text-white"
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
                 >
-                  Run Local
+                  Frontend
+                </a>
+                <a
+                  href="https://localhost:8001"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
+                    backendAllCopied.path && backendAllCopied.venv && backendAllCopied.runserver
+                      ? "bg-green-500 hover:bg-green-600 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  Backend
+                </a>
+                <a
+                  href="https://localhost:8001/admin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
+                    backendAllCopied.path && backendAllCopied.venv && backendAllCopied.runserver
+                      ? "bg-blue-500 hover:bg-blue-600 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  Admin Django
                 </a>
               </div>
             </div>
