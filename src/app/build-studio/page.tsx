@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -612,6 +612,23 @@ export default function BuildStudio() {
   const [buildStatus, setBuildStatus] = useState<string>("");
   const [editedContent, setEditedContent] = useState<string>("");
   const [isEditing, setIsEditing] = useState(false);
+  const [isLocalServer, setIsLocalServer] = useState(false);
+
+  // Check if local server is running on mount
+  useEffect(() => {
+    const checkServer = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/health", {
+          method: "GET",
+          signal: AbortSignal.timeout(2000),
+        });
+        setIsLocalServer(response.ok);
+      } catch {
+        setIsLocalServer(false);
+      }
+    };
+    checkServer();
+  }, []);
 
   // Get original script content
   const getOriginalScriptContent = () => {
@@ -850,10 +867,18 @@ export default function BuildStudio() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Script Selection Section */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-yellow-200/50 transition-shadow duration-300">
-            <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-              <span className="text-2xl">🥋</span>
-              Select Script
-            </h2>
+            <div className="mb-6">
+              <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <span className="text-2xl">🥋</span>
+                Build Studio
+              </h2>
+              {isLocalServer && (
+                <p className="text-sm text-green-600 mt-1 flex items-center gap-1">
+                  <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                  Open Terminal
+                </p>
+              )}
+            </div>
 
             {/* Project Name Input */}
             <div className="mb-4">
