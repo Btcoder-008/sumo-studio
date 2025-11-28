@@ -614,6 +614,7 @@ export default function BuildStudio() {
   const [isEditing, setIsEditing] = useState(false);
   const [isLocalServer, setIsLocalServer] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [isCopied2, setIsCopied2] = useState(false);
 
   // Check if local server is running on mount
   useEffect(() => {
@@ -917,6 +918,45 @@ export default function BuildStudio() {
               {isCopied && (
                 <p className="text-green-600 text-sm mt-2 font-medium flex items-center gap-1">
                   <span>✓</span> Path copied to clipboard!
+                </p>
+              )}
+            </div>
+
+            {/* Copy npm run dev Clipboard */}
+            <div className="mb-4">
+              <div className="flex items-center gap-2">
+                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
+                  npm run dev
+                </div>
+                <button
+                  onClick={async () => {
+                    const cmd = "npm run dev";
+                    try {
+                      await navigator.clipboard.writeText(cmd);
+                      setIsCopied2(true);
+                    } catch {
+                      const textArea = document.createElement("textarea");
+                      textArea.value = cmd;
+                      document.body.appendChild(textArea);
+                      textArea.select();
+                      document.execCommand("copy");
+                      document.body.removeChild(textArea);
+                      setIsCopied2(true);
+                    }
+                    setTimeout(() => setIsCopied2(false), 2000);
+                  }}
+                  className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
+                    isCopied2
+                      ? "bg-green-500 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  {isCopied2 ? "✓ Copied!" : "Copy"}
+                </button>
+              </div>
+              {isCopied2 && (
+                <p className="text-green-600 text-sm mt-2 font-medium flex items-center gap-1">
+                  <span>✓</span> Command copied to clipboard!
                 </p>
               )}
             </div>
