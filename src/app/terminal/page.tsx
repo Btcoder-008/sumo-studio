@@ -32,6 +32,11 @@ export default function TerminalPage() {
   const [createCopied2, setCreateCopied2] = useState(false);
   const [createBothCopied, setCreateBothCopied] = useState({ path: false, npm: false });
 
+  // Run Backend Server state (in Create Project card)
+  const [backendPath, setBackendPath] = useState(false);
+  const [backendVenv, setBackendVenv] = useState(false);
+  const [backendRunserver, setBackendRunserver] = useState(false);
+
   // Edit Project state
   const [editCopied1, setEditCopied1] = useState(false);
   const [editCopied2, setEditCopied2] = useState(false);
@@ -192,23 +197,129 @@ export default function TerminalPage() {
                   {createCopied2 ? "✓" : "Copy"}
                 </button>
               </div>
-              <a href="http://localhost:3001/build-studio" target="_blank" rel="noopener noreferrer" className="inline-block mt-2 px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-lg transition-all">http://localhost:3001/build-studio</a>
             </div>
 
-            {/* Run Local Button */}
-            <div>
-              <a
-                href="http://localhost:3001/build-studio"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
-                  createBothCopied.path && createBothCopied.npm
-                    ? "bg-green-500 hover:bg-green-600 text-white"
-                    : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                }`}
-              >
-                Run Local
-              </a>
+            {/* Run Backend Server Section */}
+            <div className="pt-4 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">Run Backend Server</h3>
+
+              {/* Backend cd path */}
+              <div className="mb-2">
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600 truncate">
+                    cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/backend
+                  </div>
+                  <button
+                    onClick={async () => {
+                      const text = "cd /Users/thiyagarajanbalakrishnan/Documents/supersumo/MyApps/sumo/backend";
+                      try {
+                        await navigator.clipboard.writeText(text);
+                        setBackendPath(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = text;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setBackendPath(true);
+                      }
+                      setTimeout(() => setBackendPath(false), 2000);
+                    }}
+                    className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
+                      backendPath
+                        ? "bg-green-500 text-white"
+                        : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                    }`}
+                  >
+                    {backendPath ? "✓" : "Copy"}
+                  </button>
+                </div>
+              </div>
+
+              {/* source venv */}
+              <div className="mb-2">
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
+                    source venv/bin/activate
+                  </div>
+                  <button
+                    onClick={async () => {
+                      const text = "source venv/bin/activate";
+                      try {
+                        await navigator.clipboard.writeText(text);
+                        setBackendVenv(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = text;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setBackendVenv(true);
+                      }
+                      setTimeout(() => setBackendVenv(false), 2000);
+                    }}
+                    className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
+                      backendVenv
+                        ? "bg-green-500 text-white"
+                        : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                    }`}
+                  >
+                    {backendVenv ? "✓" : "Copy"}
+                  </button>
+                </div>
+              </div>
+
+              {/* python3 manage.py runserver */}
+              <div className="mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
+                    python3 manage.py runserver
+                  </div>
+                  <button
+                    onClick={async () => {
+                      const text = "python3 manage.py runserver";
+                      try {
+                        await navigator.clipboard.writeText(text);
+                        setBackendRunserver(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = text;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setBackendRunserver(true);
+                      }
+                      setTimeout(() => setBackendRunserver(false), 2000);
+                    }}
+                    className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
+                      backendRunserver
+                        ? "bg-green-500 text-white"
+                        : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                    }`}
+                  >
+                    {backendRunserver ? "✓" : "Copy"}
+                  </button>
+                </div>
+              </div>
+
+              {/* Run Local Button */}
+              <div>
+                <a
+                  href="http://localhost:3001/build-studio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-block px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
+                    createBothCopied.path && createBothCopied.npm
+                      ? "bg-green-500 hover:bg-green-600 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  Run Local
+                </a>
+              </div>
             </div>
           </div>
 

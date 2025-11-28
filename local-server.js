@@ -40,21 +40,31 @@ const server = http.createServer((req, res) => {
 
     req.on('end', () => {
       try {
-        const { content, projectName } = JSON.parse(body);
+        const { content, projectName, scriptPath } = JSON.parse(body);
 
-        if (!content || !projectName) {
+        let tempPath;
+
+        // If scriptPath is provided, run it directly
+        if (scriptPath) {
+          if (!fs.existsSync(scriptPath)) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, message: `Script not found: ${scriptPath}` }));
+            return;
+          }
+          tempPath = scriptPath;
+          console.log(`\n📝 Running script: ${scriptPath}`);
+        } else if (content && projectName) {
+          // Create temp script file from content
+          tempPath = path.join(os.tmpdir(), `sumo-${projectName}-${Date.now()}.sh`);
+          fs.writeFileSync(tempPath, content);
+          fs.chmodSync(tempPath, 0o755);
+          console.log(`\n📝 Script saved to: ${tempPath}`);
+          console.log(`🚀 Opening Terminal for project: ${projectName}`);
+        } else {
           res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: false, message: 'Missing content or projectName' }));
+          res.end(JSON.stringify({ success: false, message: 'Missing content/projectName or scriptPath' }));
           return;
         }
-
-        // Create temp script file
-        const tempPath = path.join(os.tmpdir(), `sumo-${projectName}-${Date.now()}.sh`);
-        fs.writeFileSync(tempPath, content);
-        fs.chmodSync(tempPath, 0o755);
-
-        console.log(`\n📝 Script saved to: ${tempPath}`);
-        console.log(`🚀 Opening Terminal for project: ${projectName}`);
 
         // Open Terminal and run the script (macOS)
         const appleScript = `tell application "Terminal"
