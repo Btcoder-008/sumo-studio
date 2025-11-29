@@ -126,8 +126,8 @@ export default function HomePage() {
       {/* Main content */}
       <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
         {/* Marquee container */}
-        <div className="w-full overflow-hidden py-10 pointer-events-none">
-          <div className="flex animate-marquee gap-10 overflow-visible [&>*]:pointer-events-auto">
+        <div className="w-full overflow-x-auto overflow-y-hidden py-10 scrollbar-hide hover:[&_.animate-marquee]:[animation-play-state:paused]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="flex animate-marquee gap-10 overflow-visible">
             {marqueeCards.map((card, index) => (
               <Link
                 key={`${card.title}-${index}`}
@@ -158,6 +158,9 @@ export default function HomePage() {
         }
         .animate-marquee {
           animation: marquee 40s linear infinite;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
         }
       `}</style>
     </div>
