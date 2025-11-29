@@ -114,13 +114,13 @@ export default function HomePage() {
       <header className="relative z-20 bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <Image
                 src="/super-sumo.png"
                 alt="Super Sumo"
-                width={50}
-                height={50}
-                className="cursor-pointer hover:scale-105 transition-transform drop-shadow-lg md:w-[80px] md:h-[80px]"
+                width={80}
+                height={80}
+                className="cursor-pointer hover:scale-105 transition-transform drop-shadow-lg w-12 h-12 md:w-20 md:h-20"
               />
             </Link>
             <div>
