@@ -122,7 +122,7 @@ export default function HomePage() {
               <h1 className="text-2xl font-bold text-gray-800">
                 Sumo Studio
               </h1>
-              <p className="text-xs text-gray-500 tracking-tight">Build your app with Sumo</p>
+              <p className="text-gray-500 tracking-tight" style={{ fontSize: '10pt' }}>Build your app with Sumo</p>
             </div>
           </div>
 
