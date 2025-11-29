@@ -39,7 +39,6 @@ const studioCards = [
     title: "Terminal",
     icon: "🚀",
     href: "/terminal",
-    description: "Create new projects",
     bgColor: "from-green-400 to-emerald-500",
     hoverColor: "hover:shadow-green-300/50",
   },
@@ -47,7 +46,6 @@ const studioCards = [
     title: "Frontend Studio",
     icon: "🎨",
     href: "/frontend-studio",
-    description: "Design UI components",
     bgColor: "from-orange-400 to-pink-500",
     hoverColor: "hover:shadow-orange-300/50",
   },
@@ -55,7 +53,6 @@ const studioCards = [
     title: "Backend Studio",
     icon: "⚙️",
     href: "/backend-studio",
-    description: "Build APIs & services",
     bgColor: "from-pink-400 to-purple-500",
     hoverColor: "hover:shadow-pink-300/50",
   },
@@ -63,7 +60,6 @@ const studioCards = [
     title: "Module Studio",
     icon: "🧩",
     href: "/module-studio",
-    description: "Create reusable modules",
     bgColor: "from-purple-400 to-indigo-500",
     hoverColor: "hover:shadow-purple-300/50",
   },
@@ -71,7 +67,6 @@ const studioCards = [
     title: "Products",
     icon: "📦",
     href: "/products",
-    description: "Build from products",
     bgColor: "from-blue-400 to-indigo-500",
     hoverColor: "hover:shadow-blue-300/50",
   },
@@ -79,13 +74,15 @@ const studioCards = [
     title: "Deploy",
     icon: "🚀",
     href: "/deploy",
-    description: "Deploy to production",
     bgColor: "from-green-400 to-emerald-500",
     hoverColor: "hover:shadow-green-300/50",
   },
 ];
 
 export default function HomePage() {
+  // Double the cards for seamless marquee loop
+  const marqueeCards = [...studioCards, ...studioCards];
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50">
       {/* Floating app icons background */}
@@ -173,28 +170,42 @@ export default function HomePage() {
       </header>
 
       {/* Main content */}
-      <main className="relative z-10 flex flex-col items-center justify-center px-4 py-16">
-        {/* Studio cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 max-w-7xl w-full">
-          {studioCards.map((card) => (
-            <Link
-              key={card.title}
-              href={card.href}
-              className={`group relative bg-white/70 backdrop-blur-lg rounded-2xl p-6 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2`}
-            >
-              <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-4 mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                <span className="text-3xl">{card.icon}</span>
-              </div>
-              <h2 className="text-lg font-bold text-gray-800 text-center mb-1">
-                {card.title}
-              </h2>
-              <p className="text-sm text-gray-500 text-center">
-                {card.description}
-              </p>
-            </Link>
-          ))}
+      <main className="relative z-10 flex flex-col items-center justify-center py-16">
+        {/* Marquee container */}
+        <div className="w-full overflow-hidden">
+          <div className="flex animate-marquee gap-6 hover:[animation-play-state:paused]">
+            {marqueeCards.map((card, index) => (
+              <Link
+                key={`${card.title}-${index}`}
+                href={card.href}
+                className={`group flex-shrink-0 bg-white/70 backdrop-blur-lg rounded-2xl p-6 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2`}
+              >
+                <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-4 mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <span className="text-3xl">{card.icon}</span>
+                </div>
+                <h2 className="text-lg font-bold text-gray-800 text-center">
+                  {card.title}
+                </h2>
+              </Link>
+            ))}
+          </div>
         </div>
       </main>
+
+      {/* Marquee animation styles */}
+      <style jsx>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-marquee {
+          animation: marquee 20s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }
