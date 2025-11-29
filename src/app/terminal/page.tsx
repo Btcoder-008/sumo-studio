@@ -401,7 +401,7 @@ export default function TerminalPage() {
                   href="http://127.0.0.1:8001/admin"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
+                  className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer whitespace-nowrap ${
                     backendAllCopied.path && backendAllCopied.venv && backendAllCopied.runserver
                       ? "bg-blue-500 hover:bg-blue-600 text-white"
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
