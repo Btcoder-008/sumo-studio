@@ -42,7 +42,7 @@ const studioCards = [
   },
   {
     title: "Deploy",
-    icon: "🚀",
+    icon: "☁️",
     href: "/deploy",
     bgColor: "from-green-400 to-emerald-500",
     hoverColor: "hover:shadow-green-300/50",
