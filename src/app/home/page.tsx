@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,7 +8,7 @@ import Link from "next/link";
 function FloatingIcon({ icon, style }: { icon: string; style: React.CSSProperties }) {
   return (
     <div
-      className="absolute text-4xl md:text-5xl opacity-35 animate-float pointer-events-none"
+      className="absolute text-2xl md:text-4xl lg:text-5xl opacity-35 animate-float pointer-events-none"
       style={style}
     >
       {icon}
@@ -82,28 +83,32 @@ const studioCards = [
 ];
 
 export default function HomePage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50">
-      {/* Floating app icons background */}
-      {floatingIcons.map((item, index) => (
-        <FloatingIcon
-          key={index}
-          icon={item.icon}
-          style={{
-            top: item.top,
-            left: item.left,
-            right: item.right,
-            bottom: item.bottom,
-            animationDelay: item.delay,
-            animationDuration: item.duration,
-          } as React.CSSProperties}
-        />
-      ))}
+      {/* Floating app icons background - hidden on mobile */}
+      <div className="hidden md:block">
+        {floatingIcons.map((item, index) => (
+          <FloatingIcon
+            key={index}
+            icon={item.icon}
+            style={{
+              top: item.top,
+              left: item.left,
+              right: item.right,
+              bottom: item.bottom,
+              animationDelay: item.delay,
+              animationDuration: item.duration,
+            } as React.CSSProperties}
+          />
+        ))}
+      </div>
 
       {/* Gradient orbs for futuristic effect */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
-      <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }} />
+      <div className="absolute top-0 left-0 w-48 md:w-96 h-48 md:h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
+      <div className="absolute top-1/2 right-0 w-48 md:w-96 h-48 md:h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
+      <div className="absolute bottom-0 left-1/3 w-48 md:w-96 h-48 md:h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }} />
 
       {/* Header */}
       <header className="relative z-20 bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20">
@@ -113,21 +118,35 @@ export default function HomePage() {
               <Image
                 src="/super-sumo.png"
                 alt="Super Sumo"
-                width={80}
-                height={80}
-                className="cursor-pointer hover:scale-105 transition-transform drop-shadow-lg"
+                width={50}
+                height={50}
+                className="cursor-pointer hover:scale-105 transition-transform drop-shadow-lg md:w-[80px] md:h-[80px]"
               />
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">
+              <h1 className="text-lg md:text-2xl font-bold text-gray-800">
                 Sumo Studio
               </h1>
-              <p className="text-gray-500 tracking-tight" style={{ fontSize: '10pt' }}>Build your app with Sumo</p>
+              <p className="text-gray-500 tracking-tight text-xs md:text-sm hidden sm:block" style={{ fontSize: '10pt' }}>Build your app with Sumo</p>
             </div>
           </div>
 
-          {/* Navigation Menu */}
-          <nav className="flex items-center gap-2">
+          {/* Mobile menu button */}
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {menuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+
+          {/* Desktop Navigation Menu */}
+          <nav className="hidden md:flex items-center gap-2">
             <Link
               href="/terminal"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
@@ -166,24 +185,74 @@ export default function HomePage() {
             </Link>
           </nav>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {menuOpen && (
+          <nav className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 px-4 py-2">
+            <div className="grid grid-cols-2 gap-2">
+              <Link
+                href="/terminal"
+                className="px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                Terminal
+              </Link>
+              <Link
+                href="/frontend-studio"
+                className="px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-orange-100 hover:text-orange-700 transition-all text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                Frontend
+              </Link>
+              <Link
+                href="/backend-studio"
+                className="px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-pink-100 hover:text-pink-700 transition-all text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                Backend
+              </Link>
+              <Link
+                href="/module-studio"
+                className="px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 transition-all text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                Module
+              </Link>
+              <Link
+                href="/products"
+                className="px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-all text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                Products
+              </Link>
+              <Link
+                href="/deploy"
+                className="px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-green-100 hover:text-green-700 transition-all text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                Deploy
+              </Link>
+            </div>
+          </nav>
+        )}
       </header>
 
       {/* Main content */}
       <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
         {/* Marquee container */}
-        <div className="w-full overflow-hidden py-10 group/marquee">
-          <div className="flex gap-10 animate-marquee group-hover/marquee:[animation-play-state:paused]">
+        <div className="w-full overflow-hidden py-6 md:py-10 group/marquee">
+          <div className="flex gap-4 md:gap-10 animate-marquee group-hover/marquee:[animation-play-state:paused]">
             {/* First set of cards */}
             {studioCards.map((card, index) => (
               <Link
                 key={`first-${card.title}-${index}`}
                 href={card.href}
-                className={`group flex-shrink-0 w-52 h-52 bg-white/70 backdrop-blur-lg rounded-3xl p-8 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 flex flex-col items-center justify-center`}
+                className={`group flex-shrink-0 w-32 h-32 md:w-52 md:h-52 bg-white/70 backdrop-blur-lg rounded-2xl md:rounded-3xl p-4 md:p-8 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 flex flex-col items-center justify-center`}
               >
-                <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <span className="text-4xl">{card.icon}</span>
+                <div className={`w-12 h-12 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-2 md:mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <span className="text-2xl md:text-4xl">{card.icon}</span>
                 </div>
-                <h2 className="text-base font-bold text-gray-800 text-center whitespace-nowrap">
+                <h2 className="text-xs md:text-base font-bold text-gray-800 text-center whitespace-nowrap">
                   {card.title}
                 </h2>
               </Link>
@@ -193,12 +262,12 @@ export default function HomePage() {
               <Link
                 key={`second-${card.title}-${index}`}
                 href={card.href}
-                className={`group flex-shrink-0 w-52 h-52 bg-white/70 backdrop-blur-lg rounded-3xl p-8 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 flex flex-col items-center justify-center`}
+                className={`group flex-shrink-0 w-32 h-32 md:w-52 md:h-52 bg-white/70 backdrop-blur-lg rounded-2xl md:rounded-3xl p-4 md:p-8 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 flex flex-col items-center justify-center`}
               >
-                <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <span className="text-4xl">{card.icon}</span>
+                <div className={`w-12 h-12 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-2 md:mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <span className="text-2xl md:text-4xl">{card.icon}</span>
                 </div>
-                <h2 className="text-base font-bold text-gray-800 text-center whitespace-nowrap">
+                <h2 className="text-xs md:text-base font-bold text-gray-800 text-center whitespace-nowrap">
                   {card.title}
                 </h2>
               </Link>
