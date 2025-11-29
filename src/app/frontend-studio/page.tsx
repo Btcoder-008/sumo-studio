@@ -171,6 +171,8 @@ export default function FrontendStudio() {
   // Form state
   const [reviewEntireProject, setReviewEntireProject] = useState("");
   const [projectName, setProjectName] = useState("");
+  const [responsiveDesign, setResponsiveDesign] = useState(false);
+  const [comingSoonFirst, setComingSoonFirst] = useState(false);
   const [pageTypes, setPageTypes] = useState<CheckboxOption[]>(pageTypeOptions);
   const [customPageType, setCustomPageType] = useState("");
   const [frameworks, setFrameworks] = useState<CheckboxOption[]>(frameworkOptions);
@@ -632,6 +634,35 @@ export default function FrontendStudio() {
                 placeholder="Enter project core concept"
                 className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition-all hover:border-orange-300"
               />
+            </div>
+
+            {/* Project Requirements Checklist */}
+            <div className="mb-6">
+              <label className="block text-sm font-semibold text-gray-700 mb-3">
+                Project Requirements
+              </label>
+              <div className="space-y-3">
+                <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
+                  <input
+                    type="checkbox"
+                    checked={responsiveDesign}
+                    onChange={(e) => setResponsiveDesign(e.target.checked)}
+                    className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
+                  />
+                  <span className="text-xl">📱</span>
+                  <span className="text-sm text-gray-700">All pages should be responsive for both mobile and desktop</span>
+                </label>
+                <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
+                  <input
+                    type="checkbox"
+                    checked={comingSoonFirst}
+                    onChange={(e) => setComingSoonFirst(e.target.checked)}
+                    className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
+                  />
+                  <span className="text-xl">🚧</span>
+                  <span className="text-sm text-gray-700">At first make all pages look like coming soon message</span>
+                </label>
+              </div>
             </div>
 
             {/* Pages Required for this Project - Checklist */}
