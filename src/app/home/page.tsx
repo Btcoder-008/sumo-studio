@@ -1,13 +1,36 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-// App-related icons for marquee
-const marqueeIcons = [
-  "📱", "💻", "🎮", "📷", "🎵", "📧", "🔔", "⚙️",
-  "🛒", "📊", "🎬", "🌐", "💬", "📅", "🔍", "☁️",
+// Floating app icon component
+function FloatingIcon({ icon, style }: { icon: string; style: React.CSSProperties }) {
+  return (
+    <div
+      className="absolute text-4xl md:text-5xl opacity-35 animate-float pointer-events-none"
+      style={style}
+    >
+      {icon}
+    </div>
+  );
+}
+
+// App-related icons for floating background
+const floatingIcons = [
+  { icon: "📱", top: "5%", left: "10%", delay: "0s", duration: "6s" },
+  { icon: "💻", top: "15%", right: "15%", delay: "1s", duration: "7s" },
+  { icon: "🎮", top: "25%", left: "5%", delay: "2s", duration: "5s" },
+  { icon: "📷", bottom: "30%", right: "10%", delay: "0.5s", duration: "8s" },
+  { icon: "🎵", top: "40%", left: "15%", delay: "1.5s", duration: "6s" },
+  { icon: "📧", bottom: "20%", left: "8%", delay: "3s", duration: "7s" },
+  { icon: "🔔", top: "10%", right: "30%", delay: "2.5s", duration: "5s" },
+  { icon: "⚙️", bottom: "15%", right: "25%", delay: "1s", duration: "6s" },
+  { icon: "🛒", top: "60%", right: "5%", delay: "0s", duration: "7s" },
+  { icon: "📊", bottom: "40%", left: "20%", delay: "2s", duration: "8s" },
+  { icon: "🎬", top: "70%", left: "3%", delay: "1.5s", duration: "5s" },
+  { icon: "🌐", top: "8%", left: "40%", delay: "3s", duration: "6s" },
+  { icon: "💬", bottom: "10%", right: "40%", delay: "0.5s", duration: "7s" },
+  { icon: "📅", top: "50%", right: "20%", delay: "2.5s", duration: "5s" },
+  { icon: "🔍", bottom: "50%", left: "30%", delay: "1s", duration: "8s" },
+  { icon: "☁️", top: "20%", left: "25%", delay: "0s", duration: "6s" },
 ];
 
 // Studio cards data
@@ -62,67 +85,25 @@ const studioCards = [
   },
 ];
 
-// Marquee component with center focus effect
-function IconMarquee() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const totalIcons = marqueeIcons.length;
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % totalIcons);
-    }, 2000); // 2 second hold for each center icon
-
-    return () => clearInterval(interval);
-  }, [totalIcons]);
-
-  // Create a doubled array for seamless looping
-  const displayIcons = [...marqueeIcons, ...marqueeIcons, ...marqueeIcons];
-
-  return (
-    <div className="relative w-full overflow-hidden py-8">
-      {/* Gradient fade on sides */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-yellow-50 via-yellow-50/80 to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-pink-50 via-pink-50/80 to-transparent z-10 pointer-events-none" />
-
-      <div
-        className="flex items-center justify-center gap-8 transition-transform duration-1000 ease-in-out"
-        style={{
-          transform: `translateX(${-activeIndex * 80}px)`,
-        }}
-      >
-        {displayIcons.map((icon, index) => {
-          const actualIndex = index % totalIcons;
-          const isCenter = actualIndex === activeIndex;
-          const isNearCenter =
-            actualIndex === (activeIndex - 1 + totalIcons) % totalIcons ||
-            actualIndex === (activeIndex + 1) % totalIcons;
-
-          return (
-            <div
-              key={index}
-              className={`flex-shrink-0 transition-all duration-500 ease-out ${
-                isCenter
-                  ? "text-7xl md:text-8xl scale-125 opacity-100 drop-shadow-2xl"
-                  : isNearCenter
-                    ? "text-5xl md:text-6xl scale-100 opacity-70"
-                    : "text-4xl md:text-5xl scale-90 opacity-40"
-              }`}
-              style={{
-                filter: isCenter ? "drop-shadow(0 0 20px rgba(251, 146, 60, 0.5))" : "none",
-              }}
-            >
-              {icon}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
 export default function HomePage() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50">
+      {/* Floating app icons background */}
+      {floatingIcons.map((item, index) => (
+        <FloatingIcon
+          key={index}
+          icon={item.icon}
+          style={{
+            top: item.top,
+            left: item.left,
+            right: item.right,
+            bottom: item.bottom,
+            animationDelay: item.delay,
+            animationDuration: item.duration,
+          } as React.CSSProperties}
+        />
+      ))}
+
       {/* Gradient orbs for futuristic effect */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
@@ -192,12 +173,7 @@ export default function HomePage() {
       </header>
 
       {/* Main content */}
-      <main className="relative z-10 flex flex-col items-center justify-center px-4 py-8">
-        {/* Marquee Icons */}
-        <div className="w-full max-w-5xl mb-8">
-          <IconMarquee />
-        </div>
-
+      <main className="relative z-10 flex flex-col items-center justify-center px-4 py-16">
         {/* Studio cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 max-w-7xl w-full">
           {studioCards.map((card) => (
