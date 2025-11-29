@@ -506,12 +506,9 @@ const pageRequirements: Record<string, CheckboxOption[]> = {
       { id: "ae-photo", label: "1.9 Photo Upload", checked: false },
     ]},
     { id: "employee-list", label: "2. Employee List", checked: false, icon: "👥", subFields: [
-      { id: "el-photo", label: "2.1 Photo", checked: false },
-      { id: "el-name", label: "2.2 Name", checked: false },
-      { id: "el-department", label: "2.3 Department", checked: false },
-      { id: "el-designation", label: "2.4 Designation", checked: false },
-      { id: "el-status", label: "2.5 Status", checked: false },
-      { id: "el-actions", label: "2.6 Actions", checked: false },
+      { id: "el-all-data", label: "2.1 Show All Data from Add Employee", checked: false },
+      { id: "el-crud", label: "2.2 CRUD Actions (Create/Read/Update/Delete)", checked: false },
+      { id: "el-status", label: "2.3 Employee Status (Active/Inactive)", checked: false },
     ]},
     { id: "employee-profile", label: "3. Employee Profile", checked: false, icon: "👤", subFields: [
       { id: "ep-photo", label: "3.1 Profile Photo", checked: false },
@@ -1339,6 +1336,12 @@ export default function ModuleStudio() {
             </Link>
             <Link href="/module-studio" className="px-4 py-2 bg-purple-100 text-purple-700 font-medium rounded-lg transition-all">
               Module Studio
+            </Link>
+            <Link href="/products" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-all">
+              Products
+            </Link>
+            <Link href="/deploy" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-green-100 hover:text-green-700 transition-all">
+              Deploy
             </Link>
           </nav>
         </div>
