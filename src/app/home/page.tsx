@@ -126,8 +126,8 @@ export default function HomePage() {
       {/* Main content */}
       <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
         {/* Marquee container */}
-        <div className="w-full overflow-hidden py-10">
-          <div className="flex animate-marquee gap-10 hover:[animation-play-state:paused] overflow-visible">
+        <div className="w-full overflow-hidden py-10 pointer-events-none">
+          <div className="flex animate-marquee gap-10 overflow-visible [&>*]:pointer-events-auto">
             {marqueeCards.map((card, index) => (
               <Link
                 key={`${card.title}-${index}`}
