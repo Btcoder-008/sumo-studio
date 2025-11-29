@@ -50,9 +50,6 @@ const studioCards = [
 ];
 
 export default function HomePage() {
-  // Double the cards for seamless marquee loop
-  const marqueeCards = [...studioCards, ...studioCards];
-
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50">
       {/* Gradient orbs for futuristic effect */}
@@ -126,11 +123,27 @@ export default function HomePage() {
       {/* Main content */}
       <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
         {/* Marquee container */}
-        <div className="w-full overflow-x-auto overflow-y-hidden py-10 scrollbar-hide hover:[&_.animate-marquee]:[animation-play-state:paused]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          <div className="flex animate-marquee gap-10 overflow-visible">
-            {marqueeCards.map((card, index) => (
+        <div className="w-full overflow-hidden py-10 group/marquee">
+          <div className="flex gap-10 animate-marquee group-hover/marquee:[animation-play-state:paused]">
+            {/* First set of cards */}
+            {studioCards.map((card, index) => (
               <Link
-                key={`${card.title}-${index}`}
+                key={`first-${card.title}-${index}`}
+                href={card.href}
+                className={`group flex-shrink-0 w-52 h-52 bg-white/70 backdrop-blur-lg rounded-3xl p-8 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 flex flex-col items-center justify-center`}
+              >
+                <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <span className="text-4xl">{card.icon}</span>
+                </div>
+                <h2 className="text-base font-bold text-gray-800 text-center whitespace-nowrap">
+                  {card.title}
+                </h2>
+              </Link>
+            ))}
+            {/* Second set of cards (duplicate for seamless loop) */}
+            {studioCards.map((card, index) => (
+              <Link
+                key={`second-${card.title}-${index}`}
                 href={card.href}
                 className={`group flex-shrink-0 w-52 h-52 bg-white/70 backdrop-blur-lg rounded-3xl p-8 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 flex flex-col items-center justify-center`}
               >
@@ -153,14 +166,11 @@ export default function HomePage() {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-50%);
+            transform: translateX(calc(-50% - 20px));
           }
         }
         .animate-marquee {
-          animation: marquee 40s linear infinite;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
+          animation: marquee 30s linear infinite;
         }
       `}</style>
     </div>
