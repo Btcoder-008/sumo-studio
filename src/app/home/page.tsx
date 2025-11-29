@@ -44,8 +44,8 @@ const studioCards = [
     title: "Deploy",
     icon: "☁️",
     href: "/deploy",
-    bgColor: "from-green-400 to-emerald-500",
-    hoverColor: "hover:shadow-green-300/50",
+    bgColor: "from-sky-400 to-cyan-500",
+    hoverColor: "hover:shadow-sky-300/50",
   },
 ];
 
