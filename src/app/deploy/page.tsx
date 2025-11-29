@@ -38,6 +38,14 @@ export default function DeployPage() {
   const [backendDevCopied, setBackendDevCopied] = useState(false);
   const [frontendDevCopied, setFrontendDevCopied] = useState(false);
 
+  // Render deploy state
+  const [buildCmdCopied, setBuildCmdCopied] = useState(false);
+  const [startCmdCopied, setStartCmdCopied] = useState(false);
+  const [secretKeyNameCopied, setSecretKeyNameCopied] = useState(false);
+  const [debugNameCopied, setDebugNameCopied] = useState(false);
+  const [databaseUrlNameCopied, setDatabaseUrlNameCopied] = useState(false);
+  const [frontendUrlNameCopied, setFrontendUrlNameCopied] = useState(false);
+
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 overflow-hidden">
       {/* Animated background elements */}
@@ -372,22 +380,190 @@ export default function DeployPage() {
             {/* Web Service Steps */}
             <div className="mb-4 pt-4 border-t border-gray-200">
               <h3 className="text-sm font-semibold text-gray-700 mb-2">Create Web Service</h3>
-              <div className="space-y-1 text-xs text-gray-600">
+              <div className="space-y-2 text-xs text-gray-600">
                 <div>• Root Directory: <code className="bg-gray-100 px-1 rounded">backend</code></div>
                 <div>• Runtime: Python 3</div>
-                <div>• Build: <code className="bg-gray-100 px-1 rounded text-[10px]">pip install -r requirements.txt && python manage.py migrate</code></div>
-                <div>• Start: <code className="bg-gray-100 px-1 rounded">gunicorn myproject.wsgi:application</code></div>
+                <div className="flex items-center gap-2">
+                  <span>• Build:</span>
+                  <div className="flex-1 px-2 py-1 bg-gray-50 border border-gray-200 rounded font-mono text-[10px] text-gray-600 truncate">
+                    pip install -r requirements.txt && python manage.py migrate
+                  </div>
+                  <button
+                    onClick={async () => {
+                      const cmd = "pip install -r requirements.txt && python manage.py migrate";
+                      try {
+                        await navigator.clipboard.writeText(cmd);
+                        setBuildCmdCopied(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = cmd;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setBuildCmdCopied(true);
+                      }
+                      setTimeout(() => setBuildCmdCopied(false), 2000);
+                    }}
+                    className={`px-2 py-1 rounded-lg font-medium text-xs transition-all cursor-pointer ${
+                      buildCmdCopied
+                        ? "bg-green-500 text-white"
+                        : "bg-green-400 hover:bg-green-500 text-gray-800"
+                    }`}
+                  >
+                    {buildCmdCopied ? "✓" : "Copy"}
+                  </button>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>• Start:</span>
+                  <div className="flex-1 px-2 py-1 bg-gray-50 border border-gray-200 rounded font-mono text-[10px] text-gray-600 truncate">
+                    gunicorn myproject.wsgi:application
+                  </div>
+                  <button
+                    onClick={async () => {
+                      const cmd = "gunicorn myproject.wsgi:application";
+                      try {
+                        await navigator.clipboard.writeText(cmd);
+                        setStartCmdCopied(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = cmd;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setStartCmdCopied(true);
+                      }
+                      setTimeout(() => setStartCmdCopied(false), 2000);
+                    }}
+                    className={`px-2 py-1 rounded-lg font-medium text-xs transition-all cursor-pointer ${
+                      startCmdCopied
+                        ? "bg-green-500 text-white"
+                        : "bg-green-400 hover:bg-green-500 text-gray-800"
+                    }`}
+                  >
+                    {startCmdCopied ? "✓" : "Copy"}
+                  </button>
+                </div>
               </div>
             </div>
 
             {/* Environment Variables */}
             <div className="mb-4 pt-4 border-t border-gray-200">
               <h3 className="text-sm font-semibold text-gray-700 mb-2">Environment Variables</h3>
-              <div className="space-y-1 text-xs text-gray-600">
-                <div><code className="bg-gray-100 px-1 rounded">SECRET_KEY</code> = your-random-key</div>
-                <div><code className="bg-gray-100 px-1 rounded">DEBUG</code> = False</div>
-                <div><code className="bg-gray-100 px-1 rounded">DATABASE_URL</code> = (from DB)</div>
-                <div><code className="bg-gray-100 px-1 rounded">FRONTEND_URL</code> = (Vercel URL)</div>
+              <div className="space-y-2 text-xs text-gray-600">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={async () => {
+                      const name = "SECRET_KEY";
+                      try {
+                        await navigator.clipboard.writeText(name);
+                        setSecretKeyNameCopied(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = name;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setSecretKeyNameCopied(true);
+                      }
+                      setTimeout(() => setSecretKeyNameCopied(false), 2000);
+                    }}
+                    className={`px-2 py-1 rounded font-mono text-xs transition-all cursor-pointer ${
+                      secretKeyNameCopied
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-100 hover:bg-green-400 text-gray-700"
+                    }`}
+                  >
+                    {secretKeyNameCopied ? "✓ SECRET_KEY" : "SECRET_KEY"}
+                  </button>
+                  <span>= your-random-key</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={async () => {
+                      const name = "DEBUG";
+                      try {
+                        await navigator.clipboard.writeText(name);
+                        setDebugNameCopied(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = name;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setDebugNameCopied(true);
+                      }
+                      setTimeout(() => setDebugNameCopied(false), 2000);
+                    }}
+                    className={`px-2 py-1 rounded font-mono text-xs transition-all cursor-pointer ${
+                      debugNameCopied
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-100 hover:bg-green-400 text-gray-700"
+                    }`}
+                  >
+                    {debugNameCopied ? "✓ DEBUG" : "DEBUG"}
+                  </button>
+                  <span>= False</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={async () => {
+                      const name = "DATABASE_URL";
+                      try {
+                        await navigator.clipboard.writeText(name);
+                        setDatabaseUrlNameCopied(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = name;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setDatabaseUrlNameCopied(true);
+                      }
+                      setTimeout(() => setDatabaseUrlNameCopied(false), 2000);
+                    }}
+                    className={`px-2 py-1 rounded font-mono text-xs transition-all cursor-pointer ${
+                      databaseUrlNameCopied
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-100 hover:bg-green-400 text-gray-700"
+                    }`}
+                  >
+                    {databaseUrlNameCopied ? "✓ DATABASE_URL" : "DATABASE_URL"}
+                  </button>
+                  <span>= (from DB)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={async () => {
+                      const name = "FRONTEND_URL";
+                      try {
+                        await navigator.clipboard.writeText(name);
+                        setFrontendUrlNameCopied(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = name;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setFrontendUrlNameCopied(true);
+                      }
+                      setTimeout(() => setFrontendUrlNameCopied(false), 2000);
+                    }}
+                    className={`px-2 py-1 rounded font-mono text-xs transition-all cursor-pointer ${
+                      frontendUrlNameCopied
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-100 hover:bg-green-400 text-gray-700"
+                    }`}
+                  >
+                    {frontendUrlNameCopied ? "✓ FRONTEND_URL" : "FRONTEND_URL"}
+                  </button>
+                  <span>= (Vercel URL)</span>
+                </div>
               </div>
             </div>
 
