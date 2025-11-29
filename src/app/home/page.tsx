@@ -59,6 +59,14 @@ const studioCards = [
     bgColor: "from-pink-400 to-purple-500",
     hoverColor: "hover:shadow-pink-300/50",
   },
+  {
+    title: "Module Studio",
+    icon: "🧩",
+    href: "/module-studio",
+    description: "Create reusable modules",
+    bgColor: "from-purple-400 to-indigo-500",
+    hoverColor: "hover:shadow-purple-300/50",
+  },
 ];
 
 export default function HomePage() {
@@ -126,6 +134,12 @@ export default function HomePage() {
             >
               Backend Studio
             </Link>
+            <Link
+              href="/module-studio"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 transition-all"
+            >
+              Module Studio
+            </Link>
           </nav>
         </div>
       </header>
@@ -133,7 +147,7 @@ export default function HomePage() {
       {/* Main content */}
       <main className="relative z-10 flex flex-col items-center justify-center px-4 py-16">
         {/* Studio cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl w-full">
           {studioCards.map((card) => (
             <Link
               key={card.title}

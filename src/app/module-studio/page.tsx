@@ -47,24 +47,24 @@ const floatingIcons = [
   { icon: "📈", bottom: "30%", left: "8%", delay: "3s", duration: "6s" },
 ];
 
-// Module/Page Type options
-const moduleTypeOptions: CheckboxOption[] = [
-  { id: "dashboard", label: "Dashboard", checked: false, icon: "📊" },
-  { id: "admin-panel", label: "Admin Panel", checked: false, icon: "⚙️" },
-  { id: "user-management", label: "User Management", checked: false, icon: "👥" },
-  { id: "analytics", label: "Analytics & Reports", checked: false, icon: "📈" },
-  { id: "settings", label: "Settings Page", checked: false, icon: "🔧" },
-  { id: "profile", label: "Profile Page", checked: false, icon: "👤" },
-  { id: "inventory", label: "Inventory Management", checked: false, icon: "📦" },
-  { id: "orders", label: "Orders Management", checked: false, icon: "🛒" },
-  { id: "customers", label: "Customer Management", checked: false, icon: "🤝" },
-  { id: "products", label: "Product Management", checked: false, icon: "🏷️" },
-  { id: "billing", label: "Billing & Invoices", checked: false, icon: "💳" },
-  { id: "calendar", label: "Calendar/Scheduling", checked: false, icon: "📅" },
-  { id: "messages", label: "Messages/Chat", checked: false, icon: "💬" },
-  { id: "notifications", label: "Notifications Center", checked: false, icon: "🔔" },
-  { id: "file-manager", label: "File Manager", checked: false, icon: "📁" },
-  { id: "crm", label: "CRM Module", checked: false, icon: "📇" },
+// Page Type options for dropdown
+const pageTypeOptions = [
+  { id: "dashboard", label: "Dashboard", icon: "📊" },
+  { id: "admin-panel", label: "Admin Panel", icon: "⚙️" },
+  { id: "user-management", label: "User Management", icon: "👥" },
+  { id: "analytics", label: "Analytics & Reports", icon: "📈" },
+  { id: "settings", label: "Settings Page", icon: "🔧" },
+  { id: "profile", label: "Profile Page", icon: "👤" },
+  { id: "inventory", label: "Inventory Management", icon: "📦" },
+  { id: "orders", label: "Orders Management", icon: "🛒" },
+  { id: "customers", label: "Customer Management", icon: "🤝" },
+  { id: "products", label: "Product Management", icon: "🏷️" },
+  { id: "billing", label: "Billing & Invoices", icon: "💳" },
+  { id: "calendar", label: "Calendar/Scheduling", icon: "📅" },
+  { id: "messages", label: "Messages/Chat", icon: "💬" },
+  { id: "notifications", label: "Notifications Center", icon: "🔔" },
+  { id: "file-manager", label: "File Manager", icon: "📁" },
+  { id: "crm", label: "CRM Module", icon: "📇" },
 ];
 
 // Dashboard Widget options
@@ -195,9 +195,10 @@ const stateFeatureOptions: CheckboxOption[] = [
 export default function ModuleStudio() {
   // Form state
   const [reviewEntireProject, setReviewEntireProject] = useState("");
-  const [moduleTitle, setModuleTitle] = useState("");
+  const [themeReferencePageUrl, setThemeReferencePageUrl] = useState("");
+  const [referencePageUrl, setReferencePageUrl] = useState("");
   const [moduleDescription, setModuleDescription] = useState("");
-  const [moduleTypes, setModuleTypes] = useState<CheckboxOption[]>(moduleTypeOptions);
+  const [selectedPageType, setSelectedPageType] = useState("");
   const [dashboardWidgets, setDashboardWidgets] = useState<CheckboxOption[]>(dashboardWidgetOptions);
   const [tableFeatures, setTableFeatures] = useState<CheckboxOption[]>(tableFeatureOptions);
   const [formFeatures, setFormFeatures] = useState<CheckboxOption[]>(formFeatureOptions);
@@ -294,11 +295,11 @@ export default function ModuleStudio() {
   };
 
   // Check if dashboard is selected to show widgets
-  const showDashboardWidgets = moduleTypes.find((m) => m.id === "dashboard")?.checked;
+  const showDashboardWidgets = selectedPageType === "dashboard";
 
   // Generate the prompt
   const generatePrompt = () => {
-    const selectedModules = moduleTypes.filter((opt) => opt.checked).map((opt) => opt.label);
+    const selectedPageTypeLabel = pageTypeOptions.find((opt) => opt.id === selectedPageType)?.label || "";
     const selectedWidgets = dashboardWidgets.filter((opt) => opt.checked).map((opt) => opt.label);
     const selectedTableFeatures = tableFeatures.filter((opt) => opt.checked).map((opt) => opt.label);
     const selectedFormFeatures = formFeatures.filter((opt) => opt.checked).map((opt) => opt.label);
@@ -311,32 +312,36 @@ export default function ModuleStudio() {
 
     let prompt = "";
 
-    // Review Entire Project
+    // Modify this URL
     if (reviewEntireProject.trim()) {
-      prompt += `## Review Entire Project\n`;
+      prompt += `## Modify this URL\n`;
       prompt += `${reviewEntireProject}\n\n`;
     }
 
-    // Module Title
-    if (moduleTitle.trim()) {
-      prompt += `# Module: ${moduleTitle}\n\n`;
+    // Theme Reference URL
+    if (themeReferencePageUrl.trim()) {
+      prompt += `## Theme Reference URL\n`;
+      prompt += `${themeReferencePageUrl}\n\n`;
     }
 
-    // Module Description
+    // Content Reference URL
+    if (referencePageUrl.trim()) {
+      prompt += `## Content Reference URL\n`;
+      prompt += `${referencePageUrl}\n\n`;
+    }
+
+    // Description
     if (moduleDescription.trim()) {
-      prompt += `## Module Description\n`;
+      prompt += `## Purpose\n`;
       prompt += `${moduleDescription}\n\n`;
     }
 
     prompt += `## Frontend Module Design Request\n\n`;
 
-    // Module Types
-    if (selectedModules.length > 0) {
-      prompt += `### Module/Page Type(s)\n`;
-      selectedModules.forEach((module) => {
-        prompt += `- ${module}\n`;
-      });
-      prompt += `\n`;
+    // Type
+    if (selectedPageTypeLabel) {
+      prompt += `### Type\n`;
+      prompt += `- ${selectedPageTypeLabel}\n\n`;
     }
 
     // Dashboard Widgets (if dashboard selected)
@@ -460,9 +465,10 @@ export default function ModuleStudio() {
   // Clear form
   const clearForm = () => {
     setReviewEntireProject("");
-    setModuleTitle("");
+    setThemeReferencePageUrl("");
+    setReferencePageUrl("");
     setModuleDescription("");
-    setModuleTypes(moduleTypeOptions.map((opt) => ({ ...opt, checked: false })));
+    setSelectedPageType("");
     setDashboardWidgets(dashboardWidgetOptions.map((opt) => ({ ...opt, checked: false })));
     setTableFeatures(tableFeatureOptions.map((opt) => ({ ...opt, checked: false })));
     setFormFeatures(formFeatureOptions.map((opt) => ({ ...opt, checked: false })));
@@ -543,16 +549,16 @@ export default function ModuleStudio() {
               Frontend Studio
             </Link>
             <Link
-              href="/module-studio"
-              className="px-4 py-2 bg-teal-100 text-teal-700 font-medium rounded-lg transition-all"
-            >
-              Module Studio
-            </Link>
-            <Link
               href="/backend-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-pink-100 hover:text-pink-700 transition-all"
             >
               Backend Studio
+            </Link>
+            <Link
+              href="/module-studio"
+              className="px-4 py-2 bg-purple-100 text-purple-700 font-medium rounded-lg transition-all"
+            >
+              Module Studio
             </Link>
           </nav>
         </div>
@@ -564,77 +570,82 @@ export default function ModuleStudio() {
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-teal-200/50 transition-shadow duration-300 max-h-[calc(100vh-150px)] overflow-y-auto">
             <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
               <span className="text-2xl">🎯</span>
-              Module Builder
+              Module Studio
             </h2>
 
-            {/* Review Entire Project */}
+            {/* Modify this URL */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Review Entire Project
+                Modify this URL
               </label>
               <input
                 type="url"
                 value={reviewEntireProject}
                 onChange={(e) => setReviewEntireProject(e.target.value)}
-                placeholder="Paste entire project link here"
+                placeholder="Paste URL to modify"
                 className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none transition-all hover:border-teal-300"
               />
             </div>
 
-            {/* Module Title */}
+            {/* Theme Reference URL */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Module/Page Title
+                Theme Reference URL
               </label>
               <input
-                type="text"
-                value={moduleTitle}
-                onChange={(e) => setModuleTitle(e.target.value)}
-                placeholder="e.g., Admin Dashboard, User Management Panel"
+                type="url"
+                value={themeReferencePageUrl}
+                onChange={(e) => setThemeReferencePageUrl(e.target.value)}
+                placeholder="Paste theme reference URL here"
                 className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none transition-all hover:border-teal-300"
               />
             </div>
 
-            {/* Module Description */}
+            {/* Content Reference URL */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Describe Module Purpose
+                Content Reference URL
+              </label>
+              <input
+                type="url"
+                value={referencePageUrl}
+                onChange={(e) => setReferencePageUrl(e.target.value)}
+                placeholder="Paste content reference URL here"
+                className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none transition-all hover:border-teal-300"
+              />
+            </div>
+
+            {/* Description */}
+            <div className="mb-6">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Describe Purpose
               </label>
               <textarea
                 value={moduleDescription}
                 onChange={(e) => setModuleDescription(e.target.value)}
-                placeholder="Describe what this module should do, its main features, and target users..."
+                placeholder="Describe what this should do, its main features, and target users..."
                 rows={3}
                 className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none transition-all resize-none hover:border-teal-300"
               />
             </div>
 
-            {/* Module Type - Checklist */}
+            {/* Type - Dropdown */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Module/Page Type
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Type
               </label>
-              <div className="grid grid-cols-2 gap-3">
-                {moduleTypes.map((option) => (
-                  <label
-                    key={option.id}
-                    className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 border-2 ${
-                      option.checked
-                        ? "bg-gradient-to-r from-teal-100 to-green-100 border-teal-400 shadow-md"
-                        : "bg-white/50 border-gray-200 hover:border-teal-300 hover:bg-teal-50"
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={option.checked}
-                      onChange={() => handleCheckboxChange(option.id, setModuleTypes)}
-                      className="w-5 h-5 text-teal-500 border-gray-300 rounded focus:ring-teal-400 accent-teal-500"
-                    />
-                    <span className="text-lg">{option.icon}</span>
-                    <span className="text-gray-700 text-sm font-medium">{option.label}</span>
-                  </label>
+              <select
+                value={selectedPageType}
+                onChange={(e) => setSelectedPageType(e.target.value)}
+                className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none transition-all hover:border-teal-300 text-gray-700 cursor-pointer"
+              >
+                <option value="">Select a page type...</option>
+                {pageTypeOptions.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.icon} {option.label}
+                  </option>
                 ))}
-              </div>
+              </select>
             </div>
 
             {/* Dashboard Widgets - Conditional */}

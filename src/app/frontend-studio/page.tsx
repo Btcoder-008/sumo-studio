@@ -170,7 +170,6 @@ const functionalityOptions: CheckboxOption[] = [
 export default function FrontendStudio() {
   // Form state
   const [reviewEntireProject, setReviewEntireProject] = useState("");
-  const [projectTitle, setProjectTitle] = useState("");
   const [projectName, setProjectName] = useState("");
   const [pageTypes, setPageTypes] = useState<CheckboxOption[]>(pageTypeOptions);
   const [customPageType, setCustomPageType] = useState("");
@@ -335,11 +334,6 @@ export default function FrontendStudio() {
       prompt += `${reviewEntireProject}\n\n`;
     }
 
-    // Project Title
-    if (projectTitle.trim()) {
-      prompt += `# Project Title: ${projectTitle}\n\n`;
-    }
-
     // Project Core Concept
     if (projectName.trim()) {
       prompt += `## Project Core Concept\n`;
@@ -491,7 +485,6 @@ export default function FrontendStudio() {
   // Clear form
   const clearForm = () => {
     setReviewEntireProject("");
-    setProjectTitle("");
     setProjectName("");
     setPageTypes(pageTypeOptions.map((opt) => ({ ...opt, checked: false })));
     setCustomPageType("");
@@ -577,16 +570,16 @@ export default function FrontendStudio() {
               Frontend Studio
             </Link>
             <Link
-              href="/module-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-teal-100 hover:text-teal-700 transition-all"
-            >
-              Module Studio
-            </Link>
-            <Link
               href="/backend-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-pink-100 hover:text-pink-700 transition-all"
             >
               Backend Studio
+            </Link>
+            <Link
+              href="/module-studio"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 transition-all"
+            >
+              Module Studio
             </Link>
           </nav>
         </div>
@@ -598,7 +591,7 @@ export default function FrontendStudio() {
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-orange-200/50 transition-shadow duration-300 max-h-[calc(100vh-150px)] overflow-y-auto">
             <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
               <span className="text-2xl">🎨</span>
-              Frontend Builder
+              Frontend Studio
             </h2>
 
             {/* Review Entire Project */}
@@ -611,20 +604,6 @@ export default function FrontendStudio() {
                 value={reviewEntireProject}
                 onChange={(e) => setReviewEntireProject(e.target.value)}
                 placeholder="Paste entire project link here"
-                className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition-all hover:border-orange-300"
-              />
-            </div>
-
-            {/* Project Title */}
-            <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Project Title
-              </label>
-              <input
-                type="text"
-                value={projectTitle}
-                onChange={(e) => setProjectTitle(e.target.value)}
-                placeholder="Enter project title"
                 className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition-all hover:border-orange-300"
               />
             </div>

@@ -112,16 +112,16 @@ export default function TerminalPage() {
               Frontend Studio
             </Link>
             <Link
-              href="/module-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-teal-100 hover:text-teal-700 transition-all"
-            >
-              Module Studio
-            </Link>
-            <Link
               href="/backend-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-pink-100 hover:text-pink-700 transition-all"
             >
               Backend Studio
+            </Link>
+            <Link
+              href="/module-studio"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 transition-all"
+            >
+              Module Studio
             </Link>
           </nav>
         </div>

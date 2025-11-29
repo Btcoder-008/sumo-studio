@@ -461,16 +461,16 @@ export default function BackendStudio() {
               Frontend Studio
             </Link>
             <Link
-              href="/module-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-teal-100 hover:text-teal-700 transition-all"
-            >
-              Module Studio
-            </Link>
-            <Link
               href="/backend-studio"
               className="px-4 py-2 bg-pink-100 text-pink-700 font-medium rounded-lg transition-all"
             >
               Backend Studio
+            </Link>
+            <Link
+              href="/module-studio"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 transition-all"
+            >
+              Module Studio
             </Link>
           </nav>
         </div>
@@ -482,7 +482,7 @@ export default function BackendStudio() {
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-pink-200/50 transition-shadow duration-300 max-h-[calc(100vh-150px)] overflow-y-auto">
             <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
               <span className="text-2xl">⚙️</span>
-              Backend Builder
+              Backend Studio
             </h2>
 
             {/* Review Entire Project */}
