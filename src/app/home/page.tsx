@@ -3,6 +3,38 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// Floating app icon component
+function FloatingIcon({ icon, style }: { icon: string; style: React.CSSProperties }) {
+  return (
+    <div
+      className="absolute text-4xl md:text-5xl opacity-35 animate-float pointer-events-none"
+      style={style}
+    >
+      {icon}
+    </div>
+  );
+}
+
+// App-related icons for floating background
+const floatingIcons = [
+  { icon: "📱", top: "5%", left: "10%", delay: "0s", duration: "6s" },
+  { icon: "💻", top: "15%", right: "15%", delay: "1s", duration: "7s" },
+  { icon: "🎮", top: "25%", left: "5%", delay: "2s", duration: "5s" },
+  { icon: "📷", bottom: "30%", right: "10%", delay: "0.5s", duration: "8s" },
+  { icon: "🎵", top: "40%", left: "15%", delay: "1.5s", duration: "6s" },
+  { icon: "📧", bottom: "20%", left: "8%", delay: "3s", duration: "7s" },
+  { icon: "🔔", top: "10%", right: "30%", delay: "2.5s", duration: "5s" },
+  { icon: "⚙️", bottom: "15%", right: "25%", delay: "1s", duration: "6s" },
+  { icon: "🛒", top: "60%", right: "5%", delay: "0s", duration: "7s" },
+  { icon: "📊", bottom: "40%", left: "20%", delay: "2s", duration: "8s" },
+  { icon: "🎬", top: "70%", left: "3%", delay: "1.5s", duration: "5s" },
+  { icon: "🌐", top: "8%", left: "40%", delay: "3s", duration: "6s" },
+  { icon: "💬", bottom: "10%", right: "40%", delay: "0.5s", duration: "7s" },
+  { icon: "📅", top: "50%", right: "20%", delay: "2.5s", duration: "5s" },
+  { icon: "🔍", bottom: "50%", left: "30%", delay: "1s", duration: "8s" },
+  { icon: "☁️", top: "20%", left: "25%", delay: "0s", duration: "6s" },
+];
+
 // Studio cards data
 const studioCards = [
   {
@@ -52,6 +84,22 @@ const studioCards = [
 export default function HomePage() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50">
+      {/* Floating app icons background */}
+      {floatingIcons.map((item, index) => (
+        <FloatingIcon
+          key={index}
+          icon={item.icon}
+          style={{
+            top: item.top,
+            left: item.left,
+            right: item.right,
+            bottom: item.bottom,
+            animationDelay: item.delay,
+            animationDuration: item.duration,
+          } as React.CSSProperties}
+        />
+      ))}
+
       {/* Gradient orbs for futuristic effect */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
