@@ -485,6 +485,18 @@ export default function BuildStudio() {
             >
               Module Studio
             </Link>
+            <Link
+              href="/products"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-all"
+            >
+              Products
+            </Link>
+            <Link
+              href="/deploy"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-green-100 hover:text-green-700 transition-all"
+            >
+              Deploy
+            </Link>
           </nav>
         </div>
       </header>
