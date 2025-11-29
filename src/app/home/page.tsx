@@ -132,12 +132,12 @@ export default function HomePage() {
               <Link
                 key={`${card.title}-${index}`}
                 href={card.href}
-                className={`group flex-shrink-0 bg-white/70 backdrop-blur-lg rounded-2xl p-6 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2`}
+                className={`group flex-shrink-0 w-40 h-40 bg-white/70 backdrop-blur-lg rounded-2xl p-6 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 flex flex-col items-center justify-center`}
               >
-                <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-4 mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <span className="text-3xl">{card.icon}</span>
                 </div>
-                <h2 className="text-lg font-bold text-gray-800 text-center">
+                <h2 className="text-sm font-bold text-gray-800 text-center whitespace-nowrap">
                   {card.title}
                 </h2>
               </Link>
