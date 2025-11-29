@@ -124,20 +124,20 @@ export default function HomePage() {
       </header>
 
       {/* Main content */}
-      <main className="relative z-10 flex flex-col items-center justify-center py-16">
+      <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
         {/* Marquee container */}
         <div className="w-full overflow-hidden">
-          <div className="flex animate-marquee gap-6 hover:[animation-play-state:paused]">
+          <div className="flex animate-marquee gap-10 hover:[animation-play-state:paused]">
             {marqueeCards.map((card, index) => (
               <Link
                 key={`${card.title}-${index}`}
                 href={card.href}
-                className={`group flex-shrink-0 w-40 h-40 bg-white/70 backdrop-blur-lg rounded-2xl p-6 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 flex flex-col items-center justify-center`}
+                className={`group flex-shrink-0 w-52 h-52 bg-white/70 backdrop-blur-lg rounded-3xl p-8 border border-white/30 shadow-xl ${card.hoverColor} hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 flex flex-col items-center justify-center`}
               >
-                <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <span className="text-3xl">{card.icon}</span>
+                <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${card.bgColor} flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <span className="text-4xl">{card.icon}</span>
                 </div>
-                <h2 className="text-sm font-bold text-gray-800 text-center whitespace-nowrap">
+                <h2 className="text-base font-bold text-gray-800 text-center whitespace-nowrap">
                   {card.title}
                 </h2>
               </Link>
@@ -157,7 +157,7 @@ export default function HomePage() {
           }
         }
         .animate-marquee {
-          animation: marquee 20s linear infinite;
+          animation: marquee 40s linear infinite;
         }
       `}</style>
     </div>
