@@ -709,9 +709,21 @@ export default function FrontendStudio() {
 
             {/* UI Framework - Checklist */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
-                UI Framework
-              </label>
+              <div className="flex items-center justify-between mb-3">
+                <label className="block text-sm font-semibold text-gray-700">
+                  UI Framework
+                </label>
+                <Link
+                  href="/ui-framework"
+                  target="_blank"
+                  className="px-3 py-1.5 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white text-xs font-medium rounded-lg transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1"
+                >
+                  <span>View All</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </Link>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 {frameworks.map((option) => (
                   <label
@@ -737,9 +749,21 @@ export default function FrontendStudio() {
 
             {/* Color Scheme - Checklist */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Color Scheme
-              </label>
+              <div className="flex items-center justify-between mb-3">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Color Scheme
+                </label>
+                <Link
+                  href="/color-scheme"
+                  target="_blank"
+                  className="px-3 py-1.5 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white text-xs font-medium rounded-lg transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1"
+                >
+                  <span>View All</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </Link>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 {colorSchemes.map((option) => (
                   <label
@@ -776,9 +800,21 @@ export default function FrontendStudio() {
 
             {/* UI Design Effects - Checklist */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
-                UI Design Effects
-              </label>
+              <div className="flex items-center justify-between mb-3">
+                <label className="block text-sm font-semibold text-gray-700">
+                  UI Design Effects
+                </label>
+                <Link
+                  href="/ui-design-effects"
+                  target="_blank"
+                  className="px-3 py-1.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white text-xs font-medium rounded-lg transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1"
+                >
+                  <span>View All</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </Link>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 {uiDesigns.map((option) => (
                   <label
@@ -804,9 +840,21 @@ export default function FrontendStudio() {
 
             {/* Layout Components - Checklist */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Layout Components
-              </label>
+              <div className="flex items-center justify-between mb-3">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Layout Components
+                </label>
+                <Link
+                  href="/layout-components"
+                  target="_blank"
+                  className="px-3 py-1.5 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white text-xs font-medium rounded-lg transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1"
+                >
+                  <span>View All</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </Link>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 {layouts.map((option) => (
                   <label
@@ -832,9 +880,21 @@ export default function FrontendStudio() {
 
             {/* Features - Checklist */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Features
-              </label>
+              <div className="flex items-center justify-between mb-3">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Features
+                </label>
+                <Link
+                  href="/features"
+                  target="_blank"
+                  className="px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white text-xs font-medium rounded-lg transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1"
+                >
+                  <span>View All</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </Link>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 {features.map((option) => (
                   <label
