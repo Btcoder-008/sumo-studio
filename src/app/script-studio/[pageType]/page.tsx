@@ -631,7 +631,7 @@ export default function PageTypeDetail() {
       { id: "ecom-images", command: "npm install react-image-gallery swiper" },
     ],
     "employee-page": [
-      { id: "emp-mgmt", command: "npm install @your-username/employee-management" },
+      { id: "emp-mgmt", command: "npm install /Users/thiyagarajanbalakrishnan/Downloads/superstaff" },
       { id: "emp-calendar", command: "npm install @fullcalendar/react @fullcalendar/daygrid" },
       { id: "emp-export", command: "npm install xlsx file-saver" },
     ],
