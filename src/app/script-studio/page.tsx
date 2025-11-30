@@ -49,7 +49,7 @@ const allPageTypes = [
 
 export default function ScriptStudio() {
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 overflow-hidden">
       {/* Animated background elements */}
       {floatingIcons.map((item, index) => (
         <FloatingIcon
@@ -67,9 +67,9 @@ export default function ScriptStudio() {
       ))}
 
       {/* Gradient orbs for futuristic effect */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-green-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
-      <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }} />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
+      <div className="absolute top-1/2 right-0 w-96 h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
+      <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }} />
 
       {/* Header */}
       <header className="relative z-20 bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20">
@@ -102,19 +102,19 @@ export default function ScriptStudio() {
             </Link>
             <Link
               href="/frontend-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-orange-100 hover:text-orange-700 transition-all"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
             >
               Frontend Studio
             </Link>
             <Link
               href="/backend-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-pink-100 hover:text-pink-700 transition-all"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
             >
               Backend Studio
             </Link>
             <Link
               href="/script-studio"
-              className="px-4 py-2 bg-green-100 text-green-700 font-medium rounded-lg transition-all"
+              className="px-4 py-2 bg-yellow-100 text-yellow-700 font-medium rounded-lg transition-all"
             >
               Script Studio
             </Link>

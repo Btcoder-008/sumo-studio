@@ -586,19 +586,19 @@ export default function FrontendStudio() {
             </Link>
             <Link
               href="/frontend-studio"
-              className="px-4 py-2 bg-orange-100 text-orange-700 font-medium rounded-lg transition-all"
+              className="px-4 py-2 bg-yellow-100 text-yellow-700 font-medium rounded-lg transition-all"
             >
               Frontend Studio
             </Link>
             <Link
               href="/backend-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-pink-100 hover:text-pink-700 transition-all"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
             >
               Backend Studio
             </Link>
             <Link
               href="/script-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-green-100 hover:text-green-700 transition-all"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
             >
               Script Studio
             </Link>

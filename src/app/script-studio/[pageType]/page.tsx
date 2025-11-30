@@ -10,6 +10,7 @@ type SubField = {
   id: string;
   label: string;
   checked: boolean;
+  required: boolean;
 };
 
 type Requirement = {
@@ -276,67 +277,67 @@ const pageRequirements: Record<string, Requirement[]> = {
   ],
   "employee-page": [
     { id: "add-employee", label: "1. Add Employee", checked: false, icon: "➕", subFields: [
-      { id: "ae-name", label: "1.1 Employee Name", checked: false },
-      { id: "ae-email", label: "1.2 Email", checked: false },
-      { id: "ae-phone", label: "1.3 Mobile Number", checked: false },
-      { id: "ae-address", label: "1.4 Address", checked: false },
-      { id: "ae-department", label: "1.5 Department", checked: false },
-      { id: "ae-designation", label: "1.6 Designation", checked: false },
-      { id: "ae-join-date", label: "1.7 Join Date", checked: false },
-      { id: "ae-salary", label: "1.8 Salary", checked: false },
-      { id: "ae-photo", label: "1.9 Photo Upload", checked: false },
+      { id: "ae-name", label: "1.1 Employee Name", checked: false, required: false },
+      { id: "ae-email", label: "1.2 Email", checked: false, required: false },
+      { id: "ae-phone", label: "1.3 Mobile Number", checked: false, required: false },
+      { id: "ae-address", label: "1.4 Address", checked: false, required: false },
+      { id: "ae-department", label: "1.5 Department", checked: false, required: false },
+      { id: "ae-designation", label: "1.6 Designation", checked: false, required: false },
+      { id: "ae-join-date", label: "1.7 Join Date", checked: false, required: false },
+      { id: "ae-salary", label: "1.8 Salary", checked: false, required: false },
+      { id: "ae-photo", label: "1.9 Photo Upload", checked: false, required: false },
     ]},
     { id: "employee-list", label: "2. Employee List", checked: false, icon: "👥", subFields: [
-      { id: "el-all-data", label: "2.1 Show All Data from Add Employee", checked: false },
-      { id: "el-crud", label: "2.2 CRUD Actions (Create/Read/Update/Delete)", checked: false },
-      { id: "el-status", label: "2.3 Employee Status (Active/Inactive)", checked: false },
+      { id: "el-all-data", label: "2.1 Show All Data from Add Employee", checked: false, required: false },
+      { id: "el-crud", label: "2.2 CRUD Actions (Create/Read/Update/Delete)", checked: false, required: false },
+      { id: "el-status", label: "2.3 Employee Status (Active/Inactive)", checked: false, required: false },
     ]},
     { id: "employee-profile", label: "3. Employee Profile", checked: false, icon: "👤", subFields: [
-      { id: "ep-photo", label: "3.1 Profile Photo", checked: false },
-      { id: "ep-personal-info", label: "3.2 Personal Information", checked: false },
-      { id: "ep-contact-info", label: "3.3 Contact Information", checked: false },
-      { id: "ep-job-details", label: "3.4 Job Details", checked: false },
-      { id: "ep-emergency-contact", label: "3.5 Emergency Contact", checked: false },
+      { id: "ep-photo", label: "3.1 Profile Photo", checked: false, required: false },
+      { id: "ep-personal-info", label: "3.2 Personal Information", checked: false, required: false },
+      { id: "ep-contact-info", label: "3.3 Contact Information", checked: false, required: false },
+      { id: "ep-job-details", label: "3.4 Job Details", checked: false, required: false },
+      { id: "ep-emergency-contact", label: "3.5 Emergency Contact", checked: false, required: false },
     ]},
     { id: "attendance-tracker", label: "4. Attendance Tracker", checked: false, icon: "📅", subFields: [
-      { id: "at-date", label: "4.1 Date", checked: false },
-      { id: "at-check-in", label: "4.2 Check In Time", checked: false },
-      { id: "at-check-out", label: "4.3 Check Out Time", checked: false },
-      { id: "at-status", label: "4.4 Status (Present/Absent)", checked: false },
-      { id: "at-working-hours", label: "4.5 Working Hours", checked: false },
+      { id: "at-date", label: "4.1 Date", checked: false, required: false },
+      { id: "at-check-in", label: "4.2 Check In Time", checked: false, required: false },
+      { id: "at-check-out", label: "4.3 Check Out Time", checked: false, required: false },
+      { id: "at-status", label: "4.4 Status (Present/Absent)", checked: false, required: false },
+      { id: "at-working-hours", label: "4.5 Working Hours", checked: false, required: false },
     ]},
     { id: "leave-management", label: "5. Leave Management", checked: false, icon: "🏖️", subFields: [
-      { id: "lm-leave-type", label: "5.1 Leave Type", checked: false },
-      { id: "lm-from-date", label: "5.2 From Date", checked: false },
-      { id: "lm-to-date", label: "5.3 To Date", checked: false },
-      { id: "lm-reason", label: "5.4 Reason", checked: false },
-      { id: "lm-status", label: "5.5 Status", checked: false },
-      { id: "lm-balance", label: "5.6 Leave Balance", checked: false },
+      { id: "lm-leave-type", label: "5.1 Leave Type", checked: false, required: false },
+      { id: "lm-from-date", label: "5.2 From Date", checked: false, required: false },
+      { id: "lm-to-date", label: "5.3 To Date", checked: false, required: false },
+      { id: "lm-reason", label: "5.4 Reason", checked: false, required: false },
+      { id: "lm-status", label: "5.5 Status", checked: false, required: false },
+      { id: "lm-balance", label: "5.6 Leave Balance", checked: false, required: false },
     ]},
     { id: "payroll-info", label: "6. Payroll Information", checked: false, icon: "💰", subFields: [
-      { id: "pi-basic-salary", label: "6.1 Basic Salary", checked: false },
-      { id: "pi-allowances", label: "6.2 Allowances", checked: false },
-      { id: "pi-deductions", label: "6.3 Deductions", checked: false },
-      { id: "pi-net-salary", label: "6.4 Net Salary", checked: false },
-      { id: "pi-bank-details", label: "6.5 Bank Details", checked: false },
+      { id: "pi-basic-salary", label: "6.1 Basic Salary", checked: false, required: false },
+      { id: "pi-allowances", label: "6.2 Allowances", checked: false, required: false },
+      { id: "pi-deductions", label: "6.3 Deductions", checked: false, required: false },
+      { id: "pi-net-salary", label: "6.4 Net Salary", checked: false, required: false },
+      { id: "pi-bank-details", label: "6.5 Bank Details", checked: false, required: false },
     ]},
     { id: "performance-review", label: "7. Performance Review", checked: false, icon: "📊", subFields: [
-      { id: "pr-review-period", label: "7.1 Review Period", checked: false },
-      { id: "pr-goals", label: "7.2 Goals", checked: false },
-      { id: "pr-achievements", label: "7.3 Achievements", checked: false },
-      { id: "pr-rating", label: "7.4 Rating", checked: false },
-      { id: "pr-feedback", label: "7.5 Feedback", checked: false },
+      { id: "pr-review-period", label: "7.1 Review Period", checked: false, required: false },
+      { id: "pr-goals", label: "7.2 Goals", checked: false, required: false },
+      { id: "pr-achievements", label: "7.3 Achievements", checked: false, required: false },
+      { id: "pr-rating", label: "7.4 Rating", checked: false, required: false },
+      { id: "pr-feedback", label: "7.5 Feedback", checked: false, required: false },
     ]},
     { id: "document-management", label: "8. Document Management", checked: false, icon: "📁", subFields: [
-      { id: "dm-doc-type", label: "8.1 Document Type", checked: false },
-      { id: "dm-file-name", label: "8.2 File Name", checked: false },
-      { id: "dm-upload-date", label: "8.3 Upload Date", checked: false },
-      { id: "dm-download", label: "8.4 Download Button", checked: false },
+      { id: "dm-doc-type", label: "8.1 Document Type", checked: false, required: false },
+      { id: "dm-file-name", label: "8.2 File Name", checked: false, required: false },
+      { id: "dm-upload-date", label: "8.3 Upload Date", checked: false, required: false },
+      { id: "dm-download", label: "8.4 Download Button", checked: false, required: false },
     ]},
     { id: "org-chart", label: "9. Organization Chart", checked: false, icon: "🏢", subFields: [
-      { id: "oc-hierarchy", label: "9.1 Hierarchy View", checked: false },
-      { id: "oc-department-filter", label: "9.2 Department Filter", checked: false },
-      { id: "oc-employee-card", label: "9.3 Employee Card", checked: false },
+      { id: "oc-hierarchy", label: "9.1 Hierarchy View", checked: false, required: false },
+      { id: "oc-department-filter", label: "9.2 Department Filter", checked: false, required: false },
+      { id: "oc-employee-card", label: "9.3 Employee Card", checked: false, required: false },
     ]},
   ],
   "error-page": [
@@ -578,6 +579,139 @@ export default function PageTypeDetail() {
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
   const [copied, setCopied] = useState(false);
 
+  // Layout section state (only for employee-page)
+  const [layoutOptions, setLayoutOptions] = useState({
+    sidebarNav: false,
+    bottomNav: false,
+  });
+
+  // Master section state (only for employee-page)
+  const [masterOptions, setMasterOptions] = useState({
+    designationMaster: false,
+    departmentMaster: false,
+    employeeMaster: false,
+    employeeLoginMaster: false,
+  });
+
+  // npm packages for all pages
+  const pageNpmPackages: Record<string, { id: string; command: string }[]> = {
+    "accounts-page": [
+      { id: "acc-stripe", command: "npm install stripe @stripe/stripe-js" },
+      { id: "acc-paypal", command: "npm install @paypal/react-paypal-js" },
+      { id: "acc-invoice", command: "npm install jspdf html2canvas" },
+    ],
+    "admin-page": [
+      { id: "admin-panel", command: "npm install react-admin" },
+      { id: "admin-charts", command: "npm install recharts" },
+      { id: "admin-table", command: "npm install @tanstack/react-table" },
+    ],
+    "blog-page": [
+      { id: "blog-editor", command: "npm install @tiptap/react @tiptap/starter-kit" },
+      { id: "blog-markdown", command: "npm install react-markdown remark-gfm" },
+      { id: "blog-syntax", command: "npm install react-syntax-highlighter" },
+    ],
+    "contact-page": [
+      { id: "contact-form", command: "npm install react-hook-form @hookform/resolvers zod" },
+      { id: "contact-map", command: "npm install @react-google-maps/api" },
+      { id: "contact-email", command: "npm install @emailjs/browser" },
+    ],
+    "customer-page": [
+      { id: "cust-table", command: "npm install @tanstack/react-table" },
+      { id: "cust-export", command: "npm install xlsx file-saver" },
+      { id: "cust-search", command: "npm install fuse.js" },
+    ],
+    "dashboard-page": [
+      { id: "dash-charts", command: "npm install recharts" },
+      { id: "dash-grid", command: "npm install react-grid-layout" },
+      { id: "dash-icons", command: "npm install lucide-react" },
+    ],
+    "e-commerce-page": [
+      { id: "ecom-cart", command: "npm install @stripe/stripe-js" },
+      { id: "ecom-state", command: "npm install zustand" },
+      { id: "ecom-images", command: "npm install react-image-gallery swiper" },
+    ],
+    "employee-page": [
+      { id: "emp-mgmt", command: "npm install @your-username/employee-management" },
+      { id: "emp-calendar", command: "npm install @fullcalendar/react @fullcalendar/daygrid" },
+      { id: "emp-export", command: "npm install xlsx file-saver" },
+    ],
+    "error-page": [
+      { id: "err-animation", command: "npm install lottie-react" },
+      { id: "err-icons", command: "npm install lucide-react" },
+    ],
+    "form-page": [
+      { id: "form-hook", command: "npm install react-hook-form" },
+      { id: "form-validation", command: "npm install zod @hookform/resolvers" },
+      { id: "form-select", command: "npm install react-select" },
+      { id: "form-datepicker", command: "npm install react-datepicker" },
+    ],
+    "gallery-page": [
+      { id: "gallery-lightbox", command: "npm install yet-another-react-lightbox" },
+      { id: "gallery-masonry", command: "npm install react-masonry-css" },
+      { id: "gallery-dropzone", command: "npm install react-dropzone" },
+    ],
+    "inventory-page": [
+      { id: "inv-table", command: "npm install @tanstack/react-table" },
+      { id: "inv-barcode", command: "npm install react-barcode" },
+      { id: "inv-export", command: "npm install xlsx file-saver jspdf" },
+    ],
+    "landing-page": [
+      { id: "land-animation", command: "npm install framer-motion" },
+      { id: "land-scroll", command: "npm install react-intersection-observer" },
+      { id: "land-icons", command: "npm install lucide-react" },
+    ],
+    "login-page": [
+      { id: "login-auth", command: "npm install next-auth" },
+      { id: "login-form", command: "npm install react-hook-form zod @hookform/resolvers" },
+      { id: "login-social", command: "npm install @auth/prisma-adapter" },
+    ],
+    "portfolio-page": [
+      { id: "port-animation", command: "npm install framer-motion" },
+      { id: "port-gallery", command: "npm install yet-another-react-lightbox" },
+      { id: "port-icons", command: "npm install lucide-react react-icons" },
+    ],
+    "reports-dashboard": [
+      { id: "report-charts", command: "npm install recharts" },
+      { id: "report-pdf", command: "npm install jspdf jspdf-autotable" },
+      { id: "report-excel", command: "npm install xlsx file-saver" },
+      { id: "report-date", command: "npm install date-fns react-datepicker" },
+    ],
+    "service-page": [
+      { id: "serv-animation", command: "npm install framer-motion" },
+      { id: "serv-icons", command: "npm install lucide-react" },
+      { id: "serv-accordion", command: "npm install @radix-ui/react-accordion" },
+    ],
+    "settings-page": [
+      { id: "set-form", command: "npm install react-hook-form zod @hookform/resolvers" },
+      { id: "set-toggle", command: "npm install @radix-ui/react-switch" },
+      { id: "set-tabs", command: "npm install @radix-ui/react-tabs" },
+      { id: "set-toast", command: "npm install sonner" },
+    ],
+  };
+
+  const npmPackages = pageNpmPackages[pageType] || [];
+
+  // Track copied state for each package
+  const [copiedPackage, setCopiedPackage] = useState<string | null>(null);
+
+  // Copy package command to clipboard
+  const copyPackageCommand = async (packageId: string, command: string) => {
+    try {
+      await navigator.clipboard.writeText(command);
+      setCopiedPackage(packageId);
+      setTimeout(() => setCopiedPackage(null), 2000);
+    } catch {
+      const textArea = document.createElement("textarea");
+      textArea.value = command;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      setCopiedPackage(packageId);
+      setTimeout(() => setCopiedPackage(null), 2000);
+    }
+  };
+
   // Toggle main requirement checkbox
   const toggleRequirement = (reqId: string) => {
     setRequirementsState(prev => prev.map(req => {
@@ -611,6 +745,22 @@ export default function PageTypeDetail() {
     }));
   };
 
+  // Toggle subfield required status
+  const toggleRequired = (reqId: string, subFieldId: string) => {
+    setRequirementsState(prev => prev.map(req => {
+      if (req.id === reqId) {
+        const newSubFields = req.subFields.map(sf =>
+          sf.id === subFieldId ? { ...sf, required: !sf.required } : sf
+        );
+        return {
+          ...req,
+          subFields: newSubFields
+        };
+      }
+      return req;
+    }));
+  };
+
   // Toggle expand/collapse
   const toggleExpand = (reqId: string) => {
     setExpandedItems(prev => ({ ...prev, [reqId]: !prev[reqId] }));
@@ -619,13 +769,45 @@ export default function PageTypeDetail() {
   // Generate prompt from selected requirements
   const generatePrompt = () => {
     const selectedReqs = requirementsState.filter(req => req.checked || req.subFields.some(sf => sf.checked));
+    const hasLayoutOptions = layoutOptions.sidebarNav || layoutOptions.bottomNav;
+    const hasMasterOptions = masterOptions.designationMaster || masterOptions.departmentMaster || masterOptions.employeeMaster || masterOptions.employeeLoginMaster;
 
-    if (selectedReqs.length === 0) {
+    if (selectedReqs.length === 0 && !hasLayoutOptions && !hasMasterOptions) {
       return `# ${pageInfo?.icon} ${pageInfo?.label}\n\nNo requirements selected. Please select requirements from the left panel.`;
     }
 
     let prompt = `# ${pageInfo?.icon} ${pageInfo?.label}\n\n`;
     prompt += `## Selected Requirements\n\n`;
+
+    // Add Layout section if any layout options are selected
+    if (hasLayoutOptions) {
+      prompt += `### 📐 ${pageInfo?.label} Layout\n`;
+      if (layoutOptions.sidebarNav) {
+        prompt += `- All Modules are in Sidebar navigation on desktop view\n`;
+      }
+      if (layoutOptions.bottomNav) {
+        prompt += `- All Modules are in Bottom navigation bar on mobile view\n`;
+      }
+      prompt += `\n`;
+    }
+
+    // Add Master section if any master options are selected
+    if (hasMasterOptions) {
+      prompt += `### 📋 ${pageInfo?.label} Master\n`;
+      if (masterOptions.designationMaster) {
+        prompt += `- Create Designation Master\n`;
+      }
+      if (masterOptions.departmentMaster) {
+        prompt += `- Create Department Master\n`;
+      }
+      if (masterOptions.employeeMaster) {
+        prompt += `- Create Employee Master\n`;
+      }
+      if (masterOptions.employeeLoginMaster) {
+        prompt += `- Create Employee Login Master\n`;
+      }
+      prompt += `\n`;
+    }
 
     selectedReqs.forEach(req => {
       const selectedSubFields = req.subFields.filter(sf => sf.checked);
@@ -633,7 +815,8 @@ export default function PageTypeDetail() {
         prompt += `### ${req.icon} ${req.label}\n`;
         if (selectedSubFields.length > 0) {
           selectedSubFields.forEach(sf => {
-            prompt += `- ${sf.label}\n`;
+            const requiredTag = sf.required ? " (Required)" : " (Optional)";
+            prompt += `- ${sf.label}${requiredTag}\n`;
           });
         }
         prompt += `\n`;
@@ -663,10 +846,10 @@ export default function PageTypeDetail() {
 
   if (!pageInfo) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Page Not Found</h1>
-          <Link href="/script-studio" className="text-green-600 hover:underline">
+          <Link href="/script-studio" className="text-orange-600 hover:underline">
             Back to Script Studio
           </Link>
         </div>
@@ -675,7 +858,7 @@ export default function PageTypeDetail() {
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 overflow-hidden">
       {/* Animated background elements */}
       {floatingIcons.map((item, index) => (
         <FloatingIcon
@@ -693,9 +876,9 @@ export default function PageTypeDetail() {
       ))}
 
       {/* Gradient orbs for futuristic effect */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-green-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
-      <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }} />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
+      <div className="absolute top-1/2 right-0 w-96 h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
+      <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }} />
 
       {/* Header */}
       <header className="relative z-20 bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20">
@@ -728,19 +911,19 @@ export default function PageTypeDetail() {
             </Link>
             <Link
               href="/frontend-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-orange-100 hover:text-orange-700 transition-all"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
             >
               Frontend Studio
             </Link>
             <Link
               href="/backend-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-pink-100 hover:text-pink-700 transition-all"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
             >
               Backend Studio
             </Link>
             <Link
               href="/script-studio"
-              className="px-4 py-2 bg-green-100 text-green-700 font-medium rounded-lg transition-all"
+              className="px-4 py-2 bg-yellow-100 text-yellow-700 font-medium rounded-lg transition-all"
             >
               Script Studio
             </Link>
@@ -758,6 +941,51 @@ export default function PageTypeDetail() {
             </h2>
 
             <div className="space-y-4 max-h-[calc(100vh-250px)] overflow-y-auto">
+              {/* Section 0: npm Packages */}
+              {npmPackages.length > 0 && (
+                <div className="border-2 border-amber-200 rounded-xl overflow-hidden bg-amber-50/50">
+                  <div
+                    className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-amber-100/50 transition-colors"
+                    onClick={() => toggleExpand('npm-section')}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">📦</span>
+                      <span className="font-medium text-gray-800">{pageInfo.label} npm Packages</span>
+                    </div>
+                    <span className={`text-amber-600 transition-transform ${expandedItems['npm-section'] ? 'rotate-180' : ''}`}>
+                      ▼
+                    </span>
+                  </div>
+                  {expandedItems['npm-section'] && (
+                    <div className="border-t-2 border-amber-200 bg-white/50 px-4 py-3">
+                      <div className="space-y-3">
+                        {npmPackages.map((pkg, index) => (
+                          <div
+                            key={pkg.id}
+                            className="flex items-center gap-3 bg-gray-900 rounded-lg px-4 py-3"
+                          >
+                            <span className="text-amber-400 font-mono text-sm">{index + 1}.</span>
+                            <code className="flex-1 text-green-400 font-mono text-sm overflow-x-auto">
+                              {pkg.command}
+                            </code>
+                            <button
+                              onClick={() => copyPackageCommand(pkg.id, pkg.command)}
+                              className={`px-3 py-1 text-xs font-medium rounded-lg transition-all ${
+                                copiedPackage === pkg.id
+                                  ? "bg-green-500 text-white"
+                                  : "bg-amber-400 hover:bg-amber-500 text-gray-800"
+                              }`}
+                            >
+                              {copiedPackage === pkg.id ? "Copied!" : "Copy"}
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* Section 1: Layout */}
               <div className="border-2 border-blue-200 rounded-xl overflow-hidden bg-blue-50/50">
                 <div
@@ -767,6 +995,12 @@ export default function PageTypeDetail() {
                   <div className="flex items-center gap-3">
                     <input
                       type="checkbox"
+                      checked={layoutOptions.sidebarNav && layoutOptions.bottomNav}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        const newValue = !layoutOptions.sidebarNav || !layoutOptions.bottomNav;
+                        setLayoutOptions({ sidebarNav: newValue, bottomNav: newValue });
+                      }}
                       className="w-5 h-5 rounded border-2 border-blue-400 text-blue-600 focus:ring-blue-500 cursor-pointer"
                       onClick={(e) => e.stopPropagation()}
                     />
@@ -779,7 +1013,26 @@ export default function PageTypeDetail() {
                 </div>
                 {expandedItems['layout-section'] && (
                   <div className="border-t-2 border-blue-200 bg-white/50 px-4 py-3">
-                    <p className="text-gray-500 text-sm">Layout options will be added here</p>
+                    <div className="ml-6 space-y-2">
+                      <label className="flex items-center gap-3 py-1 cursor-pointer hover:bg-blue-50 rounded-lg px-2 transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={layoutOptions.sidebarNav}
+                          onChange={() => setLayoutOptions(prev => ({ ...prev, sidebarNav: !prev.sidebarNav }))}
+                          className="w-4 h-4 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                        />
+                        <span className="text-gray-700 text-sm">All Modules are in Sidebar navigation on desktop view</span>
+                      </label>
+                      <label className="flex items-center gap-3 py-1 cursor-pointer hover:bg-blue-50 rounded-lg px-2 transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={layoutOptions.bottomNav}
+                          onChange={() => setLayoutOptions(prev => ({ ...prev, bottomNav: !prev.bottomNav }))}
+                          className="w-4 h-4 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                        />
+                        <span className="text-gray-700 text-sm">All Modules are in Bottom navigation bar on mobile view</span>
+                      </label>
+                    </div>
                   </div>
                 )}
               </div>
@@ -793,6 +1046,17 @@ export default function PageTypeDetail() {
                   <div className="flex items-center gap-3">
                     <input
                       type="checkbox"
+                      checked={masterOptions.designationMaster && masterOptions.departmentMaster && masterOptions.employeeMaster && masterOptions.employeeLoginMaster}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        const newValue = !(masterOptions.designationMaster && masterOptions.departmentMaster && masterOptions.employeeMaster && masterOptions.employeeLoginMaster);
+                        setMasterOptions({
+                          designationMaster: newValue,
+                          departmentMaster: newValue,
+                          employeeMaster: newValue,
+                          employeeLoginMaster: newValue,
+                        });
+                      }}
                       className="w-5 h-5 rounded border-2 border-purple-400 text-purple-600 focus:ring-purple-500 cursor-pointer"
                       onClick={(e) => e.stopPropagation()}
                     />
@@ -805,7 +1069,44 @@ export default function PageTypeDetail() {
                 </div>
                 {expandedItems['master-section'] && (
                   <div className="border-t-2 border-purple-200 bg-white/50 px-4 py-3">
-                    <p className="text-gray-500 text-sm">Master data options will be added here</p>
+                    <div className="ml-6 space-y-2">
+                      <label className="flex items-center gap-3 py-1 cursor-pointer hover:bg-purple-50 rounded-lg px-2 transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={masterOptions.designationMaster}
+                          onChange={() => setMasterOptions(prev => ({ ...prev, designationMaster: !prev.designationMaster }))}
+                          className="w-4 h-4 rounded border-2 border-gray-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
+                        />
+                        <span className="text-gray-700 text-sm">Create Designation Master</span>
+                      </label>
+                      <label className="flex items-center gap-3 py-1 cursor-pointer hover:bg-purple-50 rounded-lg px-2 transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={masterOptions.departmentMaster}
+                          onChange={() => setMasterOptions(prev => ({ ...prev, departmentMaster: !prev.departmentMaster }))}
+                          className="w-4 h-4 rounded border-2 border-gray-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
+                        />
+                        <span className="text-gray-700 text-sm">Create Department Master</span>
+                      </label>
+                      <label className="flex items-center gap-3 py-1 cursor-pointer hover:bg-purple-50 rounded-lg px-2 transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={masterOptions.employeeMaster}
+                          onChange={() => setMasterOptions(prev => ({ ...prev, employeeMaster: !prev.employeeMaster }))}
+                          className="w-4 h-4 rounded border-2 border-gray-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
+                        />
+                        <span className="text-gray-700 text-sm">Create Employee Master</span>
+                      </label>
+                      <label className="flex items-center gap-3 py-1 cursor-pointer hover:bg-purple-50 rounded-lg px-2 transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={masterOptions.employeeLoginMaster}
+                          onChange={() => setMasterOptions(prev => ({ ...prev, employeeLoginMaster: !prev.employeeLoginMaster }))}
+                          className="w-4 h-4 rounded border-2 border-gray-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
+                        />
+                        <span className="text-gray-700 text-sm">Create Employee Login Master</span>
+                      </label>
+                    </div>
                   </div>
                 )}
               </div>
@@ -862,18 +1163,31 @@ export default function PageTypeDetail() {
                             <div className="border-t border-teal-200 bg-teal-50/30 px-4 py-3">
                               <div className="ml-6 space-y-2">
                                 {req.subFields.map((sf) => (
-                                  <label
+                                  <div
                                     key={sf.id}
-                                    className="flex items-center gap-3 py-1 cursor-pointer hover:bg-teal-50 rounded-lg px-2 transition-colors"
+                                    className="flex items-center justify-between py-1 hover:bg-teal-50 rounded-lg px-2 transition-colors"
                                   >
-                                    <input
-                                      type="checkbox"
-                                      checked={sf.checked}
-                                      onChange={() => toggleSubField(req.id, sf.id)}
-                                      className="w-4 h-4 rounded border-2 border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer"
-                                    />
-                                    <span className="text-gray-700 text-sm">{sf.label}</span>
-                                  </label>
+                                    <label className="flex items-center gap-3 cursor-pointer flex-1">
+                                      <input
+                                        type="checkbox"
+                                        checked={sf.checked}
+                                        onChange={() => toggleSubField(req.id, sf.id)}
+                                        className="w-4 h-4 rounded border-2 border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer"
+                                      />
+                                      <span className="text-gray-700 text-sm">{sf.label}</span>
+                                    </label>
+                                    {/* Required/Optional Toggle */}
+                                    <button
+                                      onClick={() => toggleRequired(req.id, sf.id)}
+                                      className={`px-2 py-0.5 text-xs font-medium rounded-full transition-all ${
+                                        sf.required
+                                          ? "bg-red-100 text-red-600 hover:bg-red-200"
+                                          : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                                      }`}
+                                    >
+                                      {sf.required ? "Required" : "Optional"}
+                                    </button>
+                                  </div>
                                 ))}
                               </div>
                             </div>
@@ -884,6 +1198,7 @@ export default function PageTypeDetail() {
                   </div>
                 )}
               </div>
+
             </div>
           </div>
 
