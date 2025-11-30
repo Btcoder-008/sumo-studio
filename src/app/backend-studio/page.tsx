@@ -467,12 +467,6 @@ export default function BackendStudio() {
               Backend Studio
             </Link>
             <Link
-              href="/design-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 transition-all"
-            >
-              Design Studio
-            </Link>
-            <Link
               href="/script-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-green-100 hover:text-green-700 transition-all"
             >
