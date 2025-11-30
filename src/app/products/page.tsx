@@ -628,7 +628,7 @@ export default function ProductsStudio() {
               Backend Studio
             </Link>
             <Link href="/module-studio" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 transition-all">
-              Module Studio
+              Design Studio
             </Link>
             <Link href="/products" className="px-4 py-2 bg-blue-100 text-blue-700 font-medium rounded-lg transition-all">
               Products

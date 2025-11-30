@@ -121,7 +121,7 @@ export default function TerminalPage() {
               href="/module-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 transition-all"
             >
-              Module Studio
+              Design Studio
             </Link>
             <Link
               href="/products"

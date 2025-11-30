@@ -60,7 +60,7 @@ const studioCards = [
     hoverColor: "hover:shadow-pink-300/50",
   },
   {
-    title: "Module Studio",
+    title: "Design Studio",
     icon: "🧩",
     href: "/module-studio",
     bgColor: "from-purple-400 to-indigo-500",
@@ -169,7 +169,7 @@ export default function HomePage() {
               href="/module-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 transition-all"
             >
-              Module Studio
+              Design Studio
             </Link>
             <Link
               href="/products"
