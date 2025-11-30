@@ -577,7 +577,9 @@ export default function CreateStudio() {
               </button>
 
               <a
-                href="https://sumo-studio.vercel.app/sumo-studio"
+                href="http://localhost:3001/sumo-studio"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex-1 px-6 py-3 font-medium text-sm rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] bg-yellow-400 hover:bg-yellow-500 text-gray-800 flex items-center justify-center gap-2"
               >
                 <span>🥋</span>
