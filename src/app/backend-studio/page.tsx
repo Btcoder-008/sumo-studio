@@ -449,10 +449,10 @@ export default function BackendStudio() {
           {/* Navigation Menu */}
           <nav className="flex items-center gap-2">
             <Link
-              href="/terminal"
+              href="/sumo-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
             >
-              Terminal
+              Sumo Studio
             </Link>
             <Link
               href="/frontend-studio"
@@ -467,22 +467,16 @@ export default function BackendStudio() {
               Backend Studio
             </Link>
             <Link
-              href="/module-studio"
+              href="/design-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 transition-all"
             >
               Design Studio
             </Link>
             <Link
-              href="/products"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-all"
-            >
-              Products
-            </Link>
-            <Link
-              href="/deploy"
+              href="/script-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-green-100 hover:text-green-700 transition-all"
             >
-              Deploy
+              Script Studio
             </Link>
           </nav>
         </div>

@@ -1325,8 +1325,8 @@ export default function ModuleStudio() {
           </div>
 
           <nav className="flex items-center gap-2">
-            <Link href="/terminal" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">
-              Terminal
+            <Link href="/sumo-studio" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">
+              Sumo Studio
             </Link>
             <Link href="/frontend-studio" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-orange-100 hover:text-orange-700 transition-all">
               Frontend Studio
@@ -1334,14 +1334,11 @@ export default function ModuleStudio() {
             <Link href="/backend-studio" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-pink-100 hover:text-pink-700 transition-all">
               Backend Studio
             </Link>
-            <Link href="/module-studio" className="px-4 py-2 bg-purple-100 text-purple-700 font-medium rounded-lg transition-all">
+            <Link href="/design-studio" className="px-4 py-2 bg-purple-100 text-purple-700 font-medium rounded-lg transition-all">
               Design Studio
             </Link>
-            <Link href="/products" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-all">
-              Products
-            </Link>
-            <Link href="/deploy" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-green-100 hover:text-green-700 transition-all">
-              Deploy
+            <Link href="/script-studio" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-green-100 hover:text-green-700 transition-all">
+              Script Studio
             </Link>
           </nav>
         </div>

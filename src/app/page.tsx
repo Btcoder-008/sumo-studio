@@ -55,7 +55,7 @@ export default function Home() {
       {/* Centered Super Sumo mascot */}
       <main className="relative z-10 flex min-h-screen items-center justify-center">
         <div className="animate-bounce-gentle">
-          <Link href="/home" className="cursor-pointer">
+          <Link href="/sumo-studio" className="cursor-pointer">
             <Image
               src="/super-sumo.png"
               alt="Super Sumo mascot"
