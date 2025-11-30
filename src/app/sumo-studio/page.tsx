@@ -160,10 +160,8 @@ export default function TerminalPage() {
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-gray-700">Parent Terminal</h3>
               <div className="flex gap-2">
-                <a
-                  href={createAllCopied.path && createAllCopied.npm && createAllCopied.localServer ? "http://localhost:3001" : "/create-studio"}
-                  target={createAllCopied.path && createAllCopied.npm && createAllCopied.localServer ? "_blank" : "_self"}
-                  rel={createAllCopied.path && createAllCopied.npm && createAllCopied.localServer ? "noopener noreferrer" : undefined}
+                <Link
+                  href="/create-studio"
                   className={`px-3 py-1 font-medium text-xs rounded-lg transition-all cursor-pointer text-center whitespace-nowrap ${
                     createAllCopied.path && createAllCopied.npm && createAllCopied.localServer
                       ? "bg-green-500 hover:bg-green-600 text-white"
@@ -171,7 +169,7 @@ export default function TerminalPage() {
                   }`}
                 >
                   Create Project
-                </a>
+                </Link>
                 <a
                   href="http://127.0.0.1:8001/admin"
                   target="_blank"
