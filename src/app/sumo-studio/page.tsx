@@ -59,16 +59,12 @@ export default function TerminalPage() {
   const [gitAddCopied, setGitAddCopied] = useState(false);
   const [gitPushCopied, setGitPushCopied] = useState(false);
 
-  // Deploy - Useful commands state
-  const [secretKeyCopied, setSecretKeyCopied] = useState(false);
-  const [backendDevCopied, setBackendDevCopied] = useState(false);
-  const [frontendDevCopied, setFrontendDevCopied] = useState(false);
-
   // Deploy - Render deploy state
   const [buildCmdCopied, setBuildCmdCopied] = useState(false);
   const [startCmdCopied, setStartCmdCopied] = useState(false);
   const [secretKeyNameCopied, setSecretKeyNameCopied] = useState(false);
   const [debugNameCopied, setDebugNameCopied] = useState(false);
+  const [debugValueCopied, setDebugValueCopied] = useState(false);
   const [databaseUrlNameCopied, setDatabaseUrlNameCopied] = useState(false);
   const [frontendUrlNameCopied, setFrontendUrlNameCopied] = useState(false);
 
@@ -155,12 +151,12 @@ export default function TerminalPage() {
       <main className="relative z-10 max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-          {/* Card 1: Create Project */}
+          {/* Card 1: Step 1 - Run Sumo Script */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-green-200/50 transition-shadow duration-300">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">🚀</span>
-                Sumo Script
+                Step 1: Run Sumo Script
               </h2>
             </div>
 
@@ -417,12 +413,12 @@ export default function TerminalPage() {
             </div>
           </div>
 
-          {/* Card 2: Edit Project */}
+          {/* Card 2: Step 2 - Configure Frontend */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-blue-200/50 transition-shadow duration-300">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">✏️</span>
-                Child Frontend
+                Step 2: Configure Frontend
               </h2>
             </div>
 
@@ -621,12 +617,12 @@ export default function TerminalPage() {
             </div>
           </div>
 
-          {/* Card 3: Child Backend */}
+          {/* Card 3: Step 3 - Configure Backend */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-purple-200/50 transition-shadow duration-300">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">⚙️</span>
-                Child Backend
+                Step 3: Configure Backend
               </h2>
             </div>
 
@@ -823,12 +819,12 @@ export default function TerminalPage() {
         {/* Deploy Section - Row 2 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
 
-          {/* Card 4: Push to GitHub */}
+          {/* Card 4: Step 4 - Push to GitHub */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-green-200/50 transition-shadow duration-300">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">📤</span>
-                Step 1: Push to GitHub
+                Step 4: Push to GitHub
               </h2>
             </div>
 
@@ -858,7 +854,7 @@ export default function TerminalPage() {
                   className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
                     gitInitCopied
                       ? "bg-green-500 text-white"
-                      : "bg-green-400 hover:bg-green-500 text-gray-800"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
                 >
                   {gitInitCopied ? "✓" : "Copy"}
@@ -892,7 +888,7 @@ export default function TerminalPage() {
                   className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
                     gitRemoteCopied
                       ? "bg-green-500 text-white"
-                      : "bg-green-400 hover:bg-green-500 text-gray-800"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
                 >
                   {gitRemoteCopied ? "✓" : "Copy"}
@@ -926,7 +922,7 @@ export default function TerminalPage() {
                   className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
                     gitAddCopied
                       ? "bg-green-500 text-white"
-                      : "bg-green-400 hover:bg-green-500 text-gray-800"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
                 >
                   {gitAddCopied ? "✓" : "Copy"}
@@ -960,7 +956,7 @@ export default function TerminalPage() {
                   className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
                     gitPushCopied
                       ? "bg-green-500 text-white"
-                      : "bg-green-400 hover:bg-green-500 text-gray-800"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
                 >
                   {gitPushCopied ? "✓" : "Copy"}
@@ -968,25 +964,14 @@ export default function TerminalPage() {
               </div>
             </div>
 
-            {/* GitHub Link */}
-            <div className="pt-4 border-t border-gray-200">
-              <a
-                href="https://github.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white font-medium text-sm rounded-lg transition-all cursor-pointer text-center block"
-              >
-                Open GitHub
-              </a>
-            </div>
           </div>
 
-          {/* Card 5: Deploy Frontend (Vercel) */}
+          {/* Card 5: Step 5 - Deploy Frontend (Vercel) */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-blue-200/50 transition-shadow duration-300">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">▲</span>
-                Step 2: Deploy Frontend (Vercel)
+                Step 5: Deploy on Vercel
               </h2>
             </div>
 
@@ -1025,33 +1010,14 @@ export default function TerminalPage() {
               </div>
             </div>
 
-            {/* Vercel Links */}
-            <div className="pt-4 mt-4 border-t border-gray-200 flex gap-2">
-              <a
-                href="https://vercel.com/new"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 px-4 py-2 bg-black hover:bg-gray-800 text-white font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
-              >
-                New Project
-              </a>
-              <a
-                href="https://vercel.com/dashboard"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 px-4 py-2 bg-green-400 hover:bg-green-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
-              >
-                Dashboard
-              </a>
-            </div>
           </div>
 
-          {/* Card 6: Deploy Backend (Render) */}
+          {/* Card 6: Step 6 - Deploy Backend (Render) */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-purple-200/50 transition-shadow duration-300">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">🔧</span>
-                Step 3: Deploy Backend (Render)
+                Step 6: Deploy on Render
               </h2>
             </div>
 
@@ -1096,7 +1062,7 @@ export default function TerminalPage() {
                     className={`px-2 py-1 rounded-lg font-medium text-xs transition-all cursor-pointer ${
                       buildCmdCopied
                         ? "bg-green-500 text-white"
-                        : "bg-green-400 hover:bg-green-500 text-gray-800"
+                        : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                     }`}
                   >
                     {buildCmdCopied ? "✓" : "Copy"}
@@ -1127,7 +1093,7 @@ export default function TerminalPage() {
                     className={`px-2 py-1 rounded-lg font-medium text-xs transition-all cursor-pointer ${
                       startCmdCopied
                         ? "bg-green-500 text-white"
-                        : "bg-green-400 hover:bg-green-500 text-gray-800"
+                        : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                     }`}
                   >
                     {startCmdCopied ? "✓" : "Copy"}
@@ -1136,9 +1102,9 @@ export default function TerminalPage() {
               </div>
             </div>
 
-            {/* Environment Variables */}
+            {/* Click Box to Copy Environment Variables */}
             <div className="mb-4 pt-4 border-t border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Environment Variables</h3>
+              <h3 className="text-sm font-semibold text-gray-700 mb-2">Click Box to Copy Environment Variables</h3>
               <div className="space-y-2 text-xs text-gray-600">
                 <div className="flex items-center gap-2">
                   <button
@@ -1161,7 +1127,7 @@ export default function TerminalPage() {
                     className={`px-2 py-1 rounded font-mono text-xs transition-all cursor-pointer ${
                       secretKeyNameCopied
                         ? "bg-green-500 text-white"
-                        : "bg-gray-100 hover:bg-green-400 text-gray-700"
+                        : "bg-gray-100 hover:bg-yellow-400 text-gray-700"
                     }`}
                   >
                     {secretKeyNameCopied ? "✓ SECRET_KEY" : "SECRET_KEY"}
@@ -1189,12 +1155,37 @@ export default function TerminalPage() {
                     className={`px-2 py-1 rounded font-mono text-xs transition-all cursor-pointer ${
                       debugNameCopied
                         ? "bg-green-500 text-white"
-                        : "bg-gray-100 hover:bg-green-400 text-gray-700"
+                        : "bg-gray-100 hover:bg-yellow-400 text-gray-700"
                     }`}
                   >
                     {debugNameCopied ? "✓ DEBUG" : "DEBUG"}
                   </button>
-                  <span>= False</span>
+                  <span>=</span>
+                  <button
+                    onClick={async () => {
+                      const value = "False";
+                      try {
+                        await navigator.clipboard.writeText(value);
+                        setDebugValueCopied(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = value;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setDebugValueCopied(true);
+                      }
+                      setTimeout(() => setDebugValueCopied(false), 2000);
+                    }}
+                    className={`px-2 py-1 rounded font-mono text-xs transition-all cursor-pointer ${
+                      debugValueCopied
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-100 hover:bg-yellow-400 text-gray-700"
+                    }`}
+                  >
+                    {debugValueCopied ? "✓ False" : "False"}
+                  </button>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
@@ -1217,7 +1208,7 @@ export default function TerminalPage() {
                     className={`px-2 py-1 rounded font-mono text-xs transition-all cursor-pointer ${
                       databaseUrlNameCopied
                         ? "bg-green-500 text-white"
-                        : "bg-gray-100 hover:bg-green-400 text-gray-700"
+                        : "bg-gray-100 hover:bg-yellow-400 text-gray-700"
                     }`}
                   >
                     {databaseUrlNameCopied ? "✓ DATABASE_URL" : "DATABASE_URL"}
@@ -1245,7 +1236,7 @@ export default function TerminalPage() {
                     className={`px-2 py-1 rounded font-mono text-xs transition-all cursor-pointer ${
                       frontendUrlNameCopied
                         ? "bg-green-500 text-white"
-                        : "bg-gray-100 hover:bg-green-400 text-gray-700"
+                        : "bg-gray-100 hover:bg-yellow-400 text-gray-700"
                     }`}
                   >
                     {frontendUrlNameCopied ? "✓ FRONTEND_URL" : "FRONTEND_URL"}
@@ -1255,182 +1246,10 @@ export default function TerminalPage() {
               </div>
             </div>
 
-            {/* Render Link */}
-            <div className="pt-4 border-t border-gray-200">
-              <a
-                href="https://dashboard.render.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium text-sm rounded-lg transition-all cursor-pointer text-center block"
-              >
-                Open Render Dashboard
-              </a>
-            </div>
           </div>
 
         </div>
 
-        {/* Deploy Section - Row 3 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-
-          {/* Card 7: Useful Commands */}
-          <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-yellow-200/50 transition-shadow duration-300">
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                <span className="text-2xl">⚡</span>
-                Useful Commands
-              </h2>
-            </div>
-
-            {/* Generate Secret Key */}
-            <div className="mb-4">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Generate Django Secret Key</h3>
-              <div className="flex items-center gap-2">
-                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600 truncate">
-                  python -c "import secrets; print(secrets.token_urlsafe(50))"
-                </div>
-                <button
-                  onClick={async () => {
-                    const cmd = 'python -c "import secrets; print(secrets.token_urlsafe(50))"';
-                    try {
-                      await navigator.clipboard.writeText(cmd);
-                      setSecretKeyCopied(true);
-                    } catch {
-                      const textArea = document.createElement("textarea");
-                      textArea.value = cmd;
-                      document.body.appendChild(textArea);
-                      textArea.select();
-                      document.execCommand("copy");
-                      document.body.removeChild(textArea);
-                      setSecretKeyCopied(true);
-                    }
-                    setTimeout(() => setSecretKeyCopied(false), 2000);
-                  }}
-                  className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                    secretKeyCopied
-                      ? "bg-green-500 text-white"
-                      : "bg-green-400 hover:bg-green-500 text-gray-800"
-                  }`}
-                >
-                  {secretKeyCopied ? "✓" : "Copy"}
-                </button>
-              </div>
-            </div>
-
-            {/* Local Development */}
-            <div className="pt-4 border-t border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Local Development</h3>
-
-              {/* Backend */}
-              <div className="mb-3">
-                <span className="text-xs text-gray-500">Backend:</span>
-                <div className="flex items-center gap-2 mt-1">
-                  <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
-                    source venv/bin/activate && python manage.py runserver
-                  </div>
-                  <button
-                    onClick={async () => {
-                      const cmd = "source venv/bin/activate && python manage.py runserver";
-                      try {
-                        await navigator.clipboard.writeText(cmd);
-                        setBackendDevCopied(true);
-                      } catch {
-                        const textArea = document.createElement("textarea");
-                        textArea.value = cmd;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        document.execCommand("copy");
-                        document.body.removeChild(textArea);
-                        setBackendDevCopied(true);
-                      }
-                      setTimeout(() => setBackendDevCopied(false), 2000);
-                    }}
-                    className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                      backendDevCopied
-                        ? "bg-green-500 text-white"
-                        : "bg-green-400 hover:bg-green-500 text-gray-800"
-                    }`}
-                  >
-                    {backendDevCopied ? "✓" : "Copy"}
-                  </button>
-                </div>
-              </div>
-
-              {/* Frontend */}
-              <div>
-                <span className="text-xs text-gray-500">Frontend:</span>
-                <div className="flex items-center gap-2 mt-1">
-                  <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
-                    npm run dev
-                  </div>
-                  <button
-                    onClick={async () => {
-                      const cmd = "npm run dev";
-                      try {
-                        await navigator.clipboard.writeText(cmd);
-                        setFrontendDevCopied(true);
-                      } catch {
-                        const textArea = document.createElement("textarea");
-                        textArea.value = cmd;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        document.execCommand("copy");
-                        document.body.removeChild(textArea);
-                        setFrontendDevCopied(true);
-                      }
-                      setTimeout(() => setFrontendDevCopied(false), 2000);
-                    }}
-                    className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                      frontendDevCopied
-                        ? "bg-green-500 text-white"
-                        : "bg-green-400 hover:bg-green-500 text-gray-800"
-                    }`}
-                  >
-                    {frontendDevCopied ? "✓" : "Copy"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 8: Troubleshooting */}
-          <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-red-200/50 transition-shadow duration-300">
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                <span className="text-2xl">🔍</span>
-                Troubleshooting
-              </h2>
-            </div>
-
-            <div className="space-y-3 text-sm">
-              <div className="p-3 bg-red-50 border border-red-100 rounded-lg">
-                <div className="font-semibold text-red-700">CORS error</div>
-                <div className="text-red-600 text-xs mt-1">Check FRONTEND_URL in backend env vars matches your Vercel URL</div>
-              </div>
-
-              <div className="p-3 bg-orange-50 border border-orange-100 rounded-lg">
-                <div className="font-semibold text-orange-700">Failed to fetch</div>
-                <div className="text-orange-600 text-xs mt-1">Check NEXT_PUBLIC_API_URL in frontend env vars</div>
-              </div>
-
-              <div className="p-3 bg-yellow-50 border border-yellow-100 rounded-lg">
-                <div className="font-semibold text-yellow-700">requirements.txt not found</div>
-                <div className="text-yellow-600 text-xs mt-1">Set Root Directory to backend in Render</div>
-              </div>
-
-              <div className="p-3 bg-blue-50 border border-blue-100 rounded-lg">
-                <div className="font-semibold text-blue-700">No Next.js version detected</div>
-                <div className="text-blue-600 text-xs mt-1">Set Root Directory to frontend in Vercel</div>
-              </div>
-
-              <div className="p-3 bg-purple-50 border border-purple-100 rounded-lg">
-                <div className="font-semibold text-purple-700">502 Bad Gateway</div>
-                <div className="text-purple-600 text-xs mt-1">Wait for backend to fully deploy, check logs</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
       </main>
 
     </div>
