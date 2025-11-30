@@ -333,7 +333,7 @@ echo "   Tab 2: Django Backend (running on :8000)"
 echo "   Tab 3: Next.js Frontend (running on :3000)"
 echo "================================"`;
 
-export default function BuildStudio() {
+export default function CreateStudio() {
   const [isRunning, setIsRunning] = useState(false);
   const [status, setStatus] = useState("");
   const [projectName, setProjectName] = useState("");
@@ -500,7 +500,7 @@ export default function BuildStudio() {
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-800 flex items-center justify-center gap-3">
             <span className="text-4xl">🏗️</span>
-            Build Studio
+            Create Project
           </h2>
           <p className="text-gray-600 mt-2">Create and manage your projects</p>
         </div>

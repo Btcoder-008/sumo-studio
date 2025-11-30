@@ -390,7 +390,7 @@ export default function TerminalPage() {
               {/* Run Buttons */}
               <div className="flex gap-2">
                 <a
-                  href="http://localhost:3001/build-studio"
+                  href="http://localhost:3001/create-studio"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`flex-1 px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer text-center whitespace-nowrap ${
@@ -399,7 +399,7 @@ export default function TerminalPage() {
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
                 >
-                  Create Child Project
+                  Create Project
                 </a>
                 <a
                   href="http://127.0.0.1:8001/admin"
