@@ -161,7 +161,7 @@ export default function TerminalPage() {
               <h3 className="text-sm font-semibold text-gray-700">Parent Terminal</h3>
               <div className="flex gap-2">
                 <a
-                  href="https://sumo-studio.vercel.app/create-studio"
+                  href="http://localhost:3001/create-studio"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`px-3 py-1 font-medium text-xs rounded-lg transition-all cursor-pointer text-center whitespace-nowrap ${
