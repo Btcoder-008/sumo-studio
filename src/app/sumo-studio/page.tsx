@@ -167,14 +167,8 @@ export default function TerminalPage() {
               <h3 className="text-sm font-semibold text-gray-700">Parent Terminal</h3>
               <div className="flex gap-2">
                 <a
-                  href="http://localhost:3001/create-studio"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`px-3 py-1 font-medium text-xs rounded-lg transition-all cursor-pointer text-center whitespace-nowrap ${
-                    createAllCopied.path && createAllCopied.npm && createAllCopied.localServer
-                      ? "bg-green-500 hover:bg-green-600 text-white"
-                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                  }`}
+                  href="/create-studio"
+                  className="px-3 py-1 font-medium text-xs rounded-lg transition-all cursor-pointer text-center whitespace-nowrap bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                 >
                   Create Project
                 </a>

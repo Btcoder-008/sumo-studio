@@ -496,79 +496,73 @@ export default function CreateStudio() {
       </header>
 
       <main className="relative z-10 max-w-7xl mx-auto px-4 py-8">
-        {/* Page Title */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800 flex items-center justify-center gap-3">
-            <span className="text-4xl">🏗️</span>
-            Create Project
-          </h2>
-          <p className="text-gray-600 mt-2">Create and manage your projects</p>
-        </div>
+        {/* Two Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Column - Form */}
+          <div>
+            {/* Page Title */}
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-3xl">🏗️</span>
+              <h2 className="text-2xl font-bold text-gray-800">Create Project</h2>
+            </div>
 
-        {/* Fullstack Script Card */}
-        <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/30 hover:shadow-yellow-200/50 transition-shadow duration-300">
-          <div className="text-center">
-            <span className="text-6xl mb-4 block">🥋</span>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Fullstack Project Setup</h3>
-            <p className="text-gray-600 mb-6">Django + PostgreSQL + Next.js</p>
-
-            <div className="space-y-4">
-              {/* Server Status Indicator */}
-              <div className={`flex items-center justify-center gap-2 p-3 rounded-lg ${
+            {/* Server Status Indicator */}
+            <div className={`flex items-center gap-2 p-3 rounded-lg mb-4 ${
+              serverRunning === null
+                ? "bg-gray-100 text-gray-600"
+                : serverRunning
+                ? "bg-green-100 text-green-700"
+                : "bg-yellow-100 text-yellow-700"
+            }`}>
+              <span className={`w-3 h-3 rounded-full ${
                 serverRunning === null
-                  ? "bg-gray-100 text-gray-600"
+                  ? "bg-gray-400 animate-pulse"
                   : serverRunning
-                  ? "bg-green-100 text-green-700"
-                  : "bg-yellow-100 text-yellow-700"
-              }`}>
-                <span className={`w-3 h-3 rounded-full ${
-                  serverRunning === null
-                    ? "bg-gray-400 animate-pulse"
-                    : serverRunning
-                    ? "bg-green-500"
-                    : "bg-yellow-500 animate-pulse"
-                }`} />
-                <span className="font-medium text-sm">
-                  {serverRunning === null
-                    ? "Checking local server..."
-                    : serverRunning
-                    ? "Local server connected"
-                    : "Local server offline - Run: npm run local-server"}
-                </span>
-              </div>
+                  ? "bg-green-500"
+                  : "bg-yellow-500 animate-pulse"
+              }`} />
+              <span className="font-medium text-sm">
+                {serverRunning === null
+                  ? "Checking local server..."
+                  : serverRunning
+                  ? "Local server connected"
+                  : "Local server offline - Run: npm run local-server"}
+              </span>
+            </div>
 
-              {/* Project Name Input */}
-              <div className="text-left">
-                <label htmlFor="projectName" className="block text-lg font-semibold text-gray-800 mb-1">
-                  Project Name
-                </label>
-                <p className="text-sm text-gray-500 mb-3 flex items-center gap-2">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs font-medium">i</span>
-                  Use lowercase letters only & no numbers. New tab will open automatically — be patient.
-                </p>
-                <input
-                  type="text"
-                  id="projectName"
-                  value={projectName}
-                  onChange={(e) => setProjectName(e.target.value)}
-                  placeholder="e.g., myapp, blog, ecommerce"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-800 placeholder-gray-400 bg-gray-50 hover:bg-white hover:border-gray-300"
-                />
-              </div>
+            {/* Project Name Input */}
+            <div className="mb-4">
+              <label htmlFor="projectName" className="block text-base font-semibold text-gray-800 mb-1">
+                Project Name
+              </label>
+              <p className="text-sm text-gray-500 mb-3 flex items-center gap-2">
+                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs font-medium">i</span>
+                Use lowercase letters only & no numbers. New tab will open automatically — be patient.
+              </p>
+              <input
+                type="text"
+                id="projectName"
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+                placeholder="e.g., myapp, blog, ecommerce"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-800 placeholder-gray-400 bg-gray-50 hover:bg-white hover:border-gray-300"
+              />
+            </div>
 
-              {/* Run Button */}
+            {/* Action Buttons */}
+            <div className="flex gap-3 mb-4">
               <button
                 onClick={handleRunScript}
                 disabled={isRunning}
-                className={`w-full px-8 py-4 font-bold text-lg rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
+                className={`flex-1 px-6 py-3 font-medium text-sm rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${
                   isRunning
                     ? "bg-gray-400 text-white"
-                    : "bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 hover:from-green-500 hover:via-blue-600 hover:to-purple-700 text-white"
+                    : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                 }`}
               >
                 {isRunning ? (
                   <span className="flex items-center justify-center gap-2">
-                    <svg className="animate-spin h-6 w-6" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
@@ -582,32 +576,41 @@ export default function CreateStudio() {
                 )}
               </button>
 
-              {status && (
-                <div className={`p-4 rounded-lg font-medium ${
-                  status.includes("Error") || status.includes("Failed")
-                    ? "bg-red-100 text-red-700"
-                    : status.includes("running") || status.includes("Running")
-                    ? "bg-green-100 text-green-700"
-                    : "bg-blue-100 text-blue-700"
-                }`}>
-                  {status}
-                </div>
-              )}
+              <a
+                href="https://sumo-studio.vercel.app/sumo-studio"
+                className="flex-1 px-6 py-3 font-medium text-sm rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] bg-yellow-400 hover:bg-yellow-500 text-gray-800 flex items-center justify-center gap-2"
+              >
+                <span>🥋</span>
+                Go to Sumo Studio
+              </a>
+            </div>
 
-              {/* Script Info */}
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                <div className="flex items-center justify-center gap-2 mb-3">
-                  <span className="text-2xl">📄</span>
-                  <span className="font-medium text-gray-800">fullstack.sh</span>
-                </div>
-
-                {/* Script Preview */}
-                <div className="bg-gray-900 rounded-lg p-3 text-left max-h-64 overflow-auto">
-                  <pre className="text-green-400 text-xs font-mono whitespace-pre-wrap">
-                    {FULLSTACK_SCRIPT}
-                  </pre>
-                </div>
+            {status && (
+              <div className={`p-4 rounded-lg font-medium ${
+                status.includes("Error") || status.includes("Failed")
+                  ? "bg-red-100 text-red-700"
+                  : status.includes("running") || status.includes("Running")
+                  ? "bg-green-100 text-green-700"
+                  : "bg-blue-100 text-blue-700"
+              }`}>
+                {status}
               </div>
+            )}
+          </div>
+
+          {/* Right Column - Script Preview */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-2xl">📄</span>
+              <h3 className="text-xl font-bold text-gray-800">Script Preview</h3>
+            </div>
+            <p className="text-gray-600 text-sm mb-4">Django + PostgreSQL + Next.js</p>
+
+            {/* Script Preview */}
+            <div className="bg-slate-900 rounded-2xl p-4 text-left h-[500px] overflow-auto">
+              <pre className="text-green-400 text-xs font-mono whitespace-pre-wrap">
+                {FULLSTACK_SCRIPT}
+              </pre>
             </div>
           </div>
         </div>
