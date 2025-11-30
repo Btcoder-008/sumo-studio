@@ -173,6 +173,9 @@ export default function FrontendStudio() {
   const [projectName, setProjectName] = useState("");
   const [responsiveDesign, setResponsiveDesign] = useState(false);
   const [comingSoonFirst, setComingSoonFirst] = useState(false);
+  const [frontendStackInfo, setFrontendStackInfo] = useState(false);
+  const [backendStackInfo, setBackendStackInfo] = useState(false);
+  const [databaseInfo, setDatabaseInfo] = useState(false);
   const [pageTypes, setPageTypes] = useState<CheckboxOption[]>(pageTypeOptions);
   const [customPageType, setCustomPageType] = useState("");
   const [frameworks, setFrameworks] = useState<CheckboxOption[]>(frameworkOptions);
@@ -472,14 +475,30 @@ export default function FrontendStudio() {
       prompt += `${additionalNotes}\n\n`;
     }
 
+    // Tech Stack Info
+    if (frontendStackInfo || backendStackInfo || databaseInfo) {
+      prompt += `### Tech Stack\n`;
+      if (frontendStackInfo) {
+        prompt += `Frontend: Next.js (v16.0.5), React (v19.2.0), Tailwind CSS (v4), TypeScript\n`;
+      }
+      if (backendStackInfo) {
+        prompt += `Backend: Django (v5.2.8), Django REST Framework, django-cors-headers\n`;
+      }
+      if (databaseInfo) {
+        prompt += `Database: Not Postgre, Only SQLite3\n`;
+      }
+      prompt += `\n`;
+    }
+
     // Footer instructions
     prompt += `---\n\n`;
     prompt += `Please create a complete, production-ready implementation with:\n`;
-    prompt += `1. Clean, well-organized code structure\n`;
-    prompt += `2. Proper component separation\n`;
-    prompt += `3. Type safety (if using TypeScript)\n`;
-    prompt += `4. Accessibility best practices\n`;
-    prompt += `5. Mobile-first responsive design\n`;
+    prompt += `1. Create all pages as coming soon message\n`;
+    prompt += `2. Mobile-first responsive design\n`;
+    prompt += `3. Clean, well-organized code structure\n`;
+    prompt += `4. Proper component separation\n`;
+    prompt += `5. Type safety (if using TypeScript)\n`;
+    prompt += `6. Accessibility best practices\n`;
 
     setGeneratedPrompt(prompt);
   };
@@ -608,20 +627,6 @@ export default function FrontendStudio() {
               Frontend Studio
             </h2>
 
-            {/* Review Entire Project */}
-            <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Review Entire Project
-              </label>
-              <input
-                type="url"
-                value={reviewEntireProject}
-                onChange={(e) => setReviewEntireProject(e.target.value)}
-                placeholder="Paste entire project link here"
-                className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition-all hover:border-orange-300"
-              />
-            </div>
-
             {/* Describe Project Core Concept */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -636,31 +641,41 @@ export default function FrontendStudio() {
               />
             </div>
 
-            {/* Project Requirements Checklist */}
+            {/* Project Tech Stack Checklist */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3">
-                Project Requirements
+                Project Tech Stack
               </label>
               <div className="space-y-3">
                 <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
                   <input
                     type="checkbox"
-                    checked={responsiveDesign}
-                    onChange={(e) => setResponsiveDesign(e.target.checked)}
+                    checked={frontendStackInfo}
+                    onChange={(e) => setFrontendStackInfo(e.target.checked)}
                     className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
                   />
-                  <span className="text-xl">📱</span>
-                  <span className="text-sm text-gray-700">All pages should be responsive for both mobile and desktop</span>
+                  <span className="text-xl">⚛️</span>
+                  <span className="text-sm text-gray-700">Frontend: Next.js (v16.0.5), React (v19.2.0), Tailwind CSS (v4), TypeScript</span>
                 </label>
                 <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
                   <input
                     type="checkbox"
-                    checked={comingSoonFirst}
-                    onChange={(e) => setComingSoonFirst(e.target.checked)}
+                    checked={backendStackInfo}
+                    onChange={(e) => setBackendStackInfo(e.target.checked)}
                     className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
                   />
-                  <span className="text-xl">🚧</span>
-                  <span className="text-sm text-gray-700">At first make all pages look like coming soon message</span>
+                  <span className="text-xl">🐍</span>
+                  <span className="text-sm text-gray-700">Backend: Django (v5.2.8), Django REST Framework, django-cors-headers</span>
+                </label>
+                <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
+                  <input
+                    type="checkbox"
+                    checked={databaseInfo}
+                    onChange={(e) => setDatabaseInfo(e.target.checked)}
+                    className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
+                  />
+                  <span className="text-xl">🗄️</span>
+                  <span className="text-sm text-gray-700">Database: Not Postgre, Only SQLite3</span>
                 </label>
               </div>
             </div>
@@ -1123,12 +1138,12 @@ export default function FrontendStudio() {
               >
                 Generate Prompt
               </button>
-              <button
-                onClick={clearForm}
-                className="px-6 py-3 bg-white/70 border-2 border-gray-300 text-gray-600 hover:bg-gray-100 hover:border-gray-400 rounded-xl transition-all font-semibold"
+              <a
+                href="/terminal"
+                className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl transition-all font-semibold text-center"
               >
-                Clear
-              </button>
+                Design
+              </a>
             </div>
           </div>
 

@@ -151,6 +151,9 @@ export default function TerminalPage() {
               </h2>
             </div>
 
+            {/* Parent Terminal Section */}
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">Parent Terminal</h3>
+
             {/* Copy Path Clipboard */}
             <div className="mb-4">
               <div className="flex items-center gap-2">
@@ -377,7 +380,7 @@ export default function TerminalPage() {
                   href="http://localhost:3001/build-studio"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
+                  className={`flex-1 px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer text-center ${
                     createAllCopied.path && createAllCopied.npm && createAllCopied.localServer
                       ? "bg-green-500 hover:bg-green-600 text-white"
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
@@ -389,7 +392,7 @@ export default function TerminalPage() {
                   href="http://127.0.0.1:8001"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
+                  className={`flex-1 px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer text-center ${
                     backendAllCopied.path && backendAllCopied.venv && backendAllCopied.runserver
                       ? "bg-green-500 hover:bg-green-600 text-white"
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
@@ -401,7 +404,7 @@ export default function TerminalPage() {
                   href="http://127.0.0.1:8001/admin"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer ${
+                  className={`flex-1 px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer text-center whitespace-nowrap ${
                     backendAllCopied.path && backendAllCopied.venv && backendAllCopied.runserver
                       ? "bg-blue-500 hover:bg-blue-600 text-white"
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
@@ -421,6 +424,9 @@ export default function TerminalPage() {
                 Child Frontend
               </h2>
             </div>
+
+            {/* Spotlight Section */}
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">Spotlight Project Path</h3>
 
             {/* Copy Path Clipboard */}
             <div className="mb-4">
@@ -458,56 +464,56 @@ export default function TerminalPage() {
               </div>
             </div>
 
-            {/* Open Child Terminal Section */}
-            <div className="pt-4 border-t border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-700 mb-3">cd Child Terminal Frontend</h3>
-            </div>
+            {/* Baby Terminal Section */}
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">Baby Terminal - cd Baby Project - claude</h3>
 
-            {/* Copy claude Clipboard */}
+            {/* What frameworks clipboard */}
             <div className="mb-4">
               <div className="flex items-center gap-2">
-                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600">
-                  claude
+                <div className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-xs text-gray-600 truncate">
+                  What frameworks used in this project
                 </div>
                 <button
                   onClick={async () => {
-                    const cmd = "claude";
+                    const text = "What frameworks used in this project";
                     try {
-                      await navigator.clipboard.writeText(cmd);
-                      setEditCopied2(true);
+                      await navigator.clipboard.writeText(text);
+                      setEditCopied1(true);
                     } catch {
                       const textArea = document.createElement("textarea");
-                      textArea.value = cmd;
+                      textArea.value = text;
                       document.body.appendChild(textArea);
                       textArea.select();
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
-                      setEditCopied2(true);
+                      setEditCopied1(true);
                     }
-                    setTimeout(() => setEditCopied2(false), 2000);
+                    setTimeout(() => setEditCopied1(false), 2000);
                   }}
                   className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                    editCopied2
+                    editCopied1
                       ? "bg-green-500 text-white"
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
                 >
-                  {editCopied2 ? "✓" : "Copy"}
+                  {editCopied1 ? "✓" : "Copy"}
                 </button>
               </div>
             </div>
 
-            {/* Use Frontend Studio Section */}
-            <div className="pt-4 border-t border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                Use Frontend Studio
+            {/* Baby Terminal - cd drag frontend - claude Section */}
+            <div className="pt-4 border-t border-gray-200 mb-3">
+              <div className="flex items-center gap-2">
+                <div className="flex-1 text-sm font-semibold text-gray-700">
+                  Baby Terminal - cd drag frontend - claude
+                </div>
                 <a
                   href="/frontend-studio"
-                  className="text-blue-500 hover:text-blue-600 transition-colors"
+                  className="px-3 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-lg transition-colors whitespace-nowrap min-w-[52px] text-center"
                 >
-                  🔗
+                  GO!
                 </a>
-              </h3>
+              </div>
             </div>
 
             {/* Copy npm run dev Clipboard */}
@@ -587,14 +593,6 @@ export default function TerminalPage() {
               <h3 className="text-sm font-semibold text-gray-700 mb-3">Push & Deploy Frontend</h3>
               <div className="flex gap-2 w-full">
                 <a
-                  href="http://localhost:3000/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
-                >
-                  Local
-                </a>
-                <a
                   href="https://github.com/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -609,6 +607,14 @@ export default function TerminalPage() {
                   className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
                 >
                   Vercel
+                </a>
+                <a
+                  href="https://dashboard.render.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
+                >
+                  Render
                 </a>
               </div>
             </div>
