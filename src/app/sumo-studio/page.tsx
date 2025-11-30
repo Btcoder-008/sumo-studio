@@ -162,6 +162,8 @@ export default function TerminalPage() {
               <div className="flex gap-2">
                 <Link
                   href="/create-studio"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`px-3 py-1 font-medium text-xs rounded-lg transition-all cursor-pointer text-center whitespace-nowrap ${
                     createAllCopied.path && createAllCopied.npm && createAllCopied.localServer
                       ? "bg-green-500 hover:bg-green-600 text-white"
