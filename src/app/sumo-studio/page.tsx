@@ -45,6 +45,7 @@ export default function TerminalPage() {
   const [editCopied3, setEditCopied3] = useState(false);
   const [editCopied4, setEditCopied4] = useState(false);
   const [editBothCopied, setEditBothCopied] = useState({ path: false, npm: false, cmd: false });
+  const [spotlightBabyCopied, setSpotlightBabyCopied] = useState(false);
 
   // Run Backend state
   const [backendCopied1, setBackendCopied1] = useState(false);
@@ -60,6 +61,7 @@ export default function TerminalPage() {
   const [gitPushCopied, setGitPushCopied] = useState(false);
 
   // Deploy - Render deploy state
+  const [backendRootCopied, setBackendRootCopied] = useState(false);
   const [buildCmdCopied, setBuildCmdCopied] = useState(false);
   const [startCmdCopied, setStartCmdCopied] = useState(false);
   const [secretKeyNameCopied, setSecretKeyNameCopied] = useState(false);
@@ -160,8 +162,36 @@ export default function TerminalPage() {
               </h2>
             </div>
 
-            {/* Parent Terminal Section */}
-            <h3 className="text-sm font-semibold text-gray-700 mb-3">Parent Terminal</h3>
+            {/* Parent Terminal Section with Buttons */}
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Parent Terminal</h3>
+              <div className="flex gap-2">
+                <a
+                  href="http://localhost:3001/create-studio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-3 py-1 font-medium text-xs rounded-lg transition-all cursor-pointer text-center whitespace-nowrap ${
+                    createAllCopied.path && createAllCopied.npm && createAllCopied.localServer
+                      ? "bg-green-500 hover:bg-green-600 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  Create Project
+                </a>
+                <a
+                  href="http://127.0.0.1:8001/admin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-3 py-1 font-medium text-xs rounded-lg transition-all cursor-pointer text-center whitespace-nowrap ${
+                    backendAllCopied.path && backendAllCopied.venv && backendAllCopied.runserver
+                      ? "bg-blue-500 hover:bg-blue-600 text-white"
+                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
+                  }`}
+                >
+                  Admin Django
+                </a>
+              </div>
+            </div>
 
             {/* Copy Path Clipboard */}
             <div className="mb-4">
@@ -383,33 +413,6 @@ export default function TerminalPage() {
                 </div>
               </div>
 
-              {/* Run Buttons */}
-              <div className="flex gap-2">
-                <a
-                  href="http://localhost:3001/create-studio"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex-1 px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer text-center whitespace-nowrap ${
-                    createAllCopied.path && createAllCopied.npm && createAllCopied.localServer
-                      ? "bg-green-500 hover:bg-green-600 text-white"
-                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                  }`}
-                >
-                  Create Project
-                </a>
-                <a
-                  href="http://127.0.0.1:8001/admin"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex-1 px-4 py-2 font-medium text-sm rounded-lg transition-all cursor-pointer text-center whitespace-nowrap ${
-                    backendAllCopied.path && backendAllCopied.venv && backendAllCopied.runserver
-                      ? "bg-blue-500 hover:bg-blue-600 text-white"
-                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
-                  }`}
-                >
-                  Admin Django
-                </a>
-              </div>
             </div>
           </div>
 
@@ -437,7 +440,6 @@ export default function TerminalPage() {
                     try {
                       await navigator.clipboard.writeText(path);
                       setEditCopied1(true);
-                      setEditBothCopied(prev => ({ ...prev, path: true }));
                     } catch {
                       const textArea = document.createElement("textarea");
                       textArea.value = path;
@@ -446,7 +448,6 @@ export default function TerminalPage() {
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
                       setEditCopied1(true);
-                      setEditBothCopied(prev => ({ ...prev, path: true }));
                     }
                     setTimeout(() => setEditCopied1(false), 2000);
                   }}
@@ -475,7 +476,7 @@ export default function TerminalPage() {
                     const text = "What frameworks used in this project";
                     try {
                       await navigator.clipboard.writeText(text);
-                      setEditCopied1(true);
+                      setEditCopied2(true);
                     } catch {
                       const textArea = document.createElement("textarea");
                       textArea.value = text;
@@ -483,17 +484,17 @@ export default function TerminalPage() {
                       textArea.select();
                       document.execCommand("copy");
                       document.body.removeChild(textArea);
-                      setEditCopied1(true);
+                      setEditCopied2(true);
                     }
-                    setTimeout(() => setEditCopied1(false), 2000);
+                    setTimeout(() => setEditCopied2(false), 2000);
                   }}
                   className={`px-3 py-2 rounded-lg font-medium text-sm transition-all cursor-pointer ${
-                    editCopied1
+                    editCopied2
                       ? "bg-green-500 text-white"
                       : "bg-yellow-400 hover:bg-yellow-500 text-gray-800"
                   }`}
                 >
-                  {editCopied1 ? "✓" : "Copy"}
+                  {editCopied2 ? "✓" : "Copy"}
                 </button>
               </div>
             </div>
@@ -585,36 +586,6 @@ export default function TerminalPage() {
               </div>
             </div>
 
-            {/* Push & Deploy Frontend Section */}
-            <div className="pt-4 border-t border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-700 mb-3">Push & Deploy Frontend</h3>
-              <div className="flex gap-2 w-full">
-                <a
-                  href="https://github.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
-                >
-                  Github
-                </a>
-                <a
-                  href="https://vercel.com/new?teamSlug=drthiyagarajanbalakrishnan-gmailcoms-projects"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
-                >
-                  Vercel
-                </a>
-                <a
-                  href="https://dashboard.render.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
-                >
-                  Render
-                </a>
-              </div>
-            </div>
           </div>
 
           {/* Card 3: Step 3 - Configure Backend */}
@@ -782,36 +753,6 @@ export default function TerminalPage() {
               </div>
             </div>
 
-            {/* Push & Deploy Backend Section */}
-            <div className="pt-4 border-t border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-700 mb-3">Push & Deploy Backend</h3>
-              <div className="flex gap-2 w-full">
-                <a
-                  href="http://localhost:8000/admin/login/?next=/admin/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
-                >
-                  Local
-                </a>
-                <a
-                  href="https://github.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
-                >
-                  Github
-                </a>
-                <a
-                  href="https://railway.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium text-sm rounded-lg transition-all cursor-pointer text-center"
-                >
-                  Railway
-                </a>
-              </div>
-            </div>
           </div>
 
         </div>
@@ -821,11 +762,19 @@ export default function TerminalPage() {
 
           {/* Card 4: Step 4 - Push to GitHub */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-green-200/50 transition-shadow duration-300">
-            <div className="mb-6">
+            <div className="mb-6 flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">📤</span>
                 Step 4: Push to GitHub
               </h2>
+              <a
+                href="https://github.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1 font-medium text-xs rounded-lg transition-all cursor-pointer text-center whitespace-nowrap bg-green-500 hover:bg-green-600 text-white"
+              >
+                Github
+              </a>
             </div>
 
             {/* git init */}
@@ -968,11 +917,19 @@ export default function TerminalPage() {
 
           {/* Card 5: Step 5 - Deploy Frontend (Vercel) */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-blue-200/50 transition-shadow duration-300">
-            <div className="mb-6">
+            <div className="mb-6 flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">▲</span>
                 Step 5: Deploy on Vercel
               </h2>
+              <a
+                href="https://vercel.com/dashboard"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1 font-medium text-xs rounded-lg transition-all cursor-pointer text-center whitespace-nowrap bg-green-500 hover:bg-green-600 text-white"
+              >
+                Vercel
+              </a>
             </div>
 
             {/* Steps Table */}
@@ -1014,28 +971,53 @@ export default function TerminalPage() {
 
           {/* Card 6: Step 6 - Deploy Backend (Render) */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-purple-200/50 transition-shadow duration-300">
-            <div className="mb-6">
+            <div className="mb-6 flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">🔧</span>
                 Step 6: Deploy on Render
               </h2>
-            </div>
-
-            {/* Database Steps */}
-            <div className="mb-4">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Create PostgreSQL Database</h3>
-              <div className="space-y-1 text-xs text-gray-600">
-                <div>• New → PostgreSQL → Free plan</div>
-                <div>• Wait for status: Available</div>
-                <div>• Copy Internal Database URL</div>
-              </div>
+              <a
+                href="https://dashboard.render.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1 font-medium text-xs rounded-lg transition-all cursor-pointer text-center whitespace-nowrap bg-green-500 hover:bg-green-600 text-white"
+              >
+                Render
+              </a>
             </div>
 
             {/* Web Service Steps */}
             <div className="mb-4 pt-4 border-t border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Create Web Service</h3>
+              <h3 className="text-sm font-semibold text-gray-700 mb-2">Create Postgre & Create Web Service</h3>
               <div className="space-y-2 text-xs text-gray-600">
-                <div>• Root Directory: <code className="bg-gray-100 px-1 rounded">backend</code></div>
+                <div className="flex items-center gap-1">
+                  <span>• Root Directory:</span>
+                  <button
+                    onClick={async () => {
+                      const value = "backend";
+                      try {
+                        await navigator.clipboard.writeText(value);
+                        setBackendRootCopied(true);
+                      } catch {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = value;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                        setBackendRootCopied(true);
+                      }
+                      setTimeout(() => setBackendRootCopied(false), 2000);
+                    }}
+                    className={`px-2 py-0.5 rounded font-mono text-xs transition-all cursor-pointer ${
+                      backendRootCopied
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-100 hover:bg-yellow-400 text-gray-700"
+                    }`}
+                  >
+                    {backendRootCopied ? "✓ backend" : "backend"}
+                  </button>
+                </div>
                 <div>• Runtime: Python 3</div>
                 <div className="flex items-center gap-2">
                   <span>• Build:</span>

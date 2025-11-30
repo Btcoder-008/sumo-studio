@@ -1136,7 +1136,7 @@ export default function FrontendStudio() {
                 href="/sumo-studio"
                 className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl transition-all font-semibold text-center"
               >
-                Design
+                Go Back!
               </a>
             </div>
           </div>
