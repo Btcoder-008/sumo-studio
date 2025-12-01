@@ -226,33 +226,183 @@ const uiDesignCategories = [
   },
 ];
 
-// Layout options
-const layoutOptions: CheckboxOption[] = [
-  { id: "sidebar", label: "Sidebar Navigation", checked: false, icon: "📋" },
-  { id: "topnav", label: "Top Navigation Bar", checked: false, icon: "🔝" },
-  { id: "footer", label: "Footer Section", checked: false, icon: "👇" },
-  { id: "breadcrumb", label: "Breadcrumb Navigation", checked: false, icon: "🧭" },
-  { id: "hero", label: "Hero Section", checked: false, icon: "🦸" },
-  { id: "cards-grid", label: "Cards Grid Layout", checked: false, icon: "🃏" },
-  { id: "table", label: "Data Table", checked: false, icon: "📊" },
-  { id: "modal", label: "Modal / Popup", checked: false, icon: "💬" },
+// Layout Component Categories with dropdown options
+const layoutCategories = [
+  {
+    id: "navigation",
+    label: "Navigation",
+    options: [
+      { id: "sidebar", label: "Sidebar Navigation" },
+      { id: "topnav", label: "Top Navigation Bar" },
+      { id: "bottom-nav", label: "Bottom Navigation Bar" },
+      { id: "hamburger-menu", label: "Hamburger Menu" },
+      { id: "mega-menu", label: "Mega Menu" },
+    ],
+  },
+  {
+    id: "header",
+    label: "Header",
+    options: [
+      { id: "hero", label: "Hero Section" },
+      { id: "sticky-header", label: "Sticky Header" },
+      { id: "banner", label: "Banner / Announcement Bar" },
+      { id: "breadcrumb", label: "Breadcrumb Navigation" },
+    ],
+  },
+  {
+    id: "footer",
+    label: "Footer",
+    options: [
+      { id: "simple-footer", label: "Simple Footer" },
+      { id: "multi-column-footer", label: "Multi-Column Footer" },
+      { id: "sticky-footer", label: "Sticky Footer" },
+      { id: "footer-with-newsletter", label: "Footer with Newsletter" },
+    ],
+  },
+  {
+    id: "content-layout",
+    label: "Content Layout",
+    options: [
+      { id: "cards-grid", label: "Cards Grid Layout" },
+      { id: "masonry", label: "Masonry Layout" },
+      { id: "list-view", label: "List View" },
+      { id: "split-screen", label: "Split Screen" },
+    ],
+  },
+  {
+    id: "data-display",
+    label: "Data Display",
+    options: [
+      { id: "data-table", label: "Data Table" },
+      { id: "kanban-board", label: "Kanban Board" },
+      { id: "timeline", label: "Timeline" },
+      { id: "accordion", label: "Accordion / Collapsible" },
+    ],
+  },
+  {
+    id: "overlay",
+    label: "Overlay / Popup",
+    options: [
+      { id: "modal", label: "Modal Dialog" },
+      { id: "drawer", label: "Drawer / Sidebar Panel" },
+      { id: "tooltip", label: "Tooltip" },
+      { id: "popover", label: "Popover" },
+    ],
+  },
+  {
+    id: "form-layout",
+    label: "Form Layout",
+    options: [
+      { id: "single-column-form", label: "Single Column Form" },
+      { id: "multi-step-form", label: "Multi-Step Form / Wizard" },
+      { id: "inline-form", label: "Inline Form" },
+      { id: "floating-labels", label: "Floating Labels Form" },
+    ],
+  },
 ];
 
-// Feature options
-const featureOptions: CheckboxOption[] = [
-  { id: "responsive", label: "Responsive Design", checked: false, icon: "📱" },
-  { id: "dark-mode", label: "Dark Mode Toggle", checked: false, icon: "🌙" },
-  { id: "animations", label: "Animations / Transitions", checked: false, icon: "✨" },
-  { id: "form-validation", label: "Form Validation", checked: false, icon: "✅" },
-  { id: "search", label: "Search Functionality", checked: false, icon: "🔍" },
-  { id: "filters", label: "Filters / Sorting", checked: false, icon: "🔧" },
-  { id: "pagination", label: "Pagination", checked: false, icon: "📄" },
-  { id: "loading-states", label: "Loading States / Skeletons", checked: false, icon: "⏳" },
-  { id: "notifications", label: "Toast / Notifications", checked: false, icon: "🔔" },
-  { id: "drag-drop", label: "Drag & Drop", checked: false, icon: "🖐️" },
-  { id: "charts", label: "Charts / Graphs", checked: false, icon: "📈" },
-  { id: "file-upload", label: "File Upload", checked: false, icon: "📤" },
-  { id: "coming-soon", label: "Create all pages as Coming Soon with Logo", checked: false, icon: "🚧" },
+// Feature Categories with dropdown options
+const featureCategories = [
+  {
+    id: "responsiveness",
+    label: "Responsiveness",
+    options: [
+      { id: "mobile-first", label: "Mobile-First Design" },
+      { id: "fluid-layout", label: "Fluid Layout" },
+      { id: "breakpoint-based", label: "Breakpoint-Based" },
+      { id: "container-queries", label: "Container Queries" },
+    ],
+  },
+  {
+    id: "theme",
+    label: "Theme",
+    options: [
+      { id: "dark-mode", label: "Dark Mode Toggle" },
+      { id: "light-mode", label: "Light Mode Only" },
+      { id: "system-preference", label: "System Preference" },
+      { id: "multi-theme", label: "Multiple Theme Options" },
+    ],
+  },
+  {
+    id: "animations",
+    label: "Animations",
+    options: [
+      { id: "page-transitions", label: "Page Transitions" },
+      { id: "micro-animations", label: "Micro-Animations" },
+      { id: "scroll-triggered", label: "Scroll-Triggered Animations" },
+      { id: "loading-animations", label: "Loading Animations" },
+    ],
+  },
+  {
+    id: "form-features",
+    label: "Form Features",
+    options: [
+      { id: "real-time-validation", label: "Real-Time Validation" },
+      { id: "auto-save", label: "Auto-Save" },
+      { id: "autocomplete", label: "Autocomplete" },
+      { id: "input-masking", label: "Input Masking" },
+    ],
+  },
+  {
+    id: "search-filter",
+    label: "Search & Filter",
+    options: [
+      { id: "basic-search", label: "Basic Search" },
+      { id: "advanced-search", label: "Advanced Search" },
+      { id: "faceted-filters", label: "Faceted Filters" },
+      { id: "live-search", label: "Live Search / Autocomplete" },
+    ],
+  },
+  {
+    id: "data-handling",
+    label: "Data Handling",
+    options: [
+      { id: "pagination", label: "Pagination" },
+      { id: "infinite-scroll", label: "Infinite Scroll" },
+      { id: "load-more", label: "Load More Button" },
+      { id: "virtual-scrolling", label: "Virtual Scrolling" },
+    ],
+  },
+  {
+    id: "feedback",
+    label: "User Feedback",
+    options: [
+      { id: "toast-notifications", label: "Toast Notifications" },
+      { id: "alert-banners", label: "Alert Banners" },
+      { id: "inline-messages", label: "Inline Messages" },
+      { id: "confirmation-dialogs", label: "Confirmation Dialogs" },
+    ],
+  },
+  {
+    id: "interaction",
+    label: "Interaction",
+    options: [
+      { id: "drag-drop", label: "Drag & Drop" },
+      { id: "swipe-gestures", label: "Swipe Gestures" },
+      { id: "keyboard-shortcuts", label: "Keyboard Shortcuts" },
+      { id: "context-menu", label: "Right-Click Context Menu" },
+    ],
+  },
+  {
+    id: "data-visualization",
+    label: "Data Visualization",
+    options: [
+      { id: "bar-charts", label: "Bar / Column Charts" },
+      { id: "line-charts", label: "Line / Area Charts" },
+      { id: "pie-charts", label: "Pie / Donut Charts" },
+      { id: "dashboard-widgets", label: "Dashboard Widgets" },
+    ],
+  },
+  {
+    id: "file-handling",
+    label: "File Handling",
+    options: [
+      { id: "file-upload", label: "File Upload" },
+      { id: "drag-drop-upload", label: "Drag & Drop Upload" },
+      { id: "image-preview", label: "Image Preview" },
+      { id: "file-download", label: "File Download / Export" },
+    ],
+  },
 ];
 
 // Functionality options (conditional - shown for dashboard/admin)
@@ -290,9 +440,9 @@ export default function FrontendStudio() {
   const [colorSchemes, setColorSchemes] = useState<CheckboxOption[]>(colorSchemeOptions);
   const [customColors, setCustomColors] = useState("");
   const [designEffectsMap, setDesignEffectsMap] = useState<Record<string, string>>({});
+  const [layoutComponentsMap, setLayoutComponentsMap] = useState<Record<string, string>>({});
+  const [featuresMap, setFeaturesMap] = useState<Record<string, string>>({});
 
-  const [layouts, setLayouts] = useState<CheckboxOption[]>(layoutOptions);
-  const [features, setFeatures] = useState<CheckboxOption[]>(featureOptions);
   const [functionalities, setFunctionalities] = useState<CheckboxOption[]>(functionalityOptions);
 
   const [referenceLinks, setReferenceLinks] = useState<ReferenceLink[]>([
@@ -433,8 +583,6 @@ export default function FrontendStudio() {
     const selectedPageTypes = pageTypes.filter((opt) => opt.checked).map((opt) => opt.label);
     const selectedFrameworks = frameworks.filter((opt) => opt.checked).map((opt) => opt.label);
     const selectedColorSchemes = colorSchemes.filter((opt) => opt.checked).map((opt) => opt.label);
-    const selectedLayouts = layouts.filter((opt) => opt.checked).map((opt) => opt.label);
-    const selectedFeatures = features.filter((opt) => opt.checked).map((opt) => opt.label);
     const selectedFunctionalities = functionalities.filter((opt) => opt.checked).map((opt) => opt.label);
     const validLinks = referenceLinks.filter((link) => link.url.trim());
 
@@ -513,20 +661,30 @@ export default function FrontendStudio() {
       prompt += `\n`;
     }
 
-    // Layout Components
-    if (selectedLayouts.length > 0) {
+    // Layout Components - Category Mapping
+    const layoutMappings = Object.entries(layoutComponentsMap).filter(([, value]) => value);
+    if (layoutMappings.length > 0) {
       prompt += `### Layout Components\n`;
-      selectedLayouts.forEach((layout) => {
-        prompt += `- ${layout}\n`;
+      layoutMappings.forEach(([categoryId, optionId]) => {
+        const category = layoutCategories.find(c => c.id === categoryId);
+        const option = category?.options.find(o => o.id === optionId);
+        if (category && option) {
+          prompt += `- ${category.label}: ${option.label}\n`;
+        }
       });
       prompt += `\n`;
     }
 
-    // Features
-    if (selectedFeatures.length > 0) {
+    // Features - Category Mapping
+    const featureMappings = Object.entries(featuresMap).filter(([, value]) => value);
+    if (featureMappings.length > 0) {
       prompt += `### Features Required\n`;
-      selectedFeatures.forEach((feature) => {
-        prompt += `- ${feature}\n`;
+      featureMappings.forEach(([categoryId, optionId]) => {
+        const category = featureCategories.find(c => c.id === categoryId);
+        const option = category?.options.find(o => o.id === optionId);
+        if (category && option) {
+          prompt += `- ${category.label}: ${option.label}\n`;
+        }
       });
       prompt += `\n`;
     }
@@ -647,8 +805,8 @@ export default function FrontendStudio() {
     setColorSchemes(colorSchemeOptions.map((opt) => ({ ...opt, checked: false })));
     setCustomColors("");
     setDesignEffectsMap({});
-    setLayouts(layoutOptions.map((opt) => ({ ...opt, checked: false })));
-    setFeatures(featureOptions.map((opt) => ({ ...opt, checked: false })));
+    setLayoutComponentsMap({});
+    setFeaturesMap({});
     setFunctionalities(functionalityOptions.map((opt) => ({ ...opt, checked: false })));
     setReferenceLinks([{ id: "1", url: "", description: "" }]);
     setUploadedImages([]);
@@ -1042,7 +1200,7 @@ export default function FrontendStudio() {
               </div>
             </div>
 
-            {/* Layout Components - Checklist */}
+            {/* Layout Components - Category with Dropdown */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <label className="block text-sm font-semibold text-gray-700">
@@ -1059,30 +1217,46 @@ export default function FrontendStudio() {
                   </svg>
                 </Link>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                {layouts.map((option) => (
-                  <label
-                    key={option.id}
-                    className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 border-2 ${
-                      option.checked
-                        ? "bg-gradient-to-r from-orange-100 to-pink-100 border-orange-400 shadow-md"
-                        : "bg-white/50 border-gray-200 hover:border-orange-300 hover:bg-orange-50"
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={option.checked}
-                      onChange={() => handleCheckboxChange(option.id, setLayouts)}
-                      className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-400 accent-orange-500"
-                    />
-                    <span className="text-lg">{option.icon}</span>
-                    <span className="text-gray-700 text-sm font-medium">{option.label}</span>
-                  </label>
-                ))}
+              <p className="text-xs text-gray-500 mb-3">Select a layout option for each category (optional)</p>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-cyan-50 to-blue-50">
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border border-gray-200 rounded-tl-lg">Category</th>
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border border-gray-200 rounded-tr-lg">Layout</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {layoutCategories.map((category, idx) => (
+                      <tr key={category.id} className={idx % 2 === 0 ? "bg-white/50" : "bg-gray-50/50"}>
+                        <td className="p-2 text-sm text-gray-700 border border-gray-200 font-medium">
+                          {category.label}
+                        </td>
+                        <td className="p-2 border border-gray-200">
+                          <select
+                            value={layoutComponentsMap[category.id] || ""}
+                            onChange={(e) => {
+                              setLayoutComponentsMap(prev => ({
+                                ...prev,
+                                [category.id]: e.target.value
+                              }));
+                            }}
+                            className="w-full px-2 py-1.5 text-sm border border-gray-200 rounded-lg bg-white focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 outline-none"
+                          >
+                            <option value="">-- Select --</option>
+                            {category.options.map((option) => (
+                              <option key={option.id} value={option.id}>{option.label}</option>
+                            ))}
+                          </select>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
 
-            {/* Features - Checklist */}
+            {/* Features - Category with Dropdown */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <label className="block text-sm font-semibold text-gray-700">
@@ -1099,26 +1273,42 @@ export default function FrontendStudio() {
                   </svg>
                 </Link>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                {features.map((option) => (
-                  <label
-                    key={option.id}
-                    className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 border-2 ${
-                      option.checked
-                        ? "bg-gradient-to-r from-orange-100 to-pink-100 border-orange-400 shadow-md"
-                        : "bg-white/50 border-gray-200 hover:border-orange-300 hover:bg-orange-50"
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={option.checked}
-                      onChange={() => handleCheckboxChange(option.id, setFeatures)}
-                      className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-400 accent-orange-500"
-                    />
-                    <span className="text-lg">{option.icon}</span>
-                    <span className="text-gray-700 text-sm font-medium">{option.label}</span>
-                  </label>
-                ))}
+              <p className="text-xs text-gray-500 mb-3">Select a feature for each category (optional)</p>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-green-50 to-emerald-50">
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border border-gray-200 rounded-tl-lg">Category</th>
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border border-gray-200 rounded-tr-lg">Feature</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {featureCategories.map((category, idx) => (
+                      <tr key={category.id} className={idx % 2 === 0 ? "bg-white/50" : "bg-gray-50/50"}>
+                        <td className="p-2 text-sm text-gray-700 border border-gray-200 font-medium">
+                          {category.label}
+                        </td>
+                        <td className="p-2 border border-gray-200">
+                          <select
+                            value={featuresMap[category.id] || ""}
+                            onChange={(e) => {
+                              setFeaturesMap(prev => ({
+                                ...prev,
+                                [category.id]: e.target.value
+                              }));
+                            }}
+                            className="w-full px-2 py-1.5 text-sm border border-gray-200 rounded-lg bg-white focus:ring-2 focus:ring-green-400 focus:border-green-400 outline-none"
+                          >
+                            <option value="">-- Select --</option>
+                            {category.options.map((option) => (
+                              <option key={option.id} value={option.id}>{option.label}</option>
+                            ))}
+                          </select>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
 
