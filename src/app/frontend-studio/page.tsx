@@ -176,6 +176,12 @@ export default function FrontendStudio() {
   const [frontendStackInfo, setFrontendStackInfo] = useState(false);
   const [backendStackInfo, setBackendStackInfo] = useState(false);
   const [databaseInfo, setDatabaseInfo] = useState(false);
+  const [sidebarNavDesktop, setSidebarNavDesktop] = useState(false);
+  const [bottomNavMobile, setBottomNavMobile] = useState(false);
+  const [darkLightModeToggle, setDarkLightModeToggle] = useState(false);
+  const [multiLanguage, setMultiLanguage] = useState(false);
+  const [pageZoom, setPageZoom] = useState(false);
+  const [referenceTheme, setReferenceTheme] = useState("");
   const [pageTypes, setPageTypes] = useState<CheckboxOption[]>(pageTypeOptions);
   const [customPageType, setCustomPageType] = useState("");
   const [frameworks, setFrameworks] = useState<CheckboxOption[]>(frameworkOptions);
@@ -339,10 +345,26 @@ export default function FrontendStudio() {
       prompt += `${reviewEntireProject}\n\n`;
     }
 
-    // Project Core Concept
-    if (projectName.trim()) {
-      prompt += `## Project Core Concept\n`;
-      prompt += `${projectName}\n\n`;
+    // Mandatory things in this Project
+    const mandatoryItems = [];
+    if (sidebarNavDesktop) mandatoryItems.push("All Modules are in Sidebar navigation on desktop view");
+    if (bottomNavMobile) mandatoryItems.push("All Modules are in Bottom navigation bar on mobile view");
+    if (darkLightModeToggle) mandatoryItems.push("Dark and Light Mode Toggle");
+    if (multiLanguage) mandatoryItems.push("Multi Language convertor");
+    if (pageZoom) mandatoryItems.push("Page Zoom in & Zoom Out");
+
+    if (mandatoryItems.length > 0) {
+      prompt += `## Mandatory things in this Project\n`;
+      mandatoryItems.forEach((item) => {
+        prompt += `- ${item}\n`;
+      });
+      prompt += `\n`;
+    }
+
+    // Reference Theme
+    if (referenceTheme.trim()) {
+      prompt += `## Reference Theme\n`;
+      prompt += `${referenceTheme}\n\n`;
     }
 
     prompt += `## Frontend Design Request\n\n`;
@@ -507,6 +529,12 @@ export default function FrontendStudio() {
   const clearForm = () => {
     setReviewEntireProject("");
     setProjectName("");
+    setSidebarNavDesktop(false);
+    setBottomNavMobile(false);
+    setDarkLightModeToggle(false);
+    setMultiLanguage(false);
+    setPageZoom(false);
+    setReferenceTheme("");
     setPageTypes(pageTypeOptions.map((opt) => ({ ...opt, checked: false })));
     setCustomPageType("");
     setFrameworks(frameworkOptions.map((opt) => ({ ...opt, checked: false })));
@@ -615,16 +643,75 @@ export default function FrontendStudio() {
               Frontend Studio
             </h2>
 
-            {/* Describe Project Core Concept */}
+            {/* Mandatory things in this Project */}
+            <div className="mb-6">
+              <label className="block text-sm font-semibold text-gray-700 mb-3">
+                Mandatory things in this Project
+              </label>
+              <div className="space-y-3">
+                <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
+                  <input
+                    type="checkbox"
+                    checked={sidebarNavDesktop}
+                    onChange={(e) => setSidebarNavDesktop(e.target.checked)}
+                    className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
+                  />
+                  <span className="text-xl">📋</span>
+                  <span className="text-sm text-gray-700">All Modules are in Sidebar navigation on desktop view</span>
+                </label>
+                <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
+                  <input
+                    type="checkbox"
+                    checked={bottomNavMobile}
+                    onChange={(e) => setBottomNavMobile(e.target.checked)}
+                    className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
+                  />
+                  <span className="text-xl">📱</span>
+                  <span className="text-sm text-gray-700">All Modules are in Bottom navigation bar on mobile view</span>
+                </label>
+                <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
+                  <input
+                    type="checkbox"
+                    checked={darkLightModeToggle}
+                    onChange={(e) => setDarkLightModeToggle(e.target.checked)}
+                    className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
+                  />
+                  <span className="text-xl">🌓</span>
+                  <span className="text-sm text-gray-700">Dark and Light Mode Toggle</span>
+                </label>
+                <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
+                  <input
+                    type="checkbox"
+                    checked={multiLanguage}
+                    onChange={(e) => setMultiLanguage(e.target.checked)}
+                    className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
+                  />
+                  <span className="text-xl">🌐</span>
+                  <span className="text-sm text-gray-700">Multi Language convertor</span>
+                </label>
+                <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
+                  <input
+                    type="checkbox"
+                    checked={pageZoom}
+                    onChange={(e) => setPageZoom(e.target.checked)}
+                    className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
+                  />
+                  <span className="text-xl">🔍</span>
+                  <span className="text-sm text-gray-700">Page Zoom in & Zoom Out</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Reference Theme */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Describe Project Core Concept
+                Reference Theme
               </label>
               <input
                 type="text"
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
-                placeholder="Enter project core concept"
+                value={referenceTheme}
+                onChange={(e) => setReferenceTheme(e.target.value)}
+                placeholder="e.g., Material Design, Apple HIG, Ant Design Pro..."
                 className="w-full px-4 py-3 bg-white/50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition-all hover:border-orange-300"
               />
             </div>
