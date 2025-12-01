@@ -485,7 +485,7 @@ export default function FrontendStudio() {
         prompt += `Backend: Django (v5.2.8), Django REST Framework, django-cors-headers\n`;
       }
       if (databaseInfo) {
-        prompt += `Database: Not Postgre, Only SQLite3\n`;
+        prompt += `Database: Postgre - Check connection once again\n`;
       }
       prompt += `\n`;
     }
@@ -663,7 +663,7 @@ export default function FrontendStudio() {
                     className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
                   />
                   <span className="text-xl">🗄️</span>
-                  <span className="text-sm text-gray-700">Database: Not Postgre, Only SQLite3</span>
+                  <span className="text-sm text-gray-700">Database: Postgre - Check connection once again</span>
                 </label>
               </div>
             </div>
