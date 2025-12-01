@@ -349,7 +349,7 @@ export default function FrontendStudio() {
 
     // Mandatory things in this Project
     const mandatoryItems = [];
-    if (mobileFirstApproach) mandatoryItems.push("Prepare the mobile interface initially, and afterwards work on the desktop interface");
+    if (mobileFirstApproach) mandatoryItems.push("Prepare the mobile interface initially and then work on the desktop interface");
     if (hamburgerMobileTopNavDesktop) mandatoryItems.push("Use a hamburger menu for mobile view and a top navigation menu for desktop view");
     if (sidebarNavDesktop) mandatoryItems.push("All Modules are in Sidebar navigation on desktop view");
     if (bottomNavMobile) mandatoryItems.push("All Modules are in Bottom navigation bar on mobile view");
@@ -663,7 +663,7 @@ export default function FrontendStudio() {
                     className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
                   />
                   <span className="text-xl">📱</span>
-                  <span className="text-sm text-gray-700">Prepare the mobile interface initially, and afterwards work on the desktop interface</span>
+                  <span className="text-sm text-gray-700">Prepare the mobile interface initially and then work on the desktop interface</span>
                 </label>
                 <label className="flex items-center gap-3 p-3 bg-white/50 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 transition-all">
                   <input
