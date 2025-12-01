@@ -106,38 +106,124 @@ const colorSchemeOptions: CheckboxOption[] = [
   { id: "custom", label: "Custom Colors", checked: false, icon: "🎨" },
 ];
 
-// UI Design Effects options
-const uiDesignOptions: CheckboxOption[] = [
-  { id: "glassmorphism", label: "Glassmorphism / Glassy Effects", checked: false, icon: "🪟" },
-  { id: "neumorphism", label: "Neumorphism / Soft UI", checked: false, icon: "🔘" },
-  { id: "gradient", label: "Gradient Backgrounds", checked: false, icon: "🌈" },
-  { id: "particles", label: "Particles Animation", checked: false, icon: "✨" },
-  { id: "floating", label: "Floating Elements", checked: false, icon: "🎈" },
-  { id: "parallax", label: "Parallax Scrolling", checked: false, icon: "📜" },
-  { id: "cursor-effects", label: "Mouse Pointer Highlighter", checked: false, icon: "🖱️" },
-  { id: "cursor-trail", label: "Cursor Trail Effect", checked: false, icon: "💫" },
-  { id: "blob", label: "Blob / Organic Shapes", checked: false, icon: "🫧" },
-  { id: "neon-glow", label: "Neon Glow Effects", checked: false, icon: "💡" },
-  { id: "shadows", label: "3D Shadows / Depth", checked: false, icon: "🎭" },
-  { id: "hover-effects", label: "Hover Animations", checked: false, icon: "👆" },
-  { id: "scroll-animations", label: "Scroll Animations", checked: false, icon: "⬇️" },
-  { id: "micro-interactions", label: "Micro-interactions", checked: false, icon: "🔄" },
-  { id: "morphing", label: "Morphing / Shape Shifting", checked: false, icon: "🔀" },
-  { id: "typewriter", label: "Typewriter Effect", checked: false, icon: "⌨️" },
-  { id: "ripple", label: "Ripple Effects", checked: false, icon: "💧" },
-  { id: "confetti", label: "Confetti / Celebration", checked: false, icon: "🎊" },
-  { id: "aurora", label: "Aurora / Northern Lights", checked: false, icon: "🌌" },
-  { id: "noise-texture", label: "Noise / Grain Texture", checked: false, icon: "📺" },
-  { id: "card-flip", label: "Card Flip Animation", checked: false, icon: "🃏" },
-  { id: "skeleton-loading", label: "Skeleton Loading", checked: false, icon: "💀" },
-  { id: "shimmer", label: "Shimmer Effect", checked: false, icon: "✨" },
-  { id: "wave", label: "Wave Animation", checked: false, icon: "🌊" },
-  { id: "spotlight", label: "Spotlight Effect", checked: false, icon: "🔦" },
-  { id: "tilt-3d", label: "3D Tilt on Hover", checked: false, icon: "📐" },
-  { id: "blur-background", label: "Blur Background", checked: false, icon: "🌫️" },
-  { id: "animated-borders", label: "Animated Borders", checked: false, icon: "🔲" },
-  { id: "text-reveal", label: "Text Reveal Animation", checked: false, icon: "📝" },
-  { id: "sticky-elements", label: "Sticky Elements", checked: false, icon: "📌" },
+// UI Design Effect Categories with dropdown options
+const uiDesignCategories = [
+  {
+    id: "background-style",
+    label: "Background Style",
+    options: [
+      { id: "glassmorphism", label: "Glassmorphism / Glassy" },
+      { id: "neumorphism", label: "Neumorphism / Soft UI" },
+      { id: "gradient", label: "Gradient Backgrounds" },
+      { id: "aurora", label: "Aurora / Northern Lights" },
+      { id: "blur-background", label: "Blur Background" },
+      { id: "noise-texture", label: "Noise / Grain Texture" },
+      { id: "particles", label: "Particles Animation" },
+    ],
+  },
+  {
+    id: "hover-effects",
+    label: "Hover Effects",
+    options: [
+      { id: "scale-hover", label: "Scale on Hover" },
+      { id: "tilt-3d", label: "3D Tilt on Hover" },
+      { id: "glow-hover", label: "Glow on Hover" },
+      { id: "lift-hover", label: "Lift on Hover" },
+      { id: "color-change", label: "Color Change on Hover" },
+      { id: "border-reveal", label: "Border Reveal on Hover" },
+    ],
+  },
+  {
+    id: "text-effects",
+    label: "Text Effects",
+    options: [
+      { id: "typewriter", label: "Typewriter Effect" },
+      { id: "text-reveal", label: "Text Reveal Animation" },
+      { id: "gradient-text", label: "Gradient Text" },
+      { id: "neon-text", label: "Neon Glow Text" },
+      { id: "text-shadow", label: "Text Shadow Effects" },
+    ],
+  },
+  {
+    id: "cursor-effects",
+    label: "Cursor Effects",
+    options: [
+      { id: "cursor-highlight", label: "Mouse Pointer Highlighter" },
+      { id: "cursor-trail", label: "Cursor Trail Effect" },
+      { id: "spotlight", label: "Spotlight Effect" },
+      { id: "magnetic-cursor", label: "Magnetic Cursor" },
+    ],
+  },
+  {
+    id: "scroll-effects",
+    label: "Scroll Effects",
+    options: [
+      { id: "parallax", label: "Parallax Scrolling" },
+      { id: "scroll-animations", label: "Scroll Animations" },
+      { id: "sticky-elements", label: "Sticky Elements" },
+      { id: "scroll-reveal", label: "Scroll Reveal" },
+    ],
+  },
+  {
+    id: "loading-effects",
+    label: "Loading Effects",
+    options: [
+      { id: "skeleton-loading", label: "Skeleton Loading" },
+      { id: "shimmer", label: "Shimmer Effect" },
+      { id: "spinner", label: "Spinner Animation" },
+      { id: "progress-bar", label: "Progress Bar" },
+    ],
+  },
+  {
+    id: "card-effects",
+    label: "Card Effects",
+    options: [
+      { id: "card-flip", label: "Card Flip Animation" },
+      { id: "card-hover-lift", label: "Card Hover Lift" },
+      { id: "card-glow", label: "Card Glow Effect" },
+      { id: "card-morph", label: "Card Morphing" },
+    ],
+  },
+  {
+    id: "border-effects",
+    label: "Border Effects",
+    options: [
+      { id: "animated-borders", label: "Animated Borders" },
+      { id: "gradient-border", label: "Gradient Border" },
+      { id: "neon-border", label: "Neon Glow Border" },
+      { id: "dashed-animated", label: "Animated Dashed Border" },
+    ],
+  },
+  {
+    id: "shape-effects",
+    label: "Shape Effects",
+    options: [
+      { id: "blob", label: "Blob / Organic Shapes" },
+      { id: "morphing", label: "Morphing / Shape Shifting" },
+      { id: "wave", label: "Wave Animation" },
+      { id: "floating", label: "Floating Elements" },
+    ],
+  },
+  {
+    id: "shadow-effects",
+    label: "Shadow & Depth",
+    options: [
+      { id: "3d-shadows", label: "3D Shadows / Depth" },
+      { id: "neon-glow", label: "Neon Glow Effects" },
+      { id: "soft-shadow", label: "Soft Shadow" },
+      { id: "colored-shadow", label: "Colored Shadow" },
+    ],
+  },
+  {
+    id: "interaction-effects",
+    label: "Interaction Effects",
+    options: [
+      { id: "ripple", label: "Ripple Effects" },
+      { id: "micro-interactions", label: "Micro-interactions" },
+      { id: "confetti", label: "Confetti / Celebration" },
+      { id: "haptic-feedback", label: "Haptic Feedback Visual" },
+    ],
+  },
 ];
 
 // Layout options
@@ -203,7 +289,7 @@ export default function FrontendStudio() {
   const [frameworkComponentMap, setFrameworkComponentMap] = useState<Record<string, string>>({});
   const [colorSchemes, setColorSchemes] = useState<CheckboxOption[]>(colorSchemeOptions);
   const [customColors, setCustomColors] = useState("");
-  const [uiDesigns, setUiDesigns] = useState<CheckboxOption[]>(uiDesignOptions);
+  const [designEffectsMap, setDesignEffectsMap] = useState<Record<string, string>>({});
 
   const [layouts, setLayouts] = useState<CheckboxOption[]>(layoutOptions);
   const [features, setFeatures] = useState<CheckboxOption[]>(featureOptions);
@@ -347,7 +433,6 @@ export default function FrontendStudio() {
     const selectedPageTypes = pageTypes.filter((opt) => opt.checked).map((opt) => opt.label);
     const selectedFrameworks = frameworks.filter((opt) => opt.checked).map((opt) => opt.label);
     const selectedColorSchemes = colorSchemes.filter((opt) => opt.checked).map((opt) => opt.label);
-    const selectedUiDesigns = uiDesigns.filter((opt) => opt.checked).map((opt) => opt.label);
     const selectedLayouts = layouts.filter((opt) => opt.checked).map((opt) => opt.label);
     const selectedFeatures = features.filter((opt) => opt.checked).map((opt) => opt.label);
     const selectedFunctionalities = functionalities.filter((opt) => opt.checked).map((opt) => opt.label);
@@ -414,11 +499,16 @@ export default function FrontendStudio() {
       prompt += `\n`;
     }
 
-    // UI Design Effects
-    if (selectedUiDesigns.length > 0) {
+    // UI Design Effects - Category Mapping
+    const effectMappings = Object.entries(designEffectsMap).filter(([, value]) => value);
+    if (effectMappings.length > 0) {
       prompt += `### UI Design Effects\n`;
-      selectedUiDesigns.forEach((design) => {
-        prompt += `- ${design}\n`;
+      effectMappings.forEach(([categoryId, effectId]) => {
+        const category = uiDesignCategories.find(c => c.id === categoryId);
+        const effect = category?.options.find(o => o.id === effectId);
+        if (category && effect) {
+          prompt += `- ${category.label}: ${effect.label}\n`;
+        }
       });
       prompt += `\n`;
     }
@@ -556,7 +646,7 @@ export default function FrontendStudio() {
     setFrameworkComponentMap({});
     setColorSchemes(colorSchemeOptions.map((opt) => ({ ...opt, checked: false })));
     setCustomColors("");
-    setUiDesigns(uiDesignOptions.map((opt) => ({ ...opt, checked: false })));
+    setDesignEffectsMap({});
     setLayouts(layoutOptions.map((opt) => ({ ...opt, checked: false })));
     setFeatures(featureOptions.map((opt) => ({ ...opt, checked: false })));
     setFunctionalities(functionalityOptions.map((opt) => ({ ...opt, checked: false })));
@@ -896,7 +986,7 @@ export default function FrontendStudio() {
               </div>
             </div>
 
-            {/* UI Design Effects - Table with Multi-Select */}
+            {/* UI Design Effects - Category with Dropdown */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <label className="block text-sm font-semibold text-gray-700">
@@ -913,52 +1003,42 @@ export default function FrontendStudio() {
                   </svg>
                 </Link>
               </div>
-              <p className="text-xs text-gray-500 mb-3">Select the design effects you want to include (multi-select)</p>
-              <div className="overflow-x-auto max-h-[400px] overflow-y-auto border border-gray-200 rounded-xl">
+              <p className="text-xs text-gray-500 mb-3">Select an effect for each category (optional)</p>
+              <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
-                  <thead className="sticky top-0 z-10">
+                  <thead>
                     <tr className="bg-gradient-to-r from-pink-50 to-rose-50">
-                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border-b border-gray-200 w-12">Select</th>
-                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border-b border-gray-200 w-10">Icon</th>
-                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border-b border-gray-200">Effect Name</th>
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border border-gray-200 rounded-tl-lg">Category</th>
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border border-gray-200 rounded-tr-lg">Effect</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {uiDesigns.map((option, idx) => (
-                      <tr
-                        key={option.id}
-                        className={`cursor-pointer transition-all ${
-                          option.checked
-                            ? "bg-gradient-to-r from-orange-100 to-pink-100"
-                            : idx % 2 === 0 ? "bg-white/50 hover:bg-orange-50" : "bg-gray-50/50 hover:bg-orange-50"
-                        }`}
-                        onClick={() => handleCheckboxChange(option.id, setUiDesigns)}
-                      >
-                        <td className="p-2 border-b border-gray-100">
-                          <input
-                            type="checkbox"
-                            checked={option.checked}
-                            onChange={() => handleCheckboxChange(option.id, setUiDesigns)}
-                            onClick={(e) => e.stopPropagation()}
-                            className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-400 accent-orange-500"
-                          />
+                    {uiDesignCategories.map((category, idx) => (
+                      <tr key={category.id} className={idx % 2 === 0 ? "bg-white/50" : "bg-gray-50/50"}>
+                        <td className="p-2 text-sm text-gray-700 border border-gray-200 font-medium">
+                          {category.label}
                         </td>
-                        <td className="p-2 text-lg border-b border-gray-100">{option.icon}</td>
-                        <td className="p-2 text-sm text-gray-700 font-medium border-b border-gray-100">{option.label}</td>
+                        <td className="p-2 border border-gray-200">
+                          <select
+                            value={designEffectsMap[category.id] || ""}
+                            onChange={(e) => {
+                              setDesignEffectsMap(prev => ({
+                                ...prev,
+                                [category.id]: e.target.value
+                              }));
+                            }}
+                            className="w-full px-2 py-1.5 text-sm border border-gray-200 rounded-lg bg-white focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none"
+                          >
+                            <option value="">-- Select --</option>
+                            {category.options.map((option) => (
+                              <option key={option.id} value={option.id}>{option.label}</option>
+                            ))}
+                          </select>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-              </div>
-              <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
-                <span>{uiDesigns.filter(d => d.checked).length} of {uiDesigns.length} selected</span>
-                <button
-                  type="button"
-                  onClick={() => setUiDesigns(uiDesigns.map(opt => ({ ...opt, checked: false })))}
-                  className="text-orange-500 hover:text-orange-600 font-medium"
-                >
-                  Clear All
-                </button>
               </div>
             </div>
 
