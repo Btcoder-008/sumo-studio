@@ -414,18 +414,6 @@ export default function FrontendStudio() {
       prompt += `\n`;
     }
 
-    // Color Schemes
-    if (selectedColorSchemes.length > 0) {
-      prompt += `### Color Scheme(s)\n`;
-      selectedColorSchemes.forEach((colorScheme) => {
-        prompt += `- ${colorScheme}\n`;
-      });
-      if (showCustomColors && customColors.trim()) {
-        prompt += `Custom colors: ${customColors}\n`;
-      }
-      prompt += `\n`;
-    }
-
     // UI Design Effects
     if (selectedUiDesigns.length > 0) {
       prompt += `### UI Design Effects\n`;
@@ -906,57 +894,6 @@ export default function FrontendStudio() {
                   </tbody>
                 </table>
               </div>
-            </div>
-
-            {/* Color Scheme - Checklist */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-3">
-                <label className="block text-sm font-semibold text-gray-700">
-                  Color Scheme
-                </label>
-                <Link
-                  href="/color-scheme"
-                  target="_blank"
-                  className="px-3 py-1.5 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white text-xs font-medium rounded-lg transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1"
-                >
-                  <span>View All</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </Link>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                {colorSchemes.map((option) => (
-                  <label
-                    key={option.id}
-                    className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 border-2 ${
-                      option.checked
-                        ? "bg-gradient-to-r from-orange-100 to-pink-100 border-orange-400 shadow-md"
-                        : "bg-white/50 border-gray-200 hover:border-orange-300 hover:bg-orange-50"
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={option.checked}
-                      onChange={() => handleCheckboxChange(option.id, setColorSchemes)}
-                      className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-400 accent-orange-500"
-                    />
-                    <span className="text-lg">{option.icon}</span>
-                    <span className="text-gray-700 text-sm font-medium">{option.label}</span>
-                  </label>
-                ))}
-              </div>
-
-              {/* Conditional: Custom colors */}
-              {showCustomColors && (
-                <input
-                  type="text"
-                  value={customColors}
-                  onChange={(e) => setCustomColors(e.target.value)}
-                  placeholder="e.g., Primary: #FF6B00, Secondary: #1A1A1A"
-                  className="w-full mt-3 px-4 py-3 bg-white/50 border-2 border-orange-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition-all"
-                />
-              )}
             </div>
 
             {/* UI Design Effects - Checklist */}
