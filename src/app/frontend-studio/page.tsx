@@ -896,7 +896,7 @@ export default function FrontendStudio() {
               </div>
             </div>
 
-            {/* UI Design Effects - Checklist */}
+            {/* UI Design Effects - Table with Multi-Select */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <label className="block text-sm font-semibold text-gray-700">
@@ -913,26 +913,52 @@ export default function FrontendStudio() {
                   </svg>
                 </Link>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                {uiDesigns.map((option) => (
-                  <label
-                    key={option.id}
-                    className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 border-2 ${
-                      option.checked
-                        ? "bg-gradient-to-r from-orange-100 to-pink-100 border-orange-400 shadow-md"
-                        : "bg-white/50 border-gray-200 hover:border-orange-300 hover:bg-orange-50"
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={option.checked}
-                      onChange={() => handleCheckboxChange(option.id, setUiDesigns)}
-                      className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-400 accent-orange-500"
-                    />
-                    <span className="text-lg">{option.icon}</span>
-                    <span className="text-gray-700 text-sm font-medium">{option.label}</span>
-                  </label>
-                ))}
+              <p className="text-xs text-gray-500 mb-3">Select the design effects you want to include (multi-select)</p>
+              <div className="overflow-x-auto max-h-[400px] overflow-y-auto border border-gray-200 rounded-xl">
+                <table className="w-full border-collapse">
+                  <thead className="sticky top-0 z-10">
+                    <tr className="bg-gradient-to-r from-pink-50 to-rose-50">
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border-b border-gray-200 w-12">Select</th>
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border-b border-gray-200 w-10">Icon</th>
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border-b border-gray-200">Effect Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {uiDesigns.map((option, idx) => (
+                      <tr
+                        key={option.id}
+                        className={`cursor-pointer transition-all ${
+                          option.checked
+                            ? "bg-gradient-to-r from-orange-100 to-pink-100"
+                            : idx % 2 === 0 ? "bg-white/50 hover:bg-orange-50" : "bg-gray-50/50 hover:bg-orange-50"
+                        }`}
+                        onClick={() => handleCheckboxChange(option.id, setUiDesigns)}
+                      >
+                        <td className="p-2 border-b border-gray-100">
+                          <input
+                            type="checkbox"
+                            checked={option.checked}
+                            onChange={() => handleCheckboxChange(option.id, setUiDesigns)}
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-400 accent-orange-500"
+                          />
+                        </td>
+                        <td className="p-2 text-lg border-b border-gray-100">{option.icon}</td>
+                        <td className="p-2 text-sm text-gray-700 font-medium border-b border-gray-100">{option.label}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
+                <span>{uiDesigns.filter(d => d.checked).length} of {uiDesigns.length} selected</span>
+                <button
+                  type="button"
+                  onClick={() => setUiDesigns(uiDesigns.map(opt => ({ ...opt, checked: false })))}
+                  className="text-orange-500 hover:text-orange-600 font-medium"
+                >
+                  Clear All
+                </button>
               </div>
             </div>
 
