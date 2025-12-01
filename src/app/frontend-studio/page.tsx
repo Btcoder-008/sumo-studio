@@ -86,6 +86,18 @@ const frameworkOptions: CheckboxOption[] = [
   { id: "styled-components", label: "Styled Components", checked: false, icon: "💅" },
 ];
 
+// UI Component types for framework mapping
+const uiComponentTypes = [
+  { id: "buttons", label: "Buttons" },
+  { id: "forms", label: "Forms" },
+  { id: "badges", label: "Badges" },
+  { id: "cards", label: "Cards" },
+  { id: "tables", label: "Tables" },
+  { id: "modals", label: "Modals" },
+  { id: "navigation", label: "Navigation" },
+  { id: "alerts", label: "Alerts" },
+];
+
 // Color scheme options
 const colorSchemeOptions: CheckboxOption[] = [
   { id: "light", label: "Light Theme", checked: false, icon: "☀️" },
@@ -188,6 +200,7 @@ export default function FrontendStudio() {
   const [pageTypes, setPageTypes] = useState<CheckboxOption[]>(pageTypeOptions);
   const [customPageType, setCustomPageType] = useState("");
   const [frameworks, setFrameworks] = useState<CheckboxOption[]>(frameworkOptions);
+  const [frameworkComponentMap, setFrameworkComponentMap] = useState<Record<string, string>>({});
   const [colorSchemes, setColorSchemes] = useState<CheckboxOption[]>(colorSchemeOptions);
   const [customColors, setCustomColors] = useState("");
   const [uiDesigns, setUiDesigns] = useState<CheckboxOption[]>(uiDesignOptions);
@@ -387,11 +400,16 @@ export default function FrontendStudio() {
       prompt += `\n`;
     }
 
-    // Frameworks
-    if (selectedFrameworks.length > 0) {
-      prompt += `### UI Framework(s)\n`;
-      selectedFrameworks.forEach((framework) => {
-        prompt += `- ${framework}\n`;
+    // Frameworks - Component Mapping
+    const componentMappings = Object.entries(frameworkComponentMap).filter(([, value]) => value);
+    if (componentMappings.length > 0) {
+      prompt += `### UI Framework per Component\n`;
+      componentMappings.forEach(([componentId, frameworkId]) => {
+        const component = uiComponentTypes.find(c => c.id === componentId);
+        const framework = frameworkOptions.find(f => f.id === frameworkId);
+        if (component && framework) {
+          prompt += `- ${component.label}: ${framework.label}\n`;
+        }
       });
       prompt += `\n`;
     }
@@ -547,6 +565,7 @@ export default function FrontendStudio() {
     setPageTypes(pageTypeOptions.map((opt) => ({ ...opt, checked: false })));
     setCustomPageType("");
     setFrameworks(frameworkOptions.map((opt) => ({ ...opt, checked: false })));
+    setFrameworkComponentMap({});
     setColorSchemes(colorSchemeOptions.map((opt) => ({ ...opt, checked: false })));
     setCustomColors("");
     setUiDesigns(uiDesignOptions.map((opt) => ({ ...opt, checked: false })));
@@ -833,7 +852,7 @@ export default function FrontendStudio() {
               )}
             </div>
 
-            {/* UI Framework - Checklist */}
+            {/* UI Framework - Component Mapping */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <label className="block text-sm font-semibold text-gray-700">
@@ -850,26 +869,42 @@ export default function FrontendStudio() {
                   </svg>
                 </Link>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                {frameworks.map((option) => (
-                  <label
-                    key={option.id}
-                    className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 border-2 ${
-                      option.checked
-                        ? "bg-gradient-to-r from-orange-100 to-pink-100 border-orange-400 shadow-md"
-                        : "bg-white/50 border-gray-200 hover:border-orange-300 hover:bg-orange-50"
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={option.checked}
-                      onChange={() => handleCheckboxChange(option.id, setFrameworks)}
-                      className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-orange-400 accent-orange-500"
-                    />
-                    <span className="text-lg">{option.icon}</span>
-                    <span className="text-gray-700 text-sm font-medium">{option.label}</span>
-                  </label>
-                ))}
+              <p className="text-xs text-gray-500 mb-3">Select a framework for each component type (optional)</p>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-orange-50 to-pink-50">
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border border-gray-200 rounded-tl-lg">Component</th>
+                      <th className="p-2 text-left text-xs font-semibold text-gray-700 border border-gray-200 rounded-tr-lg">Framework</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {uiComponentTypes.map((component, idx) => (
+                      <tr key={component.id} className={idx % 2 === 0 ? "bg-white/50" : "bg-gray-50/50"}>
+                        <td className="p-2 text-sm text-gray-700 border border-gray-200 font-medium">
+                          {component.label}
+                        </td>
+                        <td className="p-2 border border-gray-200">
+                          <select
+                            value={frameworkComponentMap[component.id] || ""}
+                            onChange={(e) => {
+                              setFrameworkComponentMap(prev => ({
+                                ...prev,
+                                [component.id]: e.target.value
+                              }));
+                            }}
+                            className="w-full px-2 py-1.5 text-sm border border-gray-200 rounded-lg bg-white focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
+                          >
+                            <option value="">-- Select --</option>
+                            {frameworkOptions.map((fw) => (
+                              <option key={fw.id} value={fw.id}>{fw.label}</option>
+                            ))}
+                          </select>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
 
