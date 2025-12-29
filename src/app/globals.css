@@ -77,3 +77,17 @@ body {
 .animate-wiggle {
   animation: wiggle 4s ease-in-out infinite;
 }
+
+/* Center logo floating animation */
+@keyframes float-center {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+}
+
+.animate-float-center {
+  animation: float-center 4s ease-in-out infinite;
+}

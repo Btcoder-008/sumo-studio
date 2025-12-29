@@ -847,58 +847,55 @@ export default function FrontendStudio() {
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
       <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }} />
 
-      {/* Header */}
-      <header className="relative z-20 bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Link href="/" className="flex items-center gap-2">
+      <div className="relative z-10 flex min-h-screen">
+        {/* Left Sidebar Navigation */}
+        <aside className="w-64 bg-white/80 backdrop-blur-md shadow-lg border-r border-white/20 flex flex-col">
+          {/* Logo and Title */}
+          <div className="p-6 border-b border-white/20">
+            <Link href="/dashboard" className="flex items-center gap-3">
               <Image
                 src="/super-sumo.png"
                 alt="Super Sumo"
-                width={80}
-                height={80}
+                width={60}
+                height={60}
                 className="cursor-pointer hover:scale-105 transition-transform drop-shadow-lg"
               />
+              <div>
+                <h1 className="text-xl font-bold text-gray-800">Super Sumo</h1>
+                <p className="text-xs text-gray-500">Build with Sumo</p>
+              </div>
             </Link>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800">
-                Sumo Studio
-              </h1>
-              <p className="text-xs text-gray-500 tracking-tight">Build your app with Sumo</p>
-            </div>
           </div>
 
-          {/* Navigation Menu */}
-          <nav className="flex items-center gap-2">
-            <Link
-              href="/sumo-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
-            >
-              Sumo Studio
-            </Link>
-            <Link
-              href="/frontend-studio"
-              className="px-4 py-2 bg-yellow-100 text-yellow-700 font-medium rounded-lg transition-all"
-            >
-              Frontend Studio
-            </Link>
-            <Link
-              href="/backend-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
-            >
-              Backend Studio
-            </Link>
-            <Link
-              href="/script-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
-            >
-              Script Studio
-            </Link>
+          {/* Navigation Links */}
+          <nav className="flex-1 p-4 space-y-2">
+            <Link href="/dashboard" className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">Dashboard</Link>
+            <Link href="/services" className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">Services</Link>
+            <Link href="/employee" className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">Employee</Link>
+            <Link href="/accounts" className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">Accounts</Link>
+            <Link href="/reports" className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">Reports</Link>
+            <Link href="/master" className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">Master</Link>
+            <Link href="/settings" className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">Settings</Link>
+            <Link href="/super-coder" className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">Super Coder</Link>
           </nav>
-        </div>
-      </header>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-4 py-8">
+          {/* Footer */}
+          <div className="p-4 border-t border-white/20 text-xs text-gray-500 text-center">
+            <p>© 2025 Super Sumo</p>
+          </div>
+        </aside>
+
+        {/* Main Content Area */}
+        <main className="flex-1 overflow-auto">
+          <header className="bg-white shadow-sm border-b border-gray-200 p-6">
+            <div className="flex items-center gap-4">
+              <Link href="/dashboard" className="text-yellow-400 hover:text-yellow-500 transition-colors text-2xl cursor-pointer">
+                ←
+              </Link>
+              <h2 className="text-3xl font-bold text-gray-800">Frontend Studio</h2>
+            </div>
+          </header>
+          <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Form Section */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-orange-200/50 transition-shadow duration-300 max-h-[calc(100vh-150px)] overflow-y-auto">
@@ -1668,8 +1665,10 @@ export default function FrontendStudio() {
               </div>
             )}
           </div>
-        </div>
-      </main>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

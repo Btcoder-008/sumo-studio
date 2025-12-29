@@ -70,6 +70,15 @@ export default function TerminalPage() {
   const [databaseUrlNameCopied, setDatabaseUrlNameCopied] = useState(false);
   const [frontendUrlNameCopied, setFrontendUrlNameCopied] = useState(false);
 
+  const navItems = [
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "Services", href: "/services" },
+    { label: "Employee", href: "/employee" },
+    { label: "Accounts", href: "/accounts" },
+    { label: "Reports", href: "/reports" },
+    { label: "Settings", href: "/settings" },
+  ];
+
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 overflow-hidden">
       {/* Animated background elements */}
@@ -93,59 +102,57 @@ export default function TerminalPage() {
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
       <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }} />
 
-      {/* Header */}
-      <header className="relative z-20 bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Link href="/" className="flex items-center gap-2">
+      <div className="relative z-10 flex min-h-screen">
+        {/* Left Sidebar Navigation */}
+        <aside className="w-64 bg-white/80 backdrop-blur-md shadow-lg border-r border-white/20 flex flex-col">
+          {/* Logo and Title */}
+          <div className="p-6 border-b border-white/20">
+            <Link href="/dashboard" className="flex items-center gap-3">
               <Image
                 src="/super-sumo.png"
                 alt="Super Sumo"
-                width={80}
-                height={80}
+                width={60}
+                height={60}
                 className="cursor-pointer hover:scale-105 transition-transform drop-shadow-lg"
               />
+              <div>
+                <h1 className="text-xl font-bold text-gray-800">Super Sumo</h1>
+                <p className="text-xs text-gray-500">Build with Sumo</p>
+              </div>
             </Link>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800">
-                Sumo Studio
-              </h1>
-              <p className="text-xs text-gray-500 tracking-tight">Build your app with Sumo</p>
-            </div>
           </div>
 
-          {/* Navigation Menu */}
-          <nav className="flex items-center gap-2">
-            <Link
-              href="/sumo-studio"
-              className="px-4 py-2 bg-yellow-100 text-yellow-700 font-medium rounded-lg transition-all"
-            >
-              Sumo Studio
-            </Link>
-            <Link
-              href="/frontend-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
-            >
-              Frontend Studio
-            </Link>
-            <Link
-              href="/backend-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
-            >
-              Backend Studio
-            </Link>
-            <Link
-              href="/script-studio"
-              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
-            >
-              Script Studio
-            </Link>
+          {/* Navigation Links */}
+          <nav className="flex-1 p-4 space-y-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
-        </div>
-      </header>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Footer */}
+          <div className="p-4 border-t border-white/20 text-xs text-gray-500 text-center">
+            <p>© 2025 Super Sumo</p>
+          </div>
+        </aside>
+
+        {/* Main Content Area */}
+        <main className="flex-1 overflow-auto">
+          <header className="bg-white shadow-sm border-b border-gray-200 p-6">
+            <div className="flex items-center gap-4">
+              <Link href="/dashboard" className="text-yellow-400 hover:text-yellow-500 transition-colors text-2xl cursor-pointer">
+                ←
+              </Link>
+              <h2 className="text-3xl font-bold text-gray-800">Sumo Studio</h2>
+            </div>
+          </header>
+          <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
           {/* Card 1: Step 1 - Run Sumo Script */}
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-green-200/50 transition-shadow duration-300">
@@ -1221,13 +1228,11 @@ export default function TerminalPage() {
                 </div>
               </div>
             </div>
-
           </div>
-
         </div>
-
-      </main>
-
+      </div>
+    </main>
     </div>
+  </div>
   );
 }

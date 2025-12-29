@@ -904,6 +904,12 @@ export default function PageTypeDetail() {
           {/* Navigation Menu */}
           <nav className="flex items-center gap-2">
             <Link
+              href="/dashboard"
+              className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
+            >
+              Dashboard
+            </Link>
+            <Link
               href="/sumo-studio"
               className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all"
             >
