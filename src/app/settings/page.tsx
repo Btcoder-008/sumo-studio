@@ -22,6 +22,7 @@ const floatingIcons = [
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard" },
+  { label: "CEO Automation", href: "/ceo-automation" },
   { label: "Services", href: "/services" },
   { label: "Employee", href: "/employee" },
   { label: "Accounts", href: "/accounts" },
