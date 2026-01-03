@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { MobileLayout } from "@/app/components/MobileLayout";
 
@@ -32,6 +33,24 @@ const navItems = [
   { label: "Settings", href: "/settings" },
 ];
 
+interface CheckInTime {
+  id: string;
+  checkInTime: string;
+  checkOutTime?: string;
+}
+
+interface Position {
+  id: string;
+  name: string;
+  description?: string;
+}
+
+interface Department {
+  id: string;
+  name: string;
+  description?: string;
+}
+
 interface Employee {
   id: string;
   name: string;
@@ -41,6 +60,7 @@ interface Employee {
   salary?: number;
   status: "Active" | "Inactive";
   joinDate: string;
+  checkInTimes: CheckInTime[];
 }
 
 interface EmployeeFormData {
@@ -51,10 +71,13 @@ interface EmployeeFormData {
   salary: string;
   status: "Active" | "Inactive";
   joinDate: string;
+  checkInTimes: CheckInTime[];
 }
 
 export default function EmployeeListPage() {
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [positions, setPositions] = useState<Position[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<EmployeeFormData>({
@@ -65,7 +88,25 @@ export default function EmployeeListPage() {
     salary: "",
     status: "Active",
     joinDate: new Date().toISOString().split("T")[0],
+    checkInTimes: [{ id: "1", checkInTime: "", checkOutTime: "" }],
   });
+
+  // Load data from localStorage on mount
+  React.useEffect(() => {
+    const savedEmployees = localStorage.getItem("employee_list");
+    const savedPositions = localStorage.getItem("employee_positions");
+    const savedDepartments = localStorage.getItem("employee_departments");
+
+    if (savedEmployees) {
+      setEmployees(JSON.parse(savedEmployees));
+    }
+    if (savedPositions) {
+      setPositions(JSON.parse(savedPositions));
+    }
+    if (savedDepartments) {
+      setDepartments(JSON.parse(savedDepartments));
+    }
+  }, []);
 
   const handleAddClick = () => {
     setFormData({
@@ -76,6 +117,7 @@ export default function EmployeeListPage() {
       salary: "",
       status: "Active",
       joinDate: new Date().toISOString().split("T")[0],
+      checkInTimes: [{ id: "1", checkInTime: "", checkOutTime: "" }],
     });
     setEditingId(null);
     setShowForm(true);
@@ -90,6 +132,7 @@ export default function EmployeeListPage() {
       salary: employee.salary?.toString() || "",
       status: employee.status,
       joinDate: employee.joinDate,
+      checkInTimes: employee.checkInTimes || [{ id: "1", checkInTime: "", checkOutTime: "" }],
     });
     setEditingId(employee.id);
     setShowForm(true);
@@ -103,6 +146,30 @@ export default function EmployeeListPage() {
     }));
   };
 
+  const handleCheckInChange = (id: string, field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      checkInTimes: prev.checkInTimes.map((time) =>
+        time.id === id ? { ...time, [field]: value } : time
+      ),
+    }));
+  };
+
+  const addCheckInTime = () => {
+    const newId = Math.random().toString(36).substr(2, 9);
+    setFormData((prev) => ({
+      ...prev,
+      checkInTimes: [...prev.checkInTimes, { id: newId, checkInTime: "", checkOutTime: "" }],
+    }));
+  };
+
+  const removeCheckInTime = (id: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      checkInTimes: prev.checkInTimes.filter((time) => time.id !== id),
+    }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -111,22 +178,22 @@ export default function EmployeeListPage() {
       return;
     }
 
+    let updatedEmployees: Employee[];
     if (editingId) {
-      setEmployees((prev) =>
-        prev.map((emp) =>
-          emp.id === editingId
-            ? {
-                ...emp,
-                name: formData.name,
-                position: formData.position,
-                email: formData.email,
-                department: formData.department,
-                salary: formData.salary ? parseInt(formData.salary) : undefined,
-                status: formData.status,
-                joinDate: formData.joinDate,
-              }
-            : emp
-        )
+      updatedEmployees = employees.map((emp) =>
+        emp.id === editingId
+          ? {
+              ...emp,
+              name: formData.name,
+              position: formData.position,
+              email: formData.email,
+              department: formData.department,
+              salary: formData.salary ? parseInt(formData.salary) : undefined,
+              status: formData.status,
+              joinDate: formData.joinDate,
+              checkInTimes: formData.checkInTimes,
+            }
+          : emp
       );
     } else {
       const newEmployee: Employee = {
@@ -138,16 +205,21 @@ export default function EmployeeListPage() {
         salary: formData.salary ? parseInt(formData.salary) : undefined,
         status: formData.status,
         joinDate: formData.joinDate,
+        checkInTimes: formData.checkInTimes,
       };
-      setEmployees((prev) => [newEmployee, ...prev]);
+      updatedEmployees = [newEmployee, ...employees];
     }
 
+    setEmployees(updatedEmployees);
+    localStorage.setItem("employee_list", JSON.stringify(updatedEmployees));
     setShowForm(false);
   };
 
   const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this employee?")) {
-      setEmployees((prev) => prev.filter((emp) => emp.id !== id));
+      const updated = employees.filter((emp) => emp.id !== id);
+      setEmployees(updated);
+      localStorage.setItem("employee_list", JSON.stringify(updated));
     }
   };
 
@@ -194,6 +266,7 @@ export default function EmployeeListPage() {
                       <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Department</th>
                       <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Email</th>
                       <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Status</th>
+                      <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Check-In Times</th>
                       <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Actions</th>
                     </tr>
                   </thead>
@@ -208,6 +281,9 @@ export default function EmployeeListPage() {
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(emp.status)}`}>
                             {emp.status}
                           </span>
+                        </td>
+                        <td className="py-3 px-4 text-xs text-gray-600">
+                          {emp.checkInTimes.length} time(s)
                         </td>
                         <td className="py-3 px-4">
                           <button
@@ -236,7 +312,7 @@ export default function EmployeeListPage() {
       {/* Add/Edit Modal */}
       {showForm && (
         <div className="fixed inset-0 bg-black/50 z-40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-center">
               <h2 className="text-2xl font-bold text-gray-800">{editingId ? "Edit Employee" : "Add New Employee"}</h2>
               <button
@@ -247,103 +323,160 @@ export default function EmployeeListPage() {
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="John Doe"
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
-                    required
-                  />
-                </div>
+            <form onSubmit={handleSubmit} className="p-6 space-y-6">
+              {/* Basic Info */}
+              <div>
+                <h3 className="text-lg font-bold text-gray-800 mb-4">Basic Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      placeholder="John Doe"
+                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
+                      required
+                    />
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Position *</label>
-                  <input
-                    type="text"
-                    name="position"
-                    value={formData.position}
-                    onChange={handleInputChange}
-                    placeholder="Senior Developer"
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
-                    required
-                  />
-                </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="john@example.com"
+                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
+                      required
+                    />
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="john@example.com"
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
-                    required
-                  />
-                </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Position *</label>
+                    <select
+                      name="position"
+                      value={formData.position}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
+                      required
+                    >
+                      <option value="">Select Position</option>
+                      {positions.map((pos) => (
+                        <option key={pos.id} value={pos.name}>
+                          {pos.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Department</label>
-                  <select
-                    name="department"
-                    value={formData.department}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
-                  >
-                    <option value="">Select Department</option>
-                    <option value="Engineering">Engineering</option>
-                    <option value="Product">Product</option>
-                    <option value="Design">Design</option>
-                    <option value="Sales">Sales</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="HR">HR</option>
-                    <option value="Finance">Finance</option>
-                  </select>
-                </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Department *</label>
+                    <select
+                      name="department"
+                      value={formData.department}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
+                      required
+                    >
+                      <option value="">Select Department</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.name}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Salary</label>
-                  <input
-                    type="number"
-                    name="salary"
-                    value={formData.salary}
-                    onChange={handleInputChange}
-                    placeholder="120000"
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
-                  />
-                </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Salary</label>
+                    <input
+                      type="number"
+                      name="salary"
+                      value={formData.salary}
+                      onChange={handleInputChange}
+                      placeholder="120000"
+                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
+                    />
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Join Date</label>
-                  <input
-                    type="date"
-                    name="joinDate"
-                    value={formData.joinDate}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
-                  />
-                </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Join Date</label>
+                    <input
+                      type="date"
+                      name="joinDate"
+                      value={formData.joinDate}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
+                    />
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Status</label>
-                  <select
-                    name="status"
-                    value={formData.status}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+                    <select
+                      name="status"
+                      value={formData.status}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
+                    >
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
+              {/* Check-In Times */}
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-bold text-gray-800">Check-In Times</h3>
+                  <button
+                    type="button"
+                    onClick={addCheckInTime}
+                    className="px-3 py-1 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all text-sm"
+                  >
+                    + Add Time
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  {formData.checkInTimes.map((time, index) => (
+                    <div key={time.id} className="flex gap-3 items-end bg-purple-50 p-3 rounded-lg">
+                      <div className="flex-1">
+                        <label className="block text-xs font-semibold text-gray-700 mb-1">Check-In Time</label>
+                        <input
+                          type="time"
+                          value={time.checkInTime}
+                          onChange={(e) => handleCheckInChange(time.id, "checkInTime", e.target.value)}
+                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400 text-sm"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <label className="block text-xs font-semibold text-gray-700 mb-1">Check-Out Time</label>
+                        <input
+                          type="time"
+                          value={time.checkOutTime || ""}
+                          onChange={(e) => handleCheckInChange(time.id, "checkOutTime", e.target.value)}
+                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400 text-sm"
+                        />
+                      </div>
+                      {formData.checkInTimes.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeCheckInTime(time.id)}
+                          className="px-3 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-all text-sm"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Form Actions */}
               <div className="flex gap-4 pt-4 border-t border-gray-200">
                 <button
                   type="button"

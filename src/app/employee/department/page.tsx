@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { MobileLayout } from "@/app/components/MobileLayout";
 
@@ -52,6 +53,14 @@ export default function DepartmentPage() {
     description: "",
   });
 
+  // Load departments from localStorage on mount
+  React.useEffect(() => {
+    const saved = localStorage.getItem("employee_departments");
+    if (saved) {
+      setDepartments(JSON.parse(saved));
+    }
+  }, []);
+
   const handleAddClick = () => {
     setFormData({ name: "", description: "" });
     setEditingId(null);
@@ -82,30 +91,33 @@ export default function DepartmentPage() {
       return;
     }
 
+    let updatedDepartments: Department[];
     if (editingId) {
-      setDepartments((prev) =>
-        prev.map((dept) =>
-          dept.id === editingId
-            ? { ...dept, name: formData.name, description: formData.description }
-            : dept
-        )
+      updatedDepartments = departments.map((dept) =>
+        dept.id === editingId
+          ? { ...dept, name: formData.name, description: formData.description }
+          : dept
       );
     } else {
-      setDepartments((prev) => [
+      updatedDepartments = [
         {
           id: Math.random().toString(36).substr(2, 9),
           name: formData.name,
           description: formData.description,
         },
-        ...prev,
-      ]);
+        ...departments,
+      ];
     }
+    setDepartments(updatedDepartments);
+    localStorage.setItem("employee_departments", JSON.stringify(updatedDepartments));
     setShowForm(false);
   };
 
   const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this department?")) {
-      setDepartments((prev) => prev.filter((dept) => dept.id !== id));
+      const updated = departments.filter((dept) => dept.id !== id);
+      setDepartments(updated);
+      localStorage.setItem("employee_departments", JSON.stringify(updated));
     }
   };
 

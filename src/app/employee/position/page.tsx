@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { MobileLayout } from "@/app/components/MobileLayout";
 
@@ -52,6 +53,14 @@ export default function PositionPage() {
     description: "",
   });
 
+  // Load positions from localStorage on mount
+  React.useEffect(() => {
+    const saved = localStorage.getItem("employee_positions");
+    if (saved) {
+      setPositions(JSON.parse(saved));
+    }
+  }, []);
+
   const handleAddClick = () => {
     setFormData({ name: "", description: "" });
     setEditingId(null);
@@ -82,30 +91,33 @@ export default function PositionPage() {
       return;
     }
 
+    let updatedPositions: Position[];
     if (editingId) {
-      setPositions((prev) =>
-        prev.map((pos) =>
-          pos.id === editingId
-            ? { ...pos, name: formData.name, description: formData.description }
-            : pos
-        )
+      updatedPositions = positions.map((pos) =>
+        pos.id === editingId
+          ? { ...pos, name: formData.name, description: formData.description }
+          : pos
       );
     } else {
-      setPositions((prev) => [
+      updatedPositions = [
         {
           id: Math.random().toString(36).substr(2, 9),
           name: formData.name,
           description: formData.description,
         },
-        ...prev,
-      ]);
+        ...positions,
+      ];
     }
+    setPositions(updatedPositions);
+    localStorage.setItem("employee_positions", JSON.stringify(updatedPositions));
     setShowForm(false);
   };
 
   const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this position?")) {
-      setPositions((prev) => prev.filter((pos) => pos.id !== id));
+      const updated = positions.filter((pos) => pos.id !== id);
+      setPositions(updated);
+      localStorage.setItem("employee_positions", JSON.stringify(updated));
     }
   };
 
