@@ -173,7 +173,7 @@ export default function EmployeeListPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.rfid || !formData.position) {
+    if (!formData.name || !formData.position) {
       alert("Please fill in all required fields");
       return;
     }
@@ -342,7 +342,7 @@ export default function EmployeeListPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">RFID *</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">RFID</label>
                     <input
                       type="text"
                       name="rfid"
@@ -350,7 +350,6 @@ export default function EmployeeListPage() {
                       onChange={handleInputChange}
                       placeholder="RFID-123456789"
                       className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400 font-mono"
-                      required
                     />
                   </div>
 
