@@ -55,7 +55,7 @@ interface Employee {
   id: string;
   name: string;
   position: string;
-  email: string;
+  rfid: string;
   department: string;
   salary?: number;
   status: "Active" | "Inactive";
@@ -66,7 +66,7 @@ interface Employee {
 interface EmployeeFormData {
   name: string;
   position: string;
-  email: string;
+  rfid: string;
   department: string;
   salary: string;
   status: "Active" | "Inactive";
@@ -83,7 +83,7 @@ export default function EmployeeListPage() {
   const [formData, setFormData] = useState<EmployeeFormData>({
     name: "",
     position: "",
-    email: "",
+    rfid: "",
     department: "",
     salary: "",
     status: "Active",
@@ -112,7 +112,7 @@ export default function EmployeeListPage() {
     setFormData({
       name: "",
       position: "",
-      email: "",
+      rfid: "",
       department: "",
       salary: "",
       status: "Active",
@@ -127,7 +127,7 @@ export default function EmployeeListPage() {
     setFormData({
       name: employee.name,
       position: employee.position,
-      email: employee.email,
+      rfid: employee.rfid,
       department: employee.department,
       salary: employee.salary?.toString() || "",
       status: employee.status,
@@ -173,7 +173,7 @@ export default function EmployeeListPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.position) {
+    if (!formData.name || !formData.rfid || !formData.position) {
       alert("Please fill in all required fields");
       return;
     }
@@ -186,7 +186,7 @@ export default function EmployeeListPage() {
               ...emp,
               name: formData.name,
               position: formData.position,
-              email: formData.email,
+              rfid: formData.rfid,
               department: formData.department,
               salary: formData.salary ? parseInt(formData.salary) : undefined,
               status: formData.status,
@@ -200,7 +200,7 @@ export default function EmployeeListPage() {
         id: Math.random().toString(36).substr(2, 9),
         name: formData.name,
         position: formData.position,
-        email: formData.email,
+        rfid: formData.rfid,
         department: formData.department,
         salary: formData.salary ? parseInt(formData.salary) : undefined,
         status: formData.status,
@@ -264,7 +264,7 @@ export default function EmployeeListPage() {
                       <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Name</th>
                       <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Position</th>
                       <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Department</th>
-                      <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Email</th>
+                      <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">RFID</th>
                       <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Status</th>
                       <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Check-In Times</th>
                       <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Actions</th>
@@ -276,7 +276,7 @@ export default function EmployeeListPage() {
                         <td className="py-3 px-4 text-sm text-gray-700 font-medium">{emp.name}</td>
                         <td className="py-3 px-4 text-sm text-gray-600">{emp.position}</td>
                         <td className="py-3 px-4 text-sm text-gray-600">{emp.department}</td>
-                        <td className="py-3 px-4 text-sm text-gray-600">{emp.email}</td>
+                        <td className="py-3 px-4 text-sm text-gray-600 font-mono">{emp.rfid}</td>
                         <td className="py-3 px-4">
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(emp.status)}`}>
                             {emp.status}
@@ -342,14 +342,14 @@ export default function EmployeeListPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">RFID *</label>
                     <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
+                      type="text"
+                      name="rfid"
+                      value={formData.rfid}
                       onChange={handleInputChange}
-                      placeholder="john@example.com"
-                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400"
+                      placeholder="RFID-123456789"
+                      className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-400 font-mono"
                       required
                     />
                   </div>
