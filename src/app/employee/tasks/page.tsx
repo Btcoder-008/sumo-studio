@@ -2,6 +2,7 @@
 
 import { MobileLayout } from "@/app/components/MobileLayout";
 import { useState } from "react";
+import React from "react";
 
 function FloatingIcon({ icon, style }: { icon: string; style: React.CSSProperties }) {
   return (
@@ -31,8 +32,27 @@ const navItems = [
   { label: "Settings", href: "/settings" },
 ];
 
+interface Employee {
+  id: string;
+  name: string;
+  position: string;
+  rfid: string;
+  department: string;
+  salary?: number;
+  status: "Active" | "Inactive";
+  joinDate: string;
+  checkInTimes: CheckInTime[];
+}
+
+interface CheckInTime {
+  id: string;
+  checkInTime: string;
+  checkOutTime?: string;
+}
+
 interface Task {
   id: string;
+  employeeId: string;
   title: string;
   assignedTo: string;
   appointmentDate: string;
@@ -43,6 +63,7 @@ interface Task {
 }
 
 interface TaskFormData {
+  employeeId: string;
   title: string;
   assignedTo: string;
   appointmentDate: string;
@@ -53,11 +74,13 @@ interface TaskFormData {
 }
 
 export default function Tasks() {
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<TaskFormData>({
+    employeeId: "",
     title: "",
     assignedTo: "",
     appointmentDate: new Date().toISOString().split("T")[0],
@@ -67,8 +90,22 @@ export default function Tasks() {
     description: "",
   });
 
+  // Load employees and tasks from localStorage on mount
+  React.useEffect(() => {
+    const savedEmployees = localStorage.getItem("employee_list");
+    const savedTasks = localStorage.getItem("employee_tasks");
+
+    if (savedEmployees) {
+      setEmployees(JSON.parse(savedEmployees));
+    }
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
+    }
+  }, []);
+
   const handleAddClick = () => {
     setFormData({
+      employeeId: "",
       title: "",
       assignedTo: "",
       appointmentDate: new Date().toISOString().split("T")[0],
@@ -83,6 +120,7 @@ export default function Tasks() {
 
   const handleEditClick = (task: Task) => {
     setFormData({
+      employeeId: task.employeeId,
       title: task.title,
       assignedTo: task.assignedTo,
       appointmentDate: task.appointmentDate,
@@ -97,40 +135,50 @@ export default function Tasks() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name === "employeeId") {
+      const selectedEmployee = employees.find((emp) => emp.id === value);
+      setFormData((prev) => ({
+        ...prev,
+        employeeId: value,
+        assignedTo: selectedEmployee?.name || "",
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.title || !formData.assignedTo) {
+    if (!formData.title || !formData.employeeId) {
       alert("Please fill in all required fields");
       return;
     }
 
+    let updatedTasks: Task[];
     if (editingId) {
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === editingId
-            ? {
-                ...task,
-                title: formData.title,
-                assignedTo: formData.assignedTo,
-                appointmentDate: formData.appointmentDate,
-                appointmentTime: formData.appointmentTime,
-                status: formData.status,
-                priority: formData.priority,
-                description: formData.description,
-              }
-            : task
-        )
+      updatedTasks = tasks.map((task) =>
+        task.id === editingId
+          ? {
+              ...task,
+              employeeId: formData.employeeId,
+              title: formData.title,
+              assignedTo: formData.assignedTo,
+              appointmentDate: formData.appointmentDate,
+              appointmentTime: formData.appointmentTime,
+              status: formData.status,
+              priority: formData.priority,
+              description: formData.description,
+            }
+          : task
       );
     } else {
       const newTask: Task = {
         id: Math.random().toString(36).substr(2, 9),
+        employeeId: formData.employeeId,
         title: formData.title,
         assignedTo: formData.assignedTo,
         appointmentDate: formData.appointmentDate,
@@ -139,15 +187,19 @@ export default function Tasks() {
         priority: formData.priority,
         description: formData.description,
       };
-      setTasks((prev) => [newTask, ...prev]);
+      updatedTasks = [newTask, ...tasks];
     }
 
+    setTasks(updatedTasks);
+    localStorage.setItem("employee_tasks", JSON.stringify(updatedTasks));
     setShowForm(false);
   };
 
   const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this task?")) {
-      setTasks((prev) => prev.filter((task) => task.id !== id));
+      const updated = tasks.filter((task) => task.id !== id);
+      setTasks(updated);
+      localStorage.setItem("employee_tasks", JSON.stringify(updated));
     }
   };
 
@@ -348,16 +400,18 @@ export default function Tasks() {
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Assigned To *</label>
                   <select
-                    name="assignedTo"
-                    value={formData.assignedTo}
+                    name="employeeId"
+                    value={formData.employeeId}
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-orange-400"
                     required
                   >
                     <option value="">Select Employee</option>
-                    <option value="John Doe">John Doe</option>
-                    <option value="Jane Smith">Jane Smith</option>
-                    <option value="Mike Johnson">Mike Johnson</option>
+                    {employees.map((emp) => (
+                      <option key={emp.id} value={emp.id}>
+                        {emp.name} ({emp.position})
+                      </option>
+                    ))}
                   </select>
                 </div>
 
