@@ -12,7 +12,8 @@
   "dependencies": {
     "next": "^16.1.1",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "superstaff": "file:../../../../Super Modules/Super Employee"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

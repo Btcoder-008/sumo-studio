@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
+import { useState } from "react";
+import { MobileLayout } from "@/app/components/MobileLayout";
 
 function FloatingIcon({ icon, style }: { icon: string; style: React.CSSProperties }) {
   return (
@@ -30,7 +30,47 @@ const navItems = [
   { label: "Settings", href: "/settings" },
 ];
 
+interface Employee {
+  id: string;
+  name: string;
+  position: string;
+  email: string;
+  department: string;
+  status: "Active" | "Inactive";
+  joinDate: string;
+}
+
 export default function Employee() {
+  const [employees, setEmployees] = useState<Employee[]>([
+    {
+      id: "1",
+      name: "John Doe",
+      position: "Senior Developer",
+      email: "john.doe@example.com",
+      department: "Engineering",
+      status: "Active",
+      joinDate: "2023-01-15",
+    },
+    {
+      id: "2",
+      name: "Jane Smith",
+      position: "Product Manager",
+      email: "jane.smith@example.com",
+      department: "Product",
+      status: "Active",
+      joinDate: "2023-03-20",
+    },
+    {
+      id: "3",
+      name: "Mike Johnson",
+      position: "UX Designer",
+      email: "mike.johnson@example.com",
+      department: "Design",
+      status: "Active",
+      joinDate: "2023-02-10",
+    },
+  ]);
+
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 overflow-hidden">
       {floatingIcons.map((item, index) => (
@@ -41,48 +81,65 @@ export default function Employee() {
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
       <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }} />
 
-      <div className="relative z-10 flex min-h-screen">
-        <aside className="w-64 bg-white/80 backdrop-blur-md shadow-lg border-r border-white/20 flex flex-col">
-          <div className="p-6 border-b border-white/20">
-            <Link href="/" className="flex items-center gap-3">
-              <Image src="/super-sumo.png" alt="Super Sumo" width={60} height={60} className="cursor-pointer hover:scale-105 transition-transform drop-shadow-lg" />
-              <div>
-                <h1 className="text-xl font-bold text-gray-800">Super Sumo</h1>
-                <p className="text-xs text-gray-500">Build with Sumo</p>
-              </div>
-            </Link>
+      <MobileLayout title="Employee Management" backLink="/dashboard" navItems={navItems}>
+        <div className="p-4 md:p-8">
+          <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-6 md:p-8 border border-white/30 mb-6">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">Employees</h3>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-300">
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Name</th>
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Position</th>
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Department</th>
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {employees.map((emp) => (
+                    <tr key={emp.id} className="border-b border-gray-200 hover:bg-yellow-50/50 transition-colors">
+                      <td className="py-3 px-4 text-sm text-gray-700">{emp.name}</td>
+                      <td className="py-3 px-4 text-sm text-gray-600">{emp.position}</td>
+                      <td className="py-3 px-4 text-sm text-gray-600">{emp.department}</td>
+                      <td className="py-3 px-4">
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${emp.status === "Active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                          {emp.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-          <nav className="flex-1 p-4 space-y-2">
-            {navItems.map((item) => (
-              <Link key={item.href} href={item.href} className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="p-4 border-t border-white/20 text-xs text-gray-500 text-center">
-            <p>© 2025 Super Sumo</p>
-          </div>
-        </aside>
 
-        <main className="flex-1 overflow-auto">
-          <header className="bg-white shadow-sm border-b border-gray-200 p-6">
-            <div className="flex items-center gap-4">
-              <Link href="/dashboard" className="text-yellow-400 hover:text-yellow-500 transition-colors text-2xl cursor-pointer">
-                ←
-              </Link>
-              <h2 className="text-3xl font-bold text-gray-800">Employee</h2>
-            </div>
-          </header>
-          <div className="p-8 flex items-center justify-center min-h-[calc(100vh-150px)]">
-            <div className="text-center">
-              <div className="text-8xl mb-6">👤</div>
-              <h2 className="text-4xl font-bold text-gray-800 mb-4">Employee</h2>
-              <p className="text-gray-500 text-lg mb-8">Coming Soon</p>
-              <Link href="/dashboard" className="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium rounded-lg transition-all inline-block">Back to Dashboard</Link>
+          <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-6 md:p-8 border border-white/30">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">Features</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                <div className="text-2xl mb-2">👥</div>
+                <h4 className="font-semibold text-gray-800">Employee Database</h4>
+                <p className="text-sm text-gray-600 mt-1">Manage employee information</p>
+              </div>
+              <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                <div className="text-2xl mb-2">📅</div>
+                <h4 className="font-semibold text-gray-800">Attendance</h4>
+                <p className="text-sm text-gray-600 mt-1">Track attendance records</p>
+              </div>
+              <div className="p-4 bg-pink-50 rounded-lg border border-pink-200">
+                <div className="text-2xl mb-2">📋</div>
+                <h4 className="font-semibold text-gray-800">Leave Management</h4>
+                <p className="text-sm text-gray-600 mt-1">Handle leave requests</p>
+              </div>
+              <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+                <div className="text-2xl mb-2">💰</div>
+                <h4 className="font-semibold text-gray-800">Payroll</h4>
+                <p className="text-sm text-gray-600 mt-1">Manage salary information</p>
+              </div>
             </div>
           </div>
-        </main>
-      </div>
+        </div>
+      </MobileLayout>
     </div>
   );
 }

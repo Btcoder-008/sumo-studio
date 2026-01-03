@@ -6,7 +6,7 @@ import Image from "next/image";
 function FloatingIcon({ icon, style, delay }: { icon: string; style: React.CSSProperties; delay: string }) {
   return (
     <div
-      className="absolute text-5xl md:text-6xl opacity-30 pointer-events-none animate-float"
+      className="absolute text-3xl md:text-5xl lg:text-6xl opacity-30 pointer-events-none animate-float"
       style={{
         ...style,
         animationDelay: delay,
@@ -39,7 +39,7 @@ const floatingIcons = [
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-b from-white to-gray-50 overflow-hidden flex items-center justify-center">
       {floatingIcons.map((item, index) => (
         <FloatingIcon
           key={index}
@@ -49,14 +49,19 @@ export default function Home() {
         />
       ))}
 
-      <div className="relative z-10 flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <Link href="/dashboard" className="inline-block">
-            <div className="animate-float-center hover:scale-105 transition-transform duration-300">
-              <Image src="/super-sumo.png" alt="Super Sumo" width={550} height={550} className="drop-shadow-2xl" />
-            </div>
-          </Link>
-        </div>
+      <div className="relative z-10 flex items-center justify-center px-4">
+        <Link href="/dashboard" className="inline-block">
+          <div className="animate-float-center hover:scale-105 transition-transform duration-300">
+            <Image
+              src="/super-sumo.png"
+              alt="Super Sumo"
+              width={550}
+              height={550}
+              className="drop-shadow-2xl w-full h-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-2xl"
+              priority
+            />
+          </div>
+        </Link>
       </div>
     </div>
   );

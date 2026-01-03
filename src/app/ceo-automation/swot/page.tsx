@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import { MobileLayout } from "../../components/MobileLayout";
 import { useState, useEffect } from "react";
 
 function FloatingIcon({ icon, style }: { icon: string; style: React.CSSProperties }) {
@@ -191,44 +191,12 @@ Tags: ${selectedTags.threats?.join(", ") || "None"}
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
       <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }} />
 
-      <div className="relative z-10 flex min-h-screen">
-        <aside className="w-64 bg-white/80 backdrop-blur-md shadow-lg border-r border-white/20 flex flex-col">
-          <div className="p-6 border-b border-white/20">
-            <Link href="/" className="flex items-center gap-3">
-              <Image src="/super-sumo.png" alt="Super Sumo" width={60} height={60} className="cursor-pointer hover:scale-105 transition-transform drop-shadow-lg" />
-              <div>
-                <h1 className="text-xl font-bold text-gray-800">Super Sumo</h1>
-                <p className="text-xs text-gray-500">Build with Sumo</p>
-              </div>
-            </Link>
-          </div>
-          <nav className="flex-1 p-4 space-y-2">
-            {navItems.map((item) => (
-              <Link key={item.href} href={item.href} className="block px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-yellow-100 hover:text-yellow-700 transition-all">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="p-4 border-t border-white/20 text-xs text-gray-500 text-center">
-            <p>© 2025 Super Sumo</p>
-          </div>
-        </aside>
-
-        <main className="flex-1 overflow-auto">
-          <header className="bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20 p-6">
-            <div className="flex items-center gap-4">
-              <Link href="/ceo-automation" className="text-green-400 hover:text-green-500 transition-colors text-2xl cursor-pointer">
-                ←
-              </Link>
-              <h2 className="text-3xl font-bold text-gray-800">SWOT Analysis 📊</h2>
-            </div>
-          </header>
-
-          <div className="p-8">
-            {/* SWOT Grid */}
-            <div className="mb-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-6">SWOT Quadrants</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <MobileLayout title="SWOT Analysis 📊" backLink="/ceo-automation" navItems={navItems}>
+        <div className="p-4 md:p-8">
+          {/* SWOT Grid */}
+          <div className="mb-8">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">SWOT Quadrants</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                 {swotQuadrants.map((quadrant) => (
                   <div
                     key={quadrant.key}
@@ -252,8 +220,8 @@ Tags: ${selectedTags.threats?.join(", ") || "None"}
 
             {/* How to Better Section */}
             <div className="mb-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-6">How to Better</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">How to Better</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                 {swotQuadrants.map((quadrant) => (
                   <div
                     key={`better-${quadrant.key}`}
@@ -306,14 +274,13 @@ Tags: ${selectedTags.threats?.join(", ") || "None"}
 
             {/* Summary */}
             {isSubmitted && (
-              <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-8 border border-white/30">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">SWOT Summary</h3>
+              <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-6 md:p-8 border border-white/30">
+                <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">SWOT Summary</h3>
                 <p className="text-sm text-gray-700 whitespace-pre-line">{savedSWOT}</p>
               </div>
             )}
-          </div>
-        </main>
-      </div>
+        </div>
+      </MobileLayout>
     </div>
   );
 }
