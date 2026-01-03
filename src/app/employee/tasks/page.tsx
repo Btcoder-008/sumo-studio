@@ -35,7 +35,8 @@ interface Task {
   id: string;
   title: string;
   assignedTo: string;
-  dueDate: string;
+  appointmentDate: string;
+  appointmentTime: string;
   status: "Not Started" | "In Progress" | "Completed" | "On Hold";
   priority: "High" | "Medium" | "Low";
   description: string;
@@ -44,7 +45,8 @@ interface Task {
 interface TaskFormData {
   title: string;
   assignedTo: string;
-  dueDate: string;
+  appointmentDate: string;
+  appointmentTime: string;
   status: "Not Started" | "In Progress" | "Completed" | "On Hold";
   priority: "High" | "Medium" | "Low";
   description: string;
@@ -58,7 +60,8 @@ export default function Tasks() {
   const [formData, setFormData] = useState<TaskFormData>({
     title: "",
     assignedTo: "",
-    dueDate: new Date().toISOString().split("T")[0],
+    appointmentDate: new Date().toISOString().split("T")[0],
+    appointmentTime: "09:00",
     status: "Not Started",
     priority: "Medium",
     description: "",
@@ -68,7 +71,8 @@ export default function Tasks() {
     setFormData({
       title: "",
       assignedTo: "",
-      dueDate: new Date().toISOString().split("T")[0],
+      appointmentDate: new Date().toISOString().split("T")[0],
+      appointmentTime: "09:00",
       status: "Not Started",
       priority: "Medium",
       description: "",
@@ -81,7 +85,8 @@ export default function Tasks() {
     setFormData({
       title: task.title,
       assignedTo: task.assignedTo,
-      dueDate: task.dueDate,
+      appointmentDate: task.appointmentDate,
+      appointmentTime: task.appointmentTime,
       status: task.status,
       priority: task.priority,
       description: task.description,
@@ -114,7 +119,8 @@ export default function Tasks() {
                 ...task,
                 title: formData.title,
                 assignedTo: formData.assignedTo,
-                dueDate: formData.dueDate,
+                appointmentDate: formData.appointmentDate,
+                appointmentTime: formData.appointmentTime,
                 status: formData.status,
                 priority: formData.priority,
                 description: formData.description,
@@ -127,7 +133,8 @@ export default function Tasks() {
         id: Math.random().toString(36).substr(2, 9),
         title: formData.title,
         assignedTo: formData.assignedTo,
-        dueDate: formData.dueDate,
+        appointmentDate: formData.appointmentDate,
+        appointmentTime: formData.appointmentTime,
         status: formData.status,
         priority: formData.priority,
         description: formData.description,
@@ -258,8 +265,9 @@ export default function Tasks() {
                     </div>
                     <p className="text-sm text-gray-600 ml-9 mb-3">{task.description}</p>
                     <div className="flex flex-wrap items-center gap-3 ml-9">
-                      <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">📌 {task.assignedTo}</span>
-                      <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">📅 {task.dueDate}</span>
+                      <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">👤 {task.assignedTo}</span>
+                      <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">📅 {task.appointmentDate}</span>
+                      <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">⏰ {task.appointmentTime}</span>
                       <span className={`text-xs font-semibold ${getPriorityColor(task.priority)}`}>
                         {task.priority === "High" ? "🔴" : task.priority === "Medium" ? "🟡" : "🟢"} {task.priority}
                       </span>
@@ -353,13 +361,25 @@ export default function Tasks() {
                   </select>
                 </div>
 
-                {/* Due Date */}
+                {/* Appointment Date */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Due Date</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Appointment Date</label>
                   <input
                     type="date"
-                    name="dueDate"
-                    value={formData.dueDate}
+                    name="appointmentDate"
+                    value={formData.appointmentDate}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-orange-400"
+                  />
+                </div>
+
+                {/* Appointment Time */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Appointment Time</label>
+                  <input
+                    type="time"
+                    name="appointmentTime"
+                    value={formData.appointmentTime}
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-orange-400"
                   />
