@@ -54,18 +54,62 @@ interface FormData {
 
 export default function Clients() {
   const [clients, setClients] = useState<Client[]>([
+    // Approved Clients
     { id: "1", name: "Alpha Gym", status: "Approved", subStatus: "Completed", salesType: "Direct", projectCount: 1, totalAmount: 5000 },
     { id: "2", name: "Black & White Gym", status: "Approved", subStatus: "Completed", salesType: "Direct", projectCount: 1, totalAmount: 20000 },
     { id: "3", name: "Chittal Cabs", status: "Approved", subStatus: "Completed", salesType: "Sub Order", projectCount: 1, totalAmount: 5000 },
     { id: "4", name: "DA Creations", status: "Approved", subStatus: "Not Started", salesType: "Sub Order", projectCount: 1, totalAmount: 20000 },
     { id: "5", name: "Dubai Kidz", status: "Approved", subStatus: "Under Process", salesType: "Direct" },
     { id: "6", name: "Health Mix", status: "Approved", subStatus: "Not Started", salesType: "Promote" },
-    { id: "7", name: "Ideal Care", status: "Approved", subStatus: "Completed", salesType: "Promote" },
+    { id: "7", name: "Ideal Care", status: "Approved", subStatus: "Completed", salesType: "Promote", projectCount: 1, totalAmount: 20000 },
     { id: "8", name: "Kaaral Printers", status: "Approved", subStatus: "Completed", salesType: "Direct", projectCount: 1, totalAmount: 50000 },
-    { id: "9", name: "Thiru Chits", status: "On Process", subStatus: "", salesType: "" },
-    { id: "10", name: "BIM", status: "Waiting", subStatus: "", salesType: "" },
-    { id: "11", name: "Gift Hub", status: "Waiting", subStatus: "", salesType: "" },
-    { id: "12", name: "90's Kids Kitchen", status: "Rejected", subStatus: "", salesType: "" },
+    { id: "9", name: "Laptop Surgeon", status: "Approved", subStatus: "Completed", salesType: "Direct" },
+    { id: "10", name: "Little Genius", status: "Approved", subStatus: "Not Started", salesType: "Direct", projectCount: 1, totalAmount: 40000 },
+    { id: "11", name: "Maruthi Jobs", status: "Approved", subStatus: "Completed", salesType: "Direct", projectCount: 1, totalAmount: 50000 },
+    { id: "12", name: "Nanas Resources", status: "Approved", subStatus: "Not Started", salesType: "Sub Order", projectCount: 1, totalAmount: 50000 },
+    { id: "13", name: "Phenix Mobiles", status: "Approved", subStatus: "Not Started", salesType: "Sub Order" },
+    { id: "14", name: "Poocharam", status: "Approved", subStatus: "Not Started", salesType: "Sub Order" },
+    { id: "15", name: "Priyaa Cellcom", status: "Approved", subStatus: "Not Started", salesType: "BNI", projectCount: 1, totalAmount: 40000 },
+    { id: "16", name: "Quality Woods", status: "Approved", subStatus: "Not Started", salesType: "BNI", projectCount: 1, totalAmount: 20000 },
+    { id: "17", name: "RA Aqua", status: "Approved", subStatus: "Completed", salesType: "BNI", projectCount: 1, totalAmount: 10000 },
+    { id: "18", name: "Raaja Rajan", status: "Approved", subStatus: "Not Started", salesType: "Direct" },
+    { id: "19", name: "Ray Clinic", status: "Approved", subStatus: "Completed", salesType: "Direct" },
+    { id: "20", name: "RR Motoshop", status: "Approved", subStatus: "Completed", salesType: "Direct", projectCount: 1, totalAmount: 30000 },
+    { id: "21", name: "Sai Vigna", status: "Approved", subStatus: "Completed", salesType: "Referral", projectCount: 1, totalAmount: 20000 },
+    { id: "22", name: "Security Service", status: "Approved", subStatus: "Not Started", salesType: "Promote" },
+    { id: "23", name: "Udhayam Hypermart", status: "Approved", subStatus: "Not Started", salesType: "BNI" },
+    { id: "24", name: "Vivek Mart", status: "Approved", subStatus: "Not Started", salesType: "Referral" },
+
+    // On Process Clients
+    { id: "25", name: "Thiru Chits", status: "On Process", subStatus: "", salesType: "" },
+    { id: "26", name: "Alagappa Bus", status: "On Process", subStatus: "", salesType: "" },
+    { id: "27", name: "Alagappa University", status: "On Process", subStatus: "", salesType: "" },
+    { id: "28", name: "BSS - OLX", status: "On Process", subStatus: "", salesType: "" },
+    { id: "29", name: "Siva Photographia", status: "On Process", subStatus: "", salesType: "" },
+    { id: "30", name: "Sri Hari CNC", status: "On Process", subStatus: "", salesType: "", projectCount: 1, totalAmount: 5000 },
+    { id: "31", name: "Share Market A/C", status: "On Process", subStatus: "", salesType: "" },
+
+    // Rejected Clients
+    { id: "32", name: "90's Kids Kitchen", status: "Rejected", subStatus: "", salesType: "" },
+    { id: "33", name: "Cycle World", status: "Rejected", subStatus: "", salesType: "" },
+    { id: "34", name: "G Clinic", status: "Rejected", subStatus: "", salesType: "" },
+    { id: "35", name: "Holy Angels", status: "Rejected", subStatus: "", salesType: "" },
+    { id: "36", name: "J tyers", status: "Rejected", subStatus: "", salesType: "" },
+    { id: "37", name: "Readathon", status: "Rejected", subStatus: "", salesType: "" },
+    { id: "38", name: "Soundharam Snacks", status: "Rejected", subStatus: "", salesType: "" },
+    { id: "39", name: "SRT Tiles", status: "Rejected", subStatus: "", salesType: "" },
+
+    // Waiting Clients
+    { id: "40", name: "BIM", status: "Waiting", subStatus: "", salesType: "" },
+    { id: "41", name: "Gift Hub", status: "Waiting", subStatus: "", salesType: "" },
+    { id: "42", name: "Jupiter Service", status: "Waiting", subStatus: "", salesType: "" },
+    { id: "43", name: "Krishna Schools", status: "Waiting", subStatus: "", salesType: "" },
+    { id: "44", name: "Pramide Academy", status: "Waiting", subStatus: "", salesType: "" },
+    { id: "45", name: "Scaling Academy", status: "Waiting", subStatus: "", salesType: "" },
+    { id: "46", name: "Srinivasa Mahal", status: "Waiting", subStatus: "", salesType: "" },
+    { id: "47", name: "SRM Trichy", status: "Waiting", subStatus: "", salesType: "" },
+    { id: "48", name: "Viyapar Clone", status: "Waiting", subStatus: "", salesType: "" },
+    { id: "49", name: "SF Vertical", status: "Waiting", subStatus: "", salesType: "" },
   ]);
 
   const [showForm, setShowForm] = useState(false);
