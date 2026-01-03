@@ -24,6 +24,7 @@ const navItems = [
   { label: "CEO Automation", href: "/ceo-automation" },
   { label: "Services", href: "/services" },
   { label: "Employee", href: "/employee" },
+  { label: "Clients", href: "/clients" },
   { label: "Accounts", href: "/accounts" },
   { label: "Reports", href: "/reports" },
   { label: "Settings", href: "/settings" },

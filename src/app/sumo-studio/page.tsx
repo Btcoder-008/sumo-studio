@@ -74,6 +74,7 @@ export default function TerminalPage() {
     { label: "Dashboard", href: "/dashboard" },
     { label: "Services", href: "/services" },
     { label: "Employee", href: "/employee" },
+  { label: "Clients", href: "/clients" },
     { label: "Accounts", href: "/accounts" },
     { label: "Reports", href: "/reports" },
     { label: "Settings", href: "/settings" },
