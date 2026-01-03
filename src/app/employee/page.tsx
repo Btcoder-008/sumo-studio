@@ -360,135 +360,185 @@ export default function Employee() {
 
       <MobileLayout title="Employee Management" backLink="/dashboard" navItems={navItems}>
         <div className="p-4 md:p-8">
-          {/* Positions Section */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">1. Add Position</h2>
-
-            <div className="mb-6">
+          {/* Create Section */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">1. Create</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {/* Position Card */}
               <button
                 onClick={handleAddPosition}
-                className="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-blue-400 to-cyan-400 text-gray-800 font-semibold rounded-lg hover:shadow-lg transition-all"
+                className="group relative bg-white/70 backdrop-blur-lg rounded-2xl shadow-lg p-8 border border-white/30 cursor-pointer hover:shadow-2xl hover:scale-105 transition-all duration-300 text-left"
               >
-                + Add Position
+                <div className="absolute inset-0 bg-blue-500 rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity" />
+                <div className="relative bg-blue-500 w-16 h-16 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-4xl">💼</span>
+                </div>
+                <div className="relative">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2 group-hover:text-gray-900 transition-colors">
+                    1.1 Add Position
+                  </h3>
+                  <p className="text-sm text-gray-600 group-hover:text-gray-700 transition-colors">
+                    Create and manage job positions
+                  </p>
+                </div>
+                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-2xl text-gray-400 group-hover:text-gray-600">→</span>
+                </div>
               </button>
-            </div>
 
-            <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-6 md:p-8 border border-white/30">
-              {positions.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-gray-500 text-lg">No positions yet. Click "Add Position" to get started.</p>
+              {/* Department Card */}
+              <button
+                onClick={handleAddDepartment}
+                className="group relative bg-white/70 backdrop-blur-lg rounded-2xl shadow-lg p-8 border border-white/30 cursor-pointer hover:shadow-2xl hover:scale-105 transition-all duration-300 text-left"
+              >
+                <div className="absolute inset-0 bg-green-500 rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity" />
+                <div className="relative bg-green-500 w-16 h-16 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-4xl">🏢</span>
                 </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-300">
-                        <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Position Name</th>
-                        <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Description</th>
-                        <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {positions.map((position) => (
-                        <tr key={position.id} className="border-b border-gray-200 hover:bg-blue-50/50 transition-colors">
-                          <td className="py-3 px-4 text-sm text-gray-700 font-medium">{position.name}</td>
-                          <td className="py-3 px-4 text-sm text-gray-600">{position.description}</td>
-                          <td className="py-3 px-4">
-                            <button
-                              onClick={() => handleEditPosition(position)}
-                              className="text-blue-600 hover:text-blue-800 font-semibold text-sm mr-3"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDeletePosition(position.id)}
-                              className="text-red-600 hover:text-red-800 font-semibold text-sm"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="relative">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2 group-hover:text-gray-900 transition-colors">
+                    1.2 Add Department
+                  </h3>
+                  <p className="text-sm text-gray-600 group-hover:text-gray-700 transition-colors">
+                    Create and manage departments
+                  </p>
                 </div>
-              )}
+                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-2xl text-gray-400 group-hover:text-gray-600">→</span>
+                </div>
+              </button>
+
+              {/* Employee Card */}
+              <button
+                onClick={handleAddEmployee}
+                className="group relative bg-white/70 backdrop-blur-lg rounded-2xl shadow-lg p-8 border border-white/30 cursor-pointer hover:shadow-2xl hover:scale-105 transition-all duration-300 text-left"
+              >
+                <div className="absolute inset-0 bg-purple-500 rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity" />
+                <div className="relative bg-purple-500 w-16 h-16 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-4xl">👥</span>
+                </div>
+                <div className="relative">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2 group-hover:text-gray-900 transition-colors">
+                    1.3 Add Employee
+                  </h3>
+                  <p className="text-sm text-gray-600 group-hover:text-gray-700 transition-colors">
+                    Add and manage employees
+                  </p>
+                </div>
+                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-2xl text-gray-400 group-hover:text-gray-600">→</span>
+                </div>
+              </button>
+
+              {/* View List Card */}
+              <button
+                onClick={() => {
+                  document.getElementById("positions-list")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="group relative bg-white/70 backdrop-blur-lg rounded-2xl shadow-lg p-8 border border-white/30 cursor-pointer hover:shadow-2xl hover:scale-105 transition-all duration-300 text-left"
+              >
+                <div className="absolute inset-0 bg-indigo-500 rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity" />
+                <div className="relative bg-indigo-500 w-16 h-16 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-4xl">📋</span>
+                </div>
+                <div className="relative">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2 group-hover:text-gray-900 transition-colors">
+                    1.4 View Lists
+                  </h3>
+                  <p className="text-sm text-gray-600 group-hover:text-gray-700 transition-colors">
+                    Manage all positions & departments
+                  </p>
+                </div>
+                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-2xl text-gray-400 group-hover:text-gray-600">→</span>
+                </div>
+              </button>
             </div>
           </div>
 
-          {/* Departments Section */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">2. Add Department</h2>
+          {/* Management Lists Section */}
+          <div id="positions-list" className="mb-12">
+            <h3 className="text-xl font-bold text-gray-800 mb-6">Positions & Departments</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Positions List */}
+              <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-6 md:p-8 border border-white/30">
+                <h4 className="text-lg font-bold text-gray-800 mb-4">Positions ({positions.length})</h4>
+                {positions.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">No positions yet</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {positions.map((position) => (
+                      <div key={position.id} className="flex items-center justify-between p-3 bg-blue-50/50 rounded-lg hover:bg-blue-50 transition-colors">
+                        <div>
+                          <p className="font-semibold text-gray-800">{position.name}</p>
+                          <p className="text-xs text-gray-600">{position.description}</p>
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleEditPosition(position)}
+                            className="text-blue-600 hover:text-blue-800 text-sm font-semibold"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeletePosition(position.id)}
+                            className="text-red-600 hover:text-red-800 text-sm font-semibold"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-            <div className="mb-6">
-              <button
-                onClick={handleAddDepartment}
-                className="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-400 text-gray-800 font-semibold rounded-lg hover:shadow-lg transition-all"
-              >
-                + Add Department
-              </button>
-            </div>
-
-            <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-6 md:p-8 border border-white/30">
-              {departments.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-gray-500 text-lg">No departments yet. Click "Add Department" to get started.</p>
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-300">
-                        <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Department Name</th>
-                        <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Description</th>
-                        <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {departments.map((department) => (
-                        <tr key={department.id} className="border-b border-gray-200 hover:bg-green-50/50 transition-colors">
-                          <td className="py-3 px-4 text-sm text-gray-700 font-medium">{department.name}</td>
-                          <td className="py-3 px-4 text-sm text-gray-600">{department.description}</td>
-                          <td className="py-3 px-4">
-                            <button
-                              onClick={() => handleEditDepartment(department)}
-                              className="text-blue-600 hover:text-blue-800 font-semibold text-sm mr-3"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDeleteDepartment(department.id)}
-                              className="text-red-600 hover:text-red-800 font-semibold text-sm"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+              {/* Departments List */}
+              <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-6 md:p-8 border border-white/30">
+                <h4 className="text-lg font-bold text-gray-800 mb-4">Departments ({departments.length})</h4>
+                {departments.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">No departments yet</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {departments.map((department) => (
+                      <div key={department.id} className="flex items-center justify-between p-3 bg-green-50/50 rounded-lg hover:bg-green-50 transition-colors">
+                        <div>
+                          <p className="font-semibold text-gray-800">{department.name}</p>
+                          <p className="text-xs text-gray-600">{department.description}</p>
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleEditDepartment(department)}
+                            className="text-blue-600 hover:text-blue-800 text-sm font-semibold"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteDepartment(department.id)}
+                            className="text-red-600 hover:text-red-800 text-sm font-semibold"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Employees Section */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">3. Add Employee</h2>
-
-            <div className="mb-6">
-              <button
-                onClick={handleAddEmployee}
-                className="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-purple-400 to-pink-400 text-gray-800 font-semibold rounded-lg hover:shadow-lg transition-all"
-              >
-                + Add Employee
-              </button>
-            </div>
-
+          <div className="mb-12">
+            <h3 className="text-xl font-bold text-gray-800 mb-6">Employees ({employees.length})</h3>
             <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-6 md:p-8 border border-white/30">
               {employees.length === 0 ? (
                 <div className="text-center py-12">
-                  <p className="text-gray-500 text-lg">No employees yet. Click "Add Employee" to get started.</p>
+                  <p className="text-gray-500 text-lg">No employees yet</p>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
@@ -540,7 +590,7 @@ export default function Employee() {
 
           {/* Operations Section */}
           <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">2. Operations</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">2. Operations</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {operationsModules.map((module) => (
                 <Link key={module.id} href={module.href}>
